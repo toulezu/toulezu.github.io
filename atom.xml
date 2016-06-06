@@ -5,22 +5,22 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://toulezu.com/"/>
-  <updated>2016-06-01T07:09:13.817Z</updated>
+  <updated>2016-06-06T03:10:22.401Z</updated>
   <id>http://toulezu.com/</id>
   
   <author>
-    <name>陈奎</name>
+    <name>ck</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>写在github上的第一篇博客</title>
     <link href="http://toulezu.com/2016/06/01/%E5%86%99%E5%9C%A8github%E4%B8%8A%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
     <id>http://toulezu.com/2016/06/01/写在github上的第一篇博客/</id>
-    <published>2016-06-01T07:08:58.433Z</published>
-    <updated>2016-06-01T07:09:13.817Z</updated>
+    <published>2016-05-31T16:00:00.000Z</published>
+    <updated>2016-06-06T03:10:22.401Z</updated>
     
     <content type="html">&lt;p&gt;这是我的第一篇写在github上的博客，但不会是最后一篇。&lt;/p&gt;
 &lt;p&gt;在这里，我将分享自己在技术学习上的心得，和一些读书笔记，以及在看过他人技术类博客之后的一些个人感想，总之，在这里将会展现我技术，人生成长的点点滴滴。&lt;/p&gt;
@@ -34,13 +34,14 @@
     
     <summary type="html">
     
-      &lt;p&gt;这是我的第一篇写在github上的博客，但不会是最后一篇。&lt;/p&gt;
-&lt;p&gt;在这里，我将分享自己在技术学习上的心得，和一些读书笔记，以及在看过他人技术类博客之后的一些个人感想，总之，在这里将会展现我技术，人生成长的点点滴滴。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;关于技术，我的分享
+      关于技术和生活的一些感想
     
     </summary>
     
+      <category term="生活" scheme="http://toulezu.com/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="感想" scheme="http://toulezu.com/tags/%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
