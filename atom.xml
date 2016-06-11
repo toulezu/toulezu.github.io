@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://toulezu.com/"/>
-  <updated>2016-06-10T09:59:33.284Z</updated>
+  <updated>2016-06-11T07:26:24.806Z</updated>
   <id>http://toulezu.com/</id>
   
   <author>
@@ -20,10 +20,9 @@
     <link href="http://toulezu.com/2016/06/10/ELK%EF%BC%9A%E5%AE%89%E8%A3%85/"/>
     <id>http://toulezu.com/2016/06/10/ELK：安装/</id>
     <published>2016-06-09T16:00:00.000Z</published>
-    <updated>2016-06-10T09:59:33.284Z</updated>
+    <updated>2016-06-11T07:26:24.806Z</updated>
     
-    <content type="html">&lt;p&gt;#ELK：安装&lt;/p&gt;
-&lt;p&gt;ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。&lt;/p&gt;
+    <content type="html">&lt;h2 id=&quot;ELK-简单介绍&quot;&gt;&lt;a href=&quot;#ELK-简单介绍&quot; class=&quot;headerlink&quot; title=&quot;ELK 简单介绍&quot;&gt;&lt;/a&gt;ELK 简单介绍&lt;/h2&gt;&lt;p&gt;ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;ElasticSearch 是开源分布式搜索引擎，能够实时处理，分析日志&lt;/p&gt;
 &lt;/li&gt;
