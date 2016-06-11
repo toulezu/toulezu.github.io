@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://toulezu.com/"/>
-  <updated>2016-06-11T07:26:24.806Z</updated>
+  <updated>2016-06-11T08:00:25.050Z</updated>
   <id>http://toulezu.com/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>ELK：安装</title>
-    <link href="http://toulezu.com/2016/06/10/ELK%EF%BC%9A%E5%AE%89%E8%A3%85/"/>
-    <id>http://toulezu.com/2016/06/10/ELK：安装/</id>
+    <link href="http://toulezu.com/2016/06/10/ELK-introduce-setup/"/>
+    <id>http://toulezu.com/2016/06/10/ELK-introduce-setup/</id>
     <published>2016-06-09T16:00:00.000Z</published>
-    <updated>2016-06-11T07:26:24.806Z</updated>
+    <updated>2016-06-11T08:00:25.050Z</updated>
     
     <content type="html">&lt;h2 id=&quot;ELK-简单介绍&quot;&gt;&lt;a href=&quot;#ELK-简单介绍&quot; class=&quot;headerlink&quot; title=&quot;ELK 简单介绍&quot;&gt;&lt;/a&gt;ELK 简单介绍&lt;/h2&gt;&lt;p&gt;ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。&lt;/p&gt;
 &lt;ul&gt;
@@ -100,10 +100,10 @@
   
   <entry>
     <title>Java 中的 synchronizd 关键字在同步中的使用</title>
-    <link href="http://toulezu.com/2016/06/07/Java%E4%B8%AD%E7%9A%84%20synchronizd%20%E5%85%B3%E9%94%AE%E5%AD%97%E7%94%A8%E6%B3%95/"/>
-    <id>http://toulezu.com/2016/06/07/Java中的 synchronizd 关键字用法/</id>
+    <link href="http://toulezu.com/2016/06/07/Java-synchronizd-usage/"/>
+    <id>http://toulezu.com/2016/06/07/Java-synchronizd-usage/</id>
     <published>2016-06-06T16:00:00.000Z</published>
-    <updated>2016-06-08T07:15:20.105Z</updated>
+    <updated>2016-06-11T08:01:33.988Z</updated>
     
     <content type="html">&lt;h3 id=&quot;为什么要线程同步&quot;&gt;&lt;a href=&quot;#为什么要线程同步&quot; class=&quot;headerlink&quot; title=&quot;为什么要线程同步&quot;&gt;&lt;/a&gt;为什么要线程同步&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;同步的目的是避免在同一个时间点操作同一个数据&lt;/li&gt;
@@ -174,10 +174,10 @@
   
   <entry>
     <title>写在github上的第一篇博客</title>
-    <link href="http://toulezu.com/2016/06/01/%E5%86%99%E5%9C%A8github%E4%B8%8A%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://toulezu.com/2016/06/01/写在github上的第一篇博客/</id>
+    <link href="http://toulezu.com/2016/06/01/blog-github-usage/"/>
+    <id>http://toulezu.com/2016/06/01/blog-github-usage/</id>
     <published>2016-05-31T16:00:00.000Z</published>
-    <updated>2016-06-08T07:14:50.277Z</updated>
+    <updated>2016-06-11T08:04:07.557Z</updated>
     
     <content type="html">&lt;p&gt;这是我的第一篇写在 github 上的博客，但不会是最后一篇。&lt;/p&gt;
 &lt;p&gt;在这里，我将分享自己在技术学习上的心得，和一些读书笔记，以及在看过他人技术类博客之后的一些个人感想，总之，在这里将会展现我技术，人生成长的点点滴滴。&lt;/p&gt;
