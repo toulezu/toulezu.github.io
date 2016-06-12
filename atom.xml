@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ckjava.com/"/>
-  <updated>2016-06-11T08:00:25.050Z</updated>
+  <updated>2016-06-12T02:39:40.257Z</updated>
   <id>http://ckjava.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://ckjava.com/2016/06/10/ELK-introduce-setup/"/>
     <id>http://ckjava.com/2016/06/10/ELK-introduce-setup/</id>
     <published>2016-06-09T16:00:00.000Z</published>
-    <updated>2016-06-11T08:00:25.050Z</updated>
+    <updated>2016-06-12T02:39:40.257Z</updated>
     
     <content type="html">&lt;h2 id=&quot;ELK-简单介绍&quot;&gt;&lt;a href=&quot;#ELK-简单介绍&quot; class=&quot;headerlink&quot; title=&quot;ELK 简单介绍&quot;&gt;&lt;/a&gt;ELK 简单介绍&lt;/h2&gt;&lt;p&gt;ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。&lt;/p&gt;
 &lt;ul&gt;
@@ -103,7 +103,7 @@
     <link href="http://ckjava.com/2016/06/07/Java-synchronizd-usage/"/>
     <id>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</id>
     <published>2016-06-06T16:00:00.000Z</published>
-    <updated>2016-06-11T08:01:33.988Z</updated>
+    <updated>2016-06-12T02:39:40.257Z</updated>
     
     <content type="html">&lt;h3 id=&quot;为什么要线程同步&quot;&gt;&lt;a href=&quot;#为什么要线程同步&quot; class=&quot;headerlink&quot; title=&quot;为什么要线程同步&quot;&gt;&lt;/a&gt;为什么要线程同步&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;同步的目的是避免在同一个时间点操作同一个数据&lt;/li&gt;
