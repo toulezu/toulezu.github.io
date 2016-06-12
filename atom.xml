@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>偷乐族</title>
+  <title>ckjava</title>
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://toulezu.com/"/>
+  <link href="http://ckjava.com/"/>
   <updated>2016-06-11T08:00:25.050Z</updated>
-  <id>http://toulezu.com/</id>
+  <id>http://ckjava.com/</id>
   
   <author>
     <name>ck</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>ELK：安装</title>
-    <link href="http://toulezu.com/2016/06/10/ELK-introduce-setup/"/>
-    <id>http://toulezu.com/2016/06/10/ELK-introduce-setup/</id>
+    <link href="http://ckjava.com/2016/06/10/ELK-introduce-setup/"/>
+    <id>http://ckjava.com/2016/06/10/ELK-introduce-setup/</id>
     <published>2016-06-09T16:00:00.000Z</published>
     <updated>2016-06-11T08:00:25.050Z</updated>
     
@@ -91,17 +91,17 @@
     
     </summary>
     
-      <category term="技术" scheme="http://toulezu.com/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="ELK" scheme="http://toulezu.com/tags/ELK/"/>
+      <category term="ELK" scheme="http://ckjava.com/tags/ELK/"/>
     
   </entry>
   
   <entry>
     <title>Java 中的 synchronizd 关键字在同步中的使用</title>
-    <link href="http://toulezu.com/2016/06/07/Java-synchronizd-usage/"/>
-    <id>http://toulezu.com/2016/06/07/Java-synchronizd-usage/</id>
+    <link href="http://ckjava.com/2016/06/07/Java-synchronizd-usage/"/>
+    <id>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</id>
     <published>2016-06-06T16:00:00.000Z</published>
     <updated>2016-06-11T08:01:33.988Z</updated>
     
@@ -165,19 +165,19 @@
     
     </summary>
     
-      <category term="技术" scheme="http://toulezu.com/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
     
     
-      <category term="Java" scheme="http://toulezu.com/tags/Java/"/>
+      <category term="Java" scheme="http://ckjava.com/tags/Java/"/>
     
   </entry>
   
   <entry>
     <title>写在github上的第一篇博客</title>
-    <link href="http://toulezu.com/2016/06/01/blog-github-usage/"/>
-    <id>http://toulezu.com/2016/06/01/blog-github-usage/</id>
+    <link href="http://ckjava.com/2016/06/01/blog-github-some-thinking/"/>
+    <id>http://ckjava.com/2016/06/01/blog-github-some-thinking/</id>
     <published>2016-05-31T16:00:00.000Z</published>
-    <updated>2016-06-11T08:04:07.557Z</updated>
+    <updated>2016-06-12T02:39:40.258Z</updated>
     
     <content type="html">&lt;p&gt;这是我的第一篇写在 github 上的博客，但不会是最后一篇。&lt;/p&gt;
 &lt;p&gt;在这里，我将分享自己在技术学习上的心得，和一些读书笔记，以及在看过他人技术类博客之后的一些个人感想，总之，在这里将会展现我技术，人生成长的点点滴滴。&lt;/p&gt;
@@ -195,10 +195,10 @@
     
     </summary>
     
-      <category term="生活" scheme="http://toulezu.com/categories/%E7%94%9F%E6%B4%BB/"/>
+      <category term="生活" scheme="http://ckjava.com/categories/%E7%94%9F%E6%B4%BB/"/>
     
     
-      <category term="感想" scheme="http://toulezu.com/tags/%E6%84%9F%E6%83%B3/"/>
+      <category term="感想" scheme="http://ckjava.com/tags/%E6%84%9F%E6%83%B3/"/>
     
   </entry>
   
