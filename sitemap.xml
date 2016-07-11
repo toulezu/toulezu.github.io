@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2016/07/11/Maven-profiles-testResource-Junit/</loc>
+    
+    <lastmod>2016-07-11T08:43:11.610Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/07/05/log4j-logstash-practice/</loc>
+    
+    <lastmod>2016-07-11T08:40:00.780Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/tags/index.html</loc>
     
     <lastmod>2016-06-12T02:39:40.260Z</lastmod>
