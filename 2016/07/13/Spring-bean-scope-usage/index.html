@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://ckjava.com/2016/07/13/Spring-bean-scope-usage/index.html">
 <meta property="og:site_name" content="ckjava">
 <meta property="og:description" content="总结一下关于Spring中bean的scope属性，主要是Controller的singleton和prototype的区别，并举例说明">
-<meta property="og:updated_time" content="2016-07-14T01:49:30.084Z">
+<meta property="og:updated_time" content="2016-07-20T03:57:39.019Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="总结一下关于Spring中bean的scope属性">
 <meta name="twitter:description" content="总结一下关于Spring中bean的scope属性，主要是Controller的singleton和prototype的区别，并举例说明">
@@ -358,7 +358,16 @@
 <li><p>同样第一次在浏览器中输入<br><code>http://localhost:8080/plainWebApi/test/test_cache?key=1&amp;value=1</code><br>返回<br><code>[{&quot;key&quot;:&quot;1&quot;,&quot;value&quot;:&quot;1&quot;,&quot;next&quot;:null}]</code><br>第二次在浏览器中输入<br><code>http://localhost:8080/plainWebApi/test/test_cache?key=2&amp;value=2</code><br>返回<br><code>[{&quot;key&quot;:&quot;2&quot;,&quot;value&quot;:&quot;2&quot;,&quot;next&quot;:null}]</code><br>可见对于两次请求cacheData都是不是一个对象，TestController当然也不是同一个。</p>
 </li>
 </ul>
-<p>参考：<br><a href="http://my.oschina.net/davidzhang/blog/67429" target="_blank" rel="external">Struts action的单例与多例</a><br><a href="http://www.cnblogs.com/shipengzhi/articles/2099694.html" target="_blank" rel="external">在spring来管理实例对象prototype和singleton的选择.针对action如何使用</a><br><a href="http://lavasoft.blog.51cto.com/62575/1394669" target="_blank" rel="external">Spring MVC Controller单例陷阱</a><br><a href="http://www.cnblogs.com/JemBai/archive/2010/11/10/1873954.html" target="_blank" rel="external">struts+spring action应配置为scope=”prototype”</a><br><a href="http://blog.csdn.net/lsh6688/article/details/7863322" target="_blank" rel="external">struts2 Action获取表单数据</a></p>
+<h2 id="例子的详细代码"><a href="#例子的详细代码" class="headerlink" title="例子的详细代码"></a>例子的详细代码</h2><ul>
+<li><a href="https://github.com/toulezu/play/tree/master/plainWebApi" target="_blank" rel="external">点这里</a></li>
+</ul>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ul>
+<li><a href="http://my.oschina.net/davidzhang/blog/67429" target="_blank" rel="external">Struts action的单例与多例</a></li>
+<li><a href="http://www.cnblogs.com/shipengzhi/articles/2099694.html" target="_blank" rel="external">在spring来管理实例对象prototype和singleton的选择.针对action如何使用</a></li>
+<li><a href="http://lavasoft.blog.51cto.com/62575/1394669" target="_blank" rel="external">Spring MVC Controller单例陷阱</a></li>
+<li><a href="http://www.cnblogs.com/JemBai/archive/2010/11/10/1873954.html" target="_blank" rel="external">struts+spring action应配置为scope=”prototype”</a></li>
+<li><a href="http://blog.csdn.net/lsh6688/article/details/7863322" target="_blank" rel="external">struts2 Action获取表单数据</a></li>
+</ul>
 
       
     </div>
@@ -484,7 +493,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -520,7 +529,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Spring-bean的scope属性"><span class="nav-number">1.</span> <span class="nav-text">关于Spring bean的scope属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例说明Controller的singleton和prototype的区别"><span class="nav-number">2.</span> <span class="nav-text">举例说明Controller的singleton和prototype的区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Spring-bean的scope属性"><span class="nav-number">1.</span> <span class="nav-text">关于Spring bean的scope属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例说明Controller的singleton和prototype的区别"><span class="nav-number">2.</span> <span class="nav-text">举例说明Controller的singleton和prototype的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子的详细代码"><span class="nav-number">3.</span> <span class="nav-text">例子的详细代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考："><span class="nav-number">4.</span> <span class="nav-text">参考：</span></a></li></ol></div>
             
           </div>
         </section>
