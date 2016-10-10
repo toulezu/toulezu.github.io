@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ELK," />
+  <meta name="keywords" content="Junit,Spring," />
 
 
 
@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="ELK 初步认识和安装">
+<meta name="description" content="在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELK：安装">
-<meta property="og:url" content="http://ckjava.com/2016/06/10/ELK-introduce-setup/index.html">
+<meta property="og:title" content="在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值">
+<meta property="og:url" content="http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/index.html">
 <meta property="og:site_name" content="ckjava">
-<meta property="og:description" content="ELK 初步认识和安装">
-<meta property="og:updated_time" content="2016-10-10T01:58:06.768Z">
+<meta property="og:description" content="在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值">
+<meta property="og:updated_time" content="2016-10-10T08:33:52.355Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ELK：安装">
-<meta name="twitter:description" content="ELK 初步认识和安装">
+<meta name="twitter:title" content="在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值">
+<meta name="twitter:description" content="在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值">
 
 
 
@@ -116,10 +116,10 @@
 
 
 
-  <link rel="canonical" href="http://ckjava.com/2016/06/10/ELK-introduce-setup/"/>
+  <link rel="canonical" href="http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/"/>
 
 
-  <title> ELK：安装 | ckjava </title>
+  <title> 在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值 | ckjava </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +249,7 @@
             
             
               
-                ELK：安装
+                在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值
               
             
           </h1>
@@ -261,8 +261,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-10T00:00:00+08:00" content="2016-06-10">
-              2016-06-10
+            <time itemprop="dateCreated" datetime="2016-09-30T00:00:00+08:00" content="2016-09-30">
+              2016-09-30
             </time>
           </span>
 
@@ -275,8 +275,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
                   </a>
                 </span>
 
@@ -291,8 +291,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/10/ELK-introduce-setup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/10/ELK-introduce-setup/" itemprop="commentsCount"></span>
+                <a href="/2016/09/30/Spring-Junit-PropertySource-Value/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/30/Spring-Junit-PropertySource-Value/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -315,67 +315,32 @@
       
 
       
-        <h2 id="ELK-简单介绍"><a href="#ELK-简单介绍" class="headerlink" title="ELK 简单介绍"></a>ELK 简单介绍</h2><p>ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。</p>
-<ul>
-<li><p>ElasticSearch 是开源分布式搜索引擎，能够实时处理，分析日志</p>
+        <h2 id="使用场景说明"><a href="#使用场景说明" class="headerlink" title="使用场景说明"></a>使用场景说明</h2><ul>
+<li><p>在平时开发的时候，为了测试Spring中的一个Bean，通常要通过<code>@ContextConfiguration</code>注解来加载一些XML配置，问题是XML配置越来越多，现在要减少甚至去除XML配置，从而简化开发</p>
 </li>
-<li><p>Logstash 统一对应用程序日志进行收集管理</p>
+<li><p>古老的项目由于历史问题没有使用Junit来测试Bean导致现在切换过来复杂</p>
 </li>
-<li><p>Kibana 是一个为 Logstash 和 ElasticSearch 提供的日志分析的 Web 接口。可使用它对日志进行高效的搜索、可视化、分析等各种操作</p>
+<li><p>有时候只想在Junit中测试几个Bean</p>
 </li>
-</ul>
-<p>他们之间的依赖关系如下：</p>
-<p>Kibana &lt;- ElasticSearch &lt;- Logstash</p>
-<h2 id="安装-Java"><a href="#安装-Java" class="headerlink" title="安装 Java"></a>安装 Java</h2><ul>
-<li><p>到<code>http://www.oracle.com/technetwork/java/javase/downloads/index.html</code>下载<code>jdk-8u91-linux-x64.gz</code></p>
-</li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf jdk-8u91-linux-x64.gz</code>解压</p>
-</li>
-<li><p>将下面的Java配置追加到<code>/etc/profile</code>文件中，然后执行<code>source /etc/profile</code>让配置立即生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># set Java environment</span><br><span class="line">JAVA_HOME=/usr/local/soft/jdk1.8.0_91</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export JAVA_HOME</span><br><span class="line">export PATH</span><br><span class="line">export CLASSPATH</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行<code>java -version</code>和<code>javac -version</code>都能返回当前安装的Java的版本号，说明安装成功</p>
+<li><p>避免加载XML配置，直接从properties文件中获取@Value属性值</p>
 </li>
 </ul>
-<ul>
-<li>如果当前用户对目录没有权限，执行<code>sudo chown -R dev:dev /usr/local/soft</code>，其中<code>dev:dev</code>表示dev用户在dev用户组。</li>
-</ul>
-<h2 id="安装-Elasticsearch"><a href="#安装-Elasticsearch" class="headerlink" title="安装 Elasticsearch"></a>安装 Elasticsearch</h2><ul>
-<li><p>到<code>https://www.elastic.co/downloads/elasticsearch</code>下载 elasticsearch-2.3.3.tar.gz</p>
+<h2 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h2><ul>
+<li><p>使用<code>@Configuration</code>注解将XML配置转换成在Bean中完成，<code>@PropertySource</code>注解用于指定properties文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 通过该类可以代替在xml中如下的配置</span><br><span class="line"> * </span><br><span class="line"> * </span><br><span class="line"> *	</span><br><span class="line">  	  &lt;bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"&gt;</span><br><span class="line">        &lt;property name="ignoreUnresolvablePlaceholders" value="true"/&gt;</span><br><span class="line">        &lt;property name="locations"&gt;</span><br><span class="line">          &lt;list&gt;</span><br><span class="line">            &lt;value&gt;classpath:jdbc.properties&lt;/value&gt;</span><br><span class="line">          &lt;/list&gt;</span><br><span class="line">        &lt;/property&gt;</span><br><span class="line">      &lt;/bean&gt;</span><br><span class="line"> * <span class="doctag">@author</span> chen_k</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@PropertySource</span>(value = &#123; <span class="string">"classpath:jdbc.properties"</span> &#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringPropertiesConfigure</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> PropertySourcesPlaceholderConfigurer <span class="title">propertySourcesPlaceholderConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PropertySourcesPlaceholderConfigurer();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf elasticsearch-2.3.3.tar.gz</code>解压</p>
-</li>
-<li><p>执行<code>sh elasticsearch-2.3.3/bin/elasticsearch</code></p>
-</li>
-<li><p>打开浏览器输入<code>http://localhost:9200/</code>，返回如下内容说明安装成功:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot; : &quot;Earth Lord&quot;,</span><br><span class="line">  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,</span><br><span class="line">  &quot;version&quot; : &#123;</span><br><span class="line">    &quot;number&quot; : &quot;2.3.3&quot;,</span><br><span class="line">    &quot;build_hash&quot; : &quot;218bdf10790eef486ff2c41a3df5cfa32dadcfde&quot;,</span><br><span class="line">    &quot;build_timestamp&quot; : &quot;2016-05-17T15:40:04Z&quot;,</span><br><span class="line">    &quot;build_snapshot&quot; : false,</span><br><span class="line">    &quot;lucene_version&quot; : &quot;5.5.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tagline&quot; : &quot;You Know, for Search&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>使用<code>@ContextConfiguration</code>的<code>classes</code>属性来加载相关的几个Bean。DBService类中几个字段通过<code>@Value</code>从properties文件获取值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ContextConfiguration</span>(classes = &#123;DBService.class, SpringPropertiesConfigure.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestDBService</span> <span class="keyword">extends</span> <span class="title">BaseTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> DBService dBService;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Test</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testGetDBInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String dbInfo = dBService.toString();</span><br><span class="line">		Assert.assertNotNull(dbInfo);</span><br><span class="line">		System.out.println(dbInfo);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h2 id="安装-Logstash"><a href="#安装-Logstash" class="headerlink" title="安装 Logstash"></a>安装 Logstash</h2><ul>
-<li><p>在<code>https://www.elastic.co/downloads/logstash</code>下载<code>logstash-2.3.2.tar.gz</code></p>
-</li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf logstash-2.3.2.tar.gz</code>解压</p>
-</li>
-<li><p>执行<code>sh logstash-2.3.2/bin/logstash -e &#39;input { stdin { } } output { stdout {} }&#39;</code>，提示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Settings: Default pipeline workers: 1</span><br><span class="line">Pipeline main started</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="完整的代码"><a href="#完整的代码" class="headerlink" title="完整的代码"></a>完整的代码</h2><ul>
+<li>点击<em><a href="https://github.com/toulezu/play/tree/master/SpringBoot/testSpringBoot" target="_blank" rel="external">这里</a></em></li>
 </ul>
-<p>说明安装成功，输入任意内容将会打印刚才的输入。</p>
-<h2 id="安装-Kibana"><a href="#安装-Kibana" class="headerlink" title="安装 Kibana"></a>安装 Kibana</h2><ul>
-<li><p>在<code>https://www.elastic.co/downloads/kibana</code>下载<code>kibana-4.5.1-linux-x64.tar.gz</code></p>
-</li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf kibana-4.5.1-linux-x64.tar.gz</code>解压</p>
-</li>
-<li><p>编辑<code>vi kibana-4.5.1-linux-x64/config/kibana.yml</code>，确保kibana和elasticsearch 关联起来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">elasticsearch.url: &quot;http://localhost:9200&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑<code>vi elasticsearch-2.3.3/config/elasticsearch.yml</code>，追加下面一行，并重启elasticsearch服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行<code>sh kibana-4.5.1-linux-x64/bin/kibana</code>启动kibana，在浏览器中输入<code>http://localhost:5601</code>，即可访问kibana</p>
-</li>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://stackoverflow.com/questions/17353327/populating-spring-value-during-unit-test?noredirect=1&amp;lq=1" target="_blank" rel="external">Populating Spring @Value during Unit Test</a></li>
+<li><a href="http://websystique.com/spring/spring-propertysource-value-annotations-example/" target="_blank" rel="external">Spring @PropertySource &amp; @Value annotations example</a></li>
+<li><a href="http://blog.csdn.net/fenglibing/article/details/8584602" target="_blank" rel="external">使用RunWith注解改变JUnit的默认执行类，并实现自已的Listener</a></li>
 </ul>
-<p>参考：<br><a href="http://blog.csdn.net/i_chips/article/details/43309415" target="_blank" rel="external">CentOS下使用ELK套件搭建日志分析和监控平台</a><br><a href="ELK日志分析系统">http://www.cnblogs.com/danbo/p/5220516.html</a><br><a href="http://www.cnblogs.com/yiwenshengmei/p/use_logstash_collect_log.html" target="_blank" rel="external">Logstash实践: 分布式系统的日志监控</a></p>
 
       
     </div>
@@ -398,7 +363,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ELK/" rel="tag">#ELK</a>
+            <a href="/tags/Junit/" rel="tag">#Junit</a>
+          
+            <a href="/tags/Spring/" rel="tag">#Spring</a>
           
         </div>
       
@@ -407,17 +374,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/07/Java-synchronizd-usage/" rel="next" title="Java 中的 synchronizd 关键字在同步中的使用">
-                <i class="fa fa-chevron-left"></i> Java 中的 synchronizd 关键字在同步中的使用
+              <a href="/2016/08/30/Java-Thread-Runnable-Executor-Practice/" rel="next" title="关于Java多线程在提升程序性能上的一些实践">
+                <i class="fa fa-chevron-left"></i> 关于Java多线程在提升程序性能上的一些实践
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/05/log4j-logstash-practice/" rel="prev" title="Log4j向Logstash发送日志实践">
-                Log4j向Logstash发送日志实践 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -443,8 +406,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/10/ELK-introduce-setup/"
-           data-title="ELK：安装" data-url="http://ckjava.com/2016/06/10/ELK-introduce-setup/">
+      <div class="ds-thread" data-thread-key="2016/09/30/Spring-Junit-PropertySource-Value/"
+           data-title="在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值" data-url="http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/">
       </div>
     
   </div>
@@ -542,7 +505,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">ELK 简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Java"><span class="nav-number">2.</span> <span class="nav-text">安装 Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Elasticsearch"><span class="nav-number">3.</span> <span class="nav-text">安装 Elasticsearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Logstash"><span class="nav-number">4.</span> <span class="nav-text">安装 Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Kibana"><span class="nav-number">5.</span> <span class="nav-text">安装 Kibana</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景说明"><span class="nav-number">1.</span> <span class="nav-text">使用场景说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用说明"><span class="nav-number">2.</span> <span class="nav-text">使用说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整的代码"><span class="nav-number">3.</span> <span class="nav-text">完整的代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ckjava.com/"/>
-  <updated>2016-09-04T04:29:37.309Z</updated>
+  <updated>2016-10-10T08:33:52.355Z</updated>
   <id>http://ckjava.com/</id>
   
   <author>
@@ -16,11 +16,61 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值</title>
+    <link href="http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/"/>
+    <id>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</id>
+    <published>2016-09-29T16:00:00.000Z</published>
+    <updated>2016-10-10T08:33:52.355Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;使用场景说明&quot;&gt;&lt;a href=&quot;#使用场景说明&quot; class=&quot;headerlink&quot; title=&quot;使用场景说明&quot;&gt;&lt;/a&gt;使用场景说明&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;在平时开发的时候，为了测试Spring中的一个Bean，通常要通过&lt;code&gt;@ContextConfiguration&lt;/code&gt;注解来加载一些XML配置，问题是XML配置越来越多，现在要减少甚至去除XML配置，从而简化开发&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;古老的项目由于历史问题没有使用Junit来测试Bean导致现在切换过来复杂&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;有时候只想在Junit中测试几个Bean&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;避免加载XML配置，直接从properties文件中获取@Value属性值&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;使用说明&quot;&gt;&lt;a href=&quot;#使用说明&quot; class=&quot;headerlink&quot; title=&quot;使用说明&quot;&gt;&lt;/a&gt;使用说明&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;使用&lt;code&gt;@Configuration&lt;/code&gt;注解将XML配置转换成在Bean中完成，&lt;code&gt;@PropertySource&lt;/code&gt;注解用于指定properties文件&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;25&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;/**&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * 通过该类可以代替在xml中如下的配置&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  	  &amp;lt;bean class=&quot;org.springframework.context.support.PropertySourcesPlaceholderConfigurer&quot;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;property name=&quot;ignoreUnresolvablePlaceholders&quot; value=&quot;true&quot;/&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;property name=&quot;locations&quot;&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &amp;lt;list&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            &amp;lt;value&amp;gt;classpath:jdbc.properties&amp;lt;/value&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;          &amp;lt;/list&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;lt;/property&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;      &amp;lt;/bean&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; * &lt;span class=&quot;doctag&quot;&gt;@author&lt;/span&gt; chen_k&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; *&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; */&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@Configuration&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@PropertySource&lt;/span&gt;(value = &amp;#123; &lt;span class=&quot;string&quot;&gt;&quot;classpath:jdbc.properties&quot;&lt;/span&gt; &amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;SpringPropertiesConfigure&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Bean&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; PropertySourcesPlaceholderConfigurer &lt;span class=&quot;title&quot;&gt;propertySourcesPlaceholderConfigurer&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; PropertySourcesPlaceholderConfigurer();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;使用&lt;code&gt;@ContextConfiguration&lt;/code&gt;的&lt;code&gt;classes&lt;/code&gt;属性来加载相关的几个Bean。DBService类中几个字段通过&lt;code&gt;@Value&lt;/code&gt;从properties文件获取值&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;meta&quot;&gt;@ContextConfiguration&lt;/span&gt;(classes = &amp;#123;DBService.class, SpringPropertiesConfigure.class&amp;#125;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;class&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;TestDBService&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;BaseTest&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Autowired&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;private&lt;/span&gt; DBService dBService;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;meta&quot;&gt;@Test&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;testGetDBInfo&lt;/span&gt;&lt;span class=&quot;params&quot;&gt;()&lt;/span&gt; &lt;/span&gt;&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		String dbInfo = dBService.toString();&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		Assert.assertNotNull(dbInfo);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;		System.out.println(dbInfo);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;完整的代码&quot;&gt;&lt;a href=&quot;#完整的代码&quot; class=&quot;headerlink&quot; title=&quot;完整的代码&quot;&gt;&lt;/a&gt;完整的代码&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;点击&lt;em&gt;&lt;a href=&quot;https://github.com/toulezu/play/tree/master/SpringBoot/testSpringBoot&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里&lt;/a&gt;&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://stackoverflow.com/questions/17353327/populating-spring-value-during-unit-test?noredirect=1&amp;amp;lq=1&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Populating Spring @Value during Unit Test&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://websystique.com/spring/spring-propertysource-value-annotations-example/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Spring @PropertySource &amp;amp; @Value annotations example&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/fenglibing/article/details/8584602&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;使用RunWith注解改变JUnit的默认执行类，并实现自已的Listener&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      在Junit单元测试中通过@PropertySource来获取Bean中的@Value属性值
+    
+    </summary>
+    
+      <category term="Spring" scheme="http://ckjava.com/categories/Spring/"/>
+    
+    
+      <category term="Junit" scheme="http://ckjava.com/tags/Junit/"/>
+    
+      <category term="Spring" scheme="http://ckjava.com/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
     <title>关于Java多线程在提升程序性能上的一些实践</title>
     <link href="http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/"/>
     <id>http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/</id>
     <published>2016-08-29T16:00:00.000Z</published>
-    <updated>2016-09-04T04:29:37.309Z</updated>
+    <updated>2016-10-10T01:58:06.787Z</updated>
     
     <content type="html">&lt;h2 id=&quot;需要使用多个线程的背景以及约束&quot;&gt;&lt;a href=&quot;#需要使用多个线程的背景以及约束&quot; class=&quot;headerlink&quot; title=&quot;需要使用多个线程的背景以及约束&quot;&gt;&lt;/a&gt;需要使用多个线程的背景以及约束&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;多个任务并行，不分先后&lt;/p&gt;
@@ -61,7 +111,7 @@
     <link href="http://ckjava.com/2016/07/13/Spring-bean-scope-usage/"/>
     <id>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</id>
     <published>2016-07-12T16:00:00.000Z</published>
-    <updated>2016-08-23T13:43:30.706Z</updated>
+    <updated>2016-10-10T01:58:06.795Z</updated>
     
     <content type="html">&lt;h2 id=&quot;关于Spring-bean的scope属性&quot;&gt;&lt;a href=&quot;#关于Spring-bean的scope属性&quot; class=&quot;headerlink&quot; title=&quot;关于Spring bean的scope属性&quot;&gt;&lt;/a&gt;关于Spring bean的scope属性&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Spring的bean默认是singleton-单例模式的，即Spring容器只存在一个共享的bean实例&lt;/p&gt;
@@ -127,7 +177,7 @@
     <link href="http://ckjava.com/2016/07/11/Maven-profiles-testResource-Junit/"/>
     <id>http://ckjava.com/2016/07/11/Maven-profiles-testResource-Junit/</id>
     <published>2016-07-10T16:00:00.000Z</published>
-    <updated>2016-08-23T13:43:30.705Z</updated>
+    <updated>2016-10-10T01:58:06.781Z</updated>
     
     <content type="html">&lt;h2 id=&quot;Maven的profiles配置使用&quot;&gt;&lt;a href=&quot;#Maven的profiles配置使用&quot; class=&quot;headerlink&quot; title=&quot;Maven的profiles配置使用&quot;&gt;&lt;/a&gt;Maven的profiles配置使用&lt;/h2&gt;&lt;p&gt;Maven的profiles可根据不同的环境将POM的配置应用到配置文件中的&lt;code&gt;${}&lt;/code&gt;变量中，具体步骤如下：&lt;/p&gt;
 &lt;ul&gt;
@@ -195,7 +245,7 @@
     <link href="http://ckjava.com/2016/07/05/log4j-logstash-practice/"/>
     <id>http://ckjava.com/2016/07/05/log4j-logstash-practice/</id>
     <published>2016-07-04T16:00:00.000Z</published>
-    <updated>2016-08-23T13:43:30.704Z</updated>
+    <updated>2016-10-10T01:58:06.776Z</updated>
     
     <content type="html">&lt;h2 id=&quot;在logstash中配置log4j&quot;&gt;&lt;a href=&quot;#在logstash中配置log4j&quot; class=&quot;headerlink&quot; title=&quot;在logstash中配置log4j&quot;&gt;&lt;/a&gt;在logstash中配置log4j&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;p&gt;在logstash的配置文件中增加如下配置&lt;/p&gt;
@@ -244,7 +294,7 @@
     <link href="http://ckjava.com/2016/06/10/ELK-introduce-setup/"/>
     <id>http://ckjava.com/2016/06/10/ELK-introduce-setup/</id>
     <published>2016-06-09T16:00:00.000Z</published>
-    <updated>2016-08-23T13:43:30.703Z</updated>
+    <updated>2016-10-10T01:58:06.768Z</updated>
     
     <content type="html">&lt;h2 id=&quot;ELK-简单介绍&quot;&gt;&lt;a href=&quot;#ELK-简单介绍&quot; class=&quot;headerlink&quot; title=&quot;ELK 简单介绍&quot;&gt;&lt;/a&gt;ELK 简单介绍&lt;/h2&gt;&lt;p&gt;ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。&lt;/p&gt;
 &lt;ul&gt;
@@ -327,7 +377,7 @@
     <link href="http://ckjava.com/2016/06/07/Java-synchronizd-usage/"/>
     <id>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</id>
     <published>2016-06-06T16:00:00.000Z</published>
-    <updated>2016-08-23T13:43:30.704Z</updated>
+    <updated>2016-10-10T01:58:06.772Z</updated>
     
     <content type="html">&lt;h3 id=&quot;为什么要线程同步&quot;&gt;&lt;a href=&quot;#为什么要线程同步&quot; class=&quot;headerlink&quot; title=&quot;为什么要线程同步&quot;&gt;&lt;/a&gt;为什么要线程同步&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;同步的目的是避免在同一个时间点操作同一个数据&lt;/li&gt;
@@ -401,7 +451,7 @@
     <link href="http://ckjava.com/2016/06/01/blog-github-some-thinking/"/>
     <id>http://ckjava.com/2016/06/01/blog-github-some-thinking/</id>
     <published>2016-05-31T16:00:00.000Z</published>
-    <updated>2016-08-23T13:43:30.706Z</updated>
+    <updated>2016-10-10T01:58:06.791Z</updated>
     
     <content type="html">&lt;p&gt;这是我的第一篇写在 github 上的博客，但不会是最后一篇。&lt;/p&gt;
 &lt;p&gt;在这里，我将分享自己在技术学习上的心得，和一些读书笔记，以及在看过他人技术类博客之后的一些个人感想，总之，在这里将会展现我技术，人生成长的点点滴滴。&lt;/p&gt;
