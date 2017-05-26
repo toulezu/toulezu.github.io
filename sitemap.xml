@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2016/11/17/load-jar-file-class/</loc>
+    
+    <lastmod>2017-05-26T14:35:31.154Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/10/31/java-read-file-piece/</loc>
+    
+    <lastmod>2017-05-26T14:31:01.382Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</loc>
+    
+    <lastmod>2017-05-26T14:18:14.487Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/</loc>
     
     <lastmod>2016-09-04T04:29:37.309Z</lastmod>
