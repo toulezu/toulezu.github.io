@@ -2,7 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-<<<<<<< HEAD
     <loc>http://ckjava.com/2016/11/17/load-jar-file-class/</loc>
     
     <lastmod>2017-05-26T14:35:31.154Z</lastmod>
@@ -25,81 +24,71 @@
   
   <url>
     <loc>http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/</loc>
-=======
-    <loc>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</loc>
->>>>>>> 67302af6971fcc96632a072a399e3f1c3af0320f
     
-    <lastmod>2016-10-10T08:33:52.355Z</lastmod>
+    <lastmod>2016-09-04T04:29:37.309Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/tags/index.html</loc>
     
-    <lastmod>2016-10-10T01:58:06.857Z</lastmod>
+    <lastmod>2016-09-03T13:51:05.889Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/categories/index.html</loc>
     
-    <lastmod>2016-10-10T01:58:06.850Z</lastmod>
+    <lastmod>2016-09-03T13:49:39.410Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/about/index.html</loc>
     
-    <lastmod>2016-10-10T01:58:06.843Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
-    
-    <lastmod>2016-10-10T01:58:06.795Z</lastmod>
+    <lastmod>2016-09-03T13:49:04.946Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
     
-    <lastmod>2016-10-10T01:58:06.791Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/</loc>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
     
-    <lastmod>2016-10-10T01:58:06.787Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/07/11/Maven-profiles-testResource-Junit/</loc>
     
-    <lastmod>2016-10-10T01:58:06.781Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.705Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/07/05/log4j-logstash-practice/</loc>
     
-    <lastmod>2016-10-10T01:58:06.776Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.704Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</loc>
     
-    <lastmod>2016-10-10T01:58:06.772Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.704Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/06/10/ELK-introduce-setup/</loc>
     
-    <lastmod>2016-10-10T01:58:06.768Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.703Z</lastmod>
     
   </url>
   
