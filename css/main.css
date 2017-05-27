@@ -507,10 +507,10 @@ code {
 }
 code {
   padding: 2px 4px;
-  word-break: break-all;
-  color: #555;
-  background: #eee;
-  border-radius: 4px;
+  word-wrap: break-all;
+  color: #eaeaea;
+  background: #000;
+  border-radius: 3px;
   font-size: 13px;
 }
 pre code {
@@ -567,6 +567,15 @@ pre code {
 }
 .gist table td {
   border: none;
+}
+pre .deletion {
+  background: #008000;
+}
+pre .addition {
+  background: #800000;
+}
+pre .meta {
+  color: #c397d8;
 }
 pre .comment {
   color: #969896;
@@ -1548,7 +1557,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #aabfff;
+  background: #fff4c9;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -1973,11 +1982,13 @@ a.search-result {
   text-overflow: ellipsis;
 }
 .search-keyword {
-  border-bottom: 1px dashed #4088b8;
+  border-bottom: 1px dashed #f00;
+  font-size: 14px;
   font-weight: bold;
+  color: #f00;
 }
 #local-search-result {
-  height: 90%;
+  height: 88%;
   overflow: auto;
 }
 .popup {
@@ -2016,7 +2027,12 @@ a.search-result {
 }
 #local-search-input {
   margin-bottom: 10px;
-  width: 50%;
+  padding: 10px;
+  width: 97%;
+  font-size: 18px;
+}
+.popup .fa-search {
+  padding-top: 8px;
 }
 .popup-btn-close {
   position: absolute;
