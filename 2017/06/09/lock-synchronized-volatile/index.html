@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="ELK," />
+  <meta name="keywords" content="Java,synchronized,volatile,锁," />
 
 
 
@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="ELK 初步认识和安装">
+<meta name="description" content="对锁的理解">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ELK：安装">
-<meta property="og:url" content="http://ckjava.com/2016/06/10/ELK-introduce-setup/index.html">
+<meta property="og:title" content="对锁的理解">
+<meta property="og:url" content="http://ckjava.com/2017/06/09/lock-synchronized-volatile/index.html">
 <meta property="og:site_name" content="ckJava">
-<meta property="og:description" content="ELK 初步认识和安装">
-<meta property="og:updated_time" content="2016-10-10T01:58:06.768Z">
+<meta property="og:description" content="对锁的理解">
+<meta property="og:updated_time" content="2017-06-09T08:25:51.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ELK：安装">
-<meta name="twitter:description" content="ELK 初步认识和安装">
+<meta name="twitter:title" content="对锁的理解">
+<meta name="twitter:description" content="对锁的理解">
 
 
 
@@ -116,10 +116,10 @@
 
 
 
-  <link rel="canonical" href="http://ckjava.com/2016/06/10/ELK-introduce-setup/"/>
+  <link rel="canonical" href="http://ckjava.com/2017/06/09/lock-synchronized-volatile/"/>
 
 
-  <title> ELK：安装 | ckJava </title>
+  <title> 对锁的理解 | ckJava </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +249,7 @@
             
             
               
-                ELK：安装
+                对锁的理解
               
             
           </h1>
@@ -261,8 +261,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-10T00:00:00+08:00" content="2016-06-10">
-              2016-06-10
+            <time itemprop="dateCreated" datetime="2017-06-09T00:00:00+08:00" content="2017-06-09">
+              2017-06-09
             </time>
           </span>
 
@@ -275,8 +275,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/多线程/" itemprop="url" rel="index">
+                    <span itemprop="name">多线程</span>
                   </a>
                 </span>
 
@@ -291,8 +291,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/06/10/ELK-introduce-setup/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/06/10/ELK-introduce-setup/" itemprop="commentsCount"></span>
+                <a href="/2017/06/09/lock-synchronized-volatile/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/09/lock-synchronized-volatile/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -315,67 +315,38 @@
       
 
       
-        <h2 id="ELK-简单介绍"><a href="#ELK-简单介绍" class="headerlink" title="ELK 简单介绍"></a>ELK 简单介绍</h2><p>ELK 是 Elasticsearch,Logstash,Kibana的合称，依赖Java才能运行。</p>
-<ul>
-<li><p>ElasticSearch 是开源分布式搜索引擎，能够实时处理，分析日志</p>
-</li>
-<li><p>Logstash 统一对应用程序日志进行收集管理</p>
-</li>
-<li><p>Kibana 是一个为 Logstash 和 ElasticSearch 提供的日志分析的 Web 接口。可使用它对日志进行高效的搜索、可视化、分析等各种操作</p>
-</li>
+        <h2 id="关于锁的基本概念"><a href="#关于锁的基本概念" class="headerlink" title="关于锁的基本概念"></a>关于锁的基本概念</h2><p>锁提供了两种主要特性：互斥（mutual exclusion） 和可见性（visibility）。</p>
+<p>互斥即一次只允许一个线程持有某个特定的锁，因此可使用该特性实现对共享数据的协调访问协议，这样，一次就只有一个线程能够使用该共享数据。</p>
+<p>可见性要更加复杂一些，它必须确保释放锁之前对共享数据做出的更改对于随后获得该锁的另一个线程是可见的 —— 如果没有同步机制提供的这种可见性保证，线程看到的共享变量可能是修改前的值或不一致的值，这将引发许多严重问题。</p>
+<h2 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h2><ul>
+<li>使用 <code>synchronized</code> 来确保线程的互斥,也就是确保线程对共享数据的原子性操作.</li>
 </ul>
-<p>他们之间的依赖关系如下：</p>
-<p>Kibana &lt;- ElasticSearch &lt;- Logstash</p>
-<h2 id="安装-Java"><a href="#安装-Java" class="headerlink" title="安装 Java"></a>安装 Java</h2><ul>
-<li><p>到<code>http://www.oracle.com/technetwork/java/javase/downloads/index.html</code>下载<code>jdk-8u91-linux-x64.gz</code></p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><ul>
+<li><p>使用 <code>volatile</code> 来确保可见性,多个线程总能读到共享变量的最新值</p>
 </li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf jdk-8u91-linux-x64.gz</code>解压</p>
+<li><p>要使 <code>volatile</code> 变量提供理想的线程安全，必须同时满足下面两个条件：</p>
+<ol>
+<li><p>对变量的写操作不依赖于当前值(也就是不能进行 读取-&gt;修改-&gt;写入 的操作, 只能进行 修改-&gt;写入)。</p>
 </li>
-<li><p>将下面的Java配置追加到<code>/etc/profile</code>文件中，然后执行<code>source /etc/profile</code>让配置立即生效</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># set Java environment</span><br><span class="line">JAVA_HOME=/usr/local/soft/jdk1.8.0_91</span><br><span class="line">PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line">export JAVA_HOME</span><br><span class="line">export PATH</span><br><span class="line">export CLASSPATH</span><br></pre></td></tr></table></figure>
+<li><p>该变量没有包含在具有其他变量的不变式中。</p>
 </li>
-<li><p>执行<code>java -version</code>和<code>javac -version</code>都能返回当前安装的Java的版本号，说明安装成功</p>
+</ol>
 </li>
 </ul>
 <ul>
-<li>如果当前用户对目录没有权限，执行<code>sudo chown -R dev:dev /usr/local/soft</code>，其中<code>dev:dev</code>表示dev用户在dev用户组。</li>
+<li>对于第二个条件,具体的例子如下</li>
 </ul>
-<h2 id="安装-Elasticsearch"><a href="#安装-Elasticsearch" class="headerlink" title="安装 Elasticsearch"></a>安装 Elasticsearch</h2><ul>
-<li><p>到<code>https://www.elastic.co/downloads/elasticsearch</code>下载 elasticsearch-2.3.3.tar.gz</p>
-</li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf elasticsearch-2.3.3.tar.gz</code>解压</p>
-</li>
-<li><p>执行<code>sh elasticsearch-2.3.3/bin/elasticsearch</code></p>
-</li>
-<li><p>打开浏览器输入<code>http://localhost:9200/</code>，返回如下内容说明安装成功:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot; : &quot;Earth Lord&quot;,</span><br><span class="line">  &quot;cluster_name&quot; : &quot;elasticsearch&quot;,</span><br><span class="line">  &quot;version&quot; : &#123;</span><br><span class="line">    &quot;number&quot; : &quot;2.3.3&quot;,</span><br><span class="line">    &quot;build_hash&quot; : &quot;218bdf10790eef486ff2c41a3df5cfa32dadcfde&quot;,</span><br><span class="line">    &quot;build_timestamp&quot; : &quot;2016-05-17T15:40:04Z&quot;,</span><br><span class="line">    &quot;build_snapshot&quot; : false,</span><br><span class="line">    &quot;lucene_version&quot; : &quot;5.5.0&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;tagline&quot; : &quot;You Know, for Search&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@NotThreadSafe </span><br><span class="line">public class NumberRange &#123;</span><br><span class="line">    private int lower, upper;</span><br><span class="line"> </span><br><span class="line">    public int getLower() &#123; return lower; &#125;</span><br><span class="line">    public int getUpper() &#123; return upper; &#125;</span><br><span class="line"> </span><br><span class="line">    public void setLower(int value) &#123; </span><br><span class="line">        if (value &gt; upper) </span><br><span class="line">            throw new IllegalArgumentException(...);</span><br><span class="line">        lower = value;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void setUpper(int value) &#123; </span><br><span class="line">        if (value &lt; lower) </span><br><span class="line">            throw new IllegalArgumentException(...);</span><br><span class="line">        upper = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于上面的例子,如果初始状态是 (0, 5)，同一时间内，线程 A 调用 setLower(4) 并且线程 B 调用 setUpper(3)，显然这两个操作交叉存入的值是不符合条件的，那么两个线程都会通过用于保护不变式的检查，使得最后的范围值是 (4, 3) —— 一个无效值。至于针对范围的其他操作，我们需要使 setLower() 和 setUpper() 操作原子化 —— 而将字段定义为 volatile 类型是无法实现这一目的的。</li>
 </ul>
-<h2 id="安装-Logstash"><a href="#安装-Logstash" class="headerlink" title="安装 Logstash"></a>安装 Logstash</h2><ul>
-<li><p>在<code>https://www.elastic.co/downloads/logstash</code>下载<code>logstash-2.3.2.tar.gz</code></p>
-</li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf logstash-2.3.2.tar.gz</code>解压</p>
-</li>
-<li><p>执行<code>sh logstash-2.3.2/bin/logstash -e &#39;input { stdin { } } output { stdout {} }&#39;</code>，提示</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Settings: Default pipeline workers: 1</span><br><span class="line">Pipeline main started</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="synchronized-和-volatile-组合使用"><a href="#synchronized-和-volatile-组合使用" class="headerlink" title="synchronized 和 volatile 组合使用"></a>synchronized 和 volatile 组合使用</h2><ul>
+<li>结合使用的一个例子, 其中 <code>synchronized</code>一次只允许一个线程访问值, <code>volatile</code> 允许多个线程执行读操作, 这样组合使用后既可以保证操作的原子性,也可以确保所有的线程在<strong>读</strong>上能够取得很好的性能</li>
 </ul>
-<p>说明安装成功，输入任意内容将会打印刚才的输入。</p>
-<h2 id="安装-Kibana"><a href="#安装-Kibana" class="headerlink" title="安装 Kibana"></a>安装 Kibana</h2><ul>
-<li><p>在<code>https://www.elastic.co/downloads/kibana</code>下载<code>kibana-4.5.1-linux-x64.tar.gz</code></p>
-</li>
-<li><p>上传到<code>Ubuntu</code>上的<code>/usr/local/soft</code>目录下，执行<code>tar -xvf kibana-4.5.1-linux-x64.tar.gz</code>解压</p>
-</li>
-<li><p>编辑<code>vi kibana-4.5.1-linux-x64/config/kibana.yml</code>，确保kibana和elasticsearch 关联起来</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">elasticsearch.url: &quot;http://localhost:9200&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑<code>vi elasticsearch-2.3.3/config/elasticsearch.yml</code>，追加下面一行，并重启elasticsearch服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.cors.enabled: true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>执行<code>sh kibana-4.5.1-linux-x64/bin/kibana</code>启动kibana，在浏览器中输入<code>http://localhost:5601</code>，即可访问kibana</p>
-</li>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@ThreadSafe</span><br><span class="line">public class CheesyCounter &#123;</span><br><span class="line">    // Employs the cheap read-write lock trick</span><br><span class="line">    // All mutative operations MUST be done with the &apos;this&apos; lock held</span><br><span class="line">    @GuardedBy(&quot;this&quot;) private volatile int value;</span><br><span class="line"> </span><br><span class="line">    public int getValue() &#123; return value; &#125;</span><br><span class="line"> </span><br><span class="line">    public synchronized int increment() &#123;</span><br><span class="line">        return value++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></li>
 </ul>
-<p>参考：<br><a href="http://blog.csdn.net/i_chips/article/details/43309415" target="_blank" rel="external">CentOS下使用ELK套件搭建日志分析和监控平台</a><br><a href="ELK日志分析系统">http://www.cnblogs.com/danbo/p/5220516.html</a><br><a href="http://www.cnblogs.com/yiwenshengmei/p/use_logstash_collect_log.html" target="_blank" rel="external">Logstash实践: 分布式系统的日志监控</a></p>
 
       
     </div>
@@ -398,7 +369,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/ELK/" rel="tag">#ELK</a>
+            <a href="/tags/Java/" rel="tag">#Java</a>
+          
+            <a href="/tags/synchronized/" rel="tag">#synchronized</a>
+          
+            <a href="/tags/volatile/" rel="tag">#volatile</a>
+          
+            <a href="/tags/锁/" rel="tag">#锁</a>
           
         </div>
       
@@ -407,17 +384,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/07/Java-synchronizd-usage/" rel="next" title="Java 中的 synchronizd 关键字在同步中的使用">
-                <i class="fa fa-chevron-left"></i> Java 中的 synchronizd 关键字在同步中的使用
+              <a href="/2017/05/23/Spring-Annotation/" rel="next" title="对 Spring 中一些常见的 Annotation 的理解">
+                <i class="fa fa-chevron-left"></i> 对 Spring 中一些常见的 Annotation 的理解
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/07/05/log4j-logstash-practice/" rel="prev" title="Log4j向Logstash发送日志实践">
-                Log4j向Logstash发送日志实践 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -443,8 +416,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/06/10/ELK-introduce-setup/"
-           data-title="ELK：安装" data-url="http://ckjava.com/2016/06/10/ELK-introduce-setup/">
+      <div class="ds-thread" data-thread-key="2017/06/09/lock-synchronized-volatile/"
+           data-title="对锁的理解" data-url="http://ckjava.com/2017/06/09/lock-synchronized-volatile/">
       </div>
     
   </div>
@@ -542,7 +515,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK-简单介绍"><span class="nav-number">1.</span> <span class="nav-text">ELK 简单介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Java"><span class="nav-number">2.</span> <span class="nav-text">安装 Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Elasticsearch"><span class="nav-number">3.</span> <span class="nav-text">安装 Elasticsearch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Logstash"><span class="nav-number">4.</span> <span class="nav-text">安装 Logstash</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装-Kibana"><span class="nav-number">5.</span> <span class="nav-text">安装 Kibana</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于锁的基本概念"><span class="nav-number">1.</span> <span class="nav-text">关于锁的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥"><span class="nav-number">2.</span> <span class="nav-text">互斥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可见性"><span class="nav-number">3.</span> <span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized-和-volatile-组合使用"><span class="nav-number">4.</span> <span class="nav-text">synchronized 和 volatile 组合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
