@@ -92,7 +92,7 @@
 <meta property="og:url" content="http://ckjava.com/2017/06/09/lock-synchronized-volatile/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="对锁的理解">
-<meta property="og:updated_time" content="2017-06-09T08:25:51.420Z">
+<meta property="og:updated_time" content="2017-06-14T03:06:18.526Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对锁的理解">
 <meta name="twitter:description" content="对锁的理解">
@@ -336,14 +336,14 @@
 <ul>
 <li>对于第二个条件,具体的例子如下</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">@NotThreadSafe </span><br><span class="line">public class NumberRange &#123;</span><br><span class="line">    private int lower, upper;</span><br><span class="line"> </span><br><span class="line">    public int getLower() &#123; return lower; &#125;</span><br><span class="line">    public int getUpper() &#123; return upper; &#125;</span><br><span class="line"> </span><br><span class="line">    public void setLower(int value) &#123; </span><br><span class="line">        if (value &gt; upper) </span><br><span class="line">            throw new IllegalArgumentException(...);</span><br><span class="line">        lower = value;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public void setUpper(int value) &#123; </span><br><span class="line">        if (value &lt; lower) </span><br><span class="line">            throw new IllegalArgumentException(...);</span><br><span class="line">        upper = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NotThreadSafe</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberRange</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> lower, upper;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLower</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> lower; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getUpper</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> upper; &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLower</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (value &gt; upper) </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(...);</span><br><span class="line">        lower = value;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUpper</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (value &lt; lower) </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(...);</span><br><span class="line">        upper = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>对于上面的例子,如果初始状态是 (0, 5)，同一时间内，线程 A 调用 setLower(4) 并且线程 B 调用 setUpper(3)，显然这两个操作交叉存入的值是不符合条件的，那么两个线程都会通过用于保护不变式的检查，使得最后的范围值是 (4, 3) —— 一个无效值。至于针对范围的其他操作，我们需要使 setLower() 和 setUpper() 操作原子化 —— 而将字段定义为 volatile 类型是无法实现这一目的的。</li>
 </ul>
 <h2 id="synchronized-和-volatile-组合使用"><a href="#synchronized-和-volatile-组合使用" class="headerlink" title="synchronized 和 volatile 组合使用"></a>synchronized 和 volatile 组合使用</h2><ul>
 <li>结合使用的一个例子, 其中 <code>synchronized</code>一次只允许一个线程访问值, <code>volatile</code> 允许多个线程执行读操作, 这样组合使用后既可以保证操作的原子性,也可以确保所有的线程在<strong>读</strong>上能够取得很好的性能</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@ThreadSafe</span><br><span class="line">public class CheesyCounter &#123;</span><br><span class="line">    // Employs the cheap read-write lock trick</span><br><span class="line">    // All mutative operations MUST be done with the &apos;this&apos; lock held</span><br><span class="line">    @GuardedBy(&quot;this&quot;) private volatile int value;</span><br><span class="line"> </span><br><span class="line">    public int getValue() &#123; return value; &#125;</span><br><span class="line"> </span><br><span class="line">    public synchronized int increment() &#123;</span><br><span class="line">        return value++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ThreadSafe</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheesyCounter</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Employs the cheap read-write lock trick</span></span><br><span class="line">    <span class="comment">// All mutative operations MUST be done with the 'this' lock held</span></span><br><span class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"this"</span>) <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></li>
 </ul>
@@ -391,6 +391,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/14/Swagger2-SpringMVC/" rel="prev" title="Swagger2 在 SpringMVC 项目中的应用">
+                Swagger2 在 SpringMVC 项目中的应用 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -462,7 +466,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">16</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -479,7 +483,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
