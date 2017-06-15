@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
+    
+    <lastmod>2017-06-15T02:53:37.230Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
     
-    <lastmod>2017-06-14T03:13:35.186Z</lastmod>
+    <lastmod>2017-06-14T03:19:04.893Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
+    
+    <lastmod>2017-06-14T03:18:53.535Z</lastmod>
     
   </url>
   
@@ -16,23 +30,9 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
-    
-    <lastmod>2017-06-14T03:11:27.371Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ckjava.com/2017/06/09/lock-synchronized-volatile/</loc>
     
     <lastmod>2017-06-14T03:06:18.526Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
-    
-    <lastmod>2017-06-14T03:03:29.418Z</lastmod>
     
   </url>
   
