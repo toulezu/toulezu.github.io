@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,synchronized,volatile,锁," />
+  <meta name="keywords" content="Phabricator," />
 
 
 
@@ -86,16 +86,16 @@
 
 
 
-<meta name="description" content="对锁的理解">
+<meta name="description" content="Phabricator 在 Windows 环境上的部署与二次开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对锁的理解">
-<meta property="og:url" content="http://ckjava.com/2017/06/09/lock-synchronized-volatile/index.html">
+<meta property="og:title" content="Phabricator 在 Windows 环境上的部署与二次开发">
+<meta property="og:url" content="http://ckjava.com/2017/07/03/Phabricator-Windows-setup/index.html">
 <meta property="og:site_name" content="ckJava">
-<meta property="og:description" content="对锁的理解">
-<meta property="og:updated_time" content="2017-06-14T03:06:18.526Z">
+<meta property="og:description" content="Phabricator 在 Windows 环境上的部署与二次开发">
+<meta property="og:updated_time" content="2017-07-03T09:23:43.125Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对锁的理解">
-<meta name="twitter:description" content="对锁的理解">
+<meta name="twitter:title" content="Phabricator 在 Windows 环境上的部署与二次开发">
+<meta name="twitter:description" content="Phabricator 在 Windows 环境上的部署与二次开发">
 
 
 
@@ -116,10 +116,10 @@
 
 
 
-  <link rel="canonical" href="http://ckjava.com/2017/06/09/lock-synchronized-volatile/"/>
+  <link rel="canonical" href="http://ckjava.com/2017/07/03/Phabricator-Windows-setup/"/>
 
 
-  <title> 对锁的理解 | ckJava </title>
+  <title> Phabricator 在 Windows 环境上的部署与二次开发 | ckJava </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -259,7 +259,7 @@
             
             
               
-                对锁的理解
+                Phabricator 在 Windows 环境上的部署与二次开发
               
             
           </h1>
@@ -271,8 +271,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-06-09T00:00:00+08:00" content="2017-06-09">
-              2017-06-09
+            <time itemprop="dateCreated" datetime="2017-07-03T00:00:00+08:00" content="2017-07-03">
+              2017-07-03
             </time>
           </span>
 
@@ -285,8 +285,20 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/多线程/" itemprop="url" rel="index">
-                    <span itemprop="name">多线程</span>
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/技术/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
                   </a>
                 </span>
 
@@ -301,8 +313,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/06/09/lock-synchronized-volatile/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/09/lock-synchronized-volatile/" itemprop="commentsCount"></span>
+                <a href="/2017/07/03/Phabricator-Windows-setup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/07/03/Phabricator-Windows-setup/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -325,37 +337,37 @@
       
 
       
-        <h2 id="关于锁的基本概念"><a href="#关于锁的基本概念" class="headerlink" title="关于锁的基本概念"></a>关于锁的基本概念</h2><p>锁提供了两种主要特性：互斥（mutual exclusion） 和可见性（visibility）。</p>
-<p>互斥即一次只允许一个线程持有某个特定的锁，因此可使用该特性实现对共享数据的协调访问协议，这样，一次就只有一个线程能够使用该共享数据。</p>
-<p>可见性要更加复杂一些，它必须确保释放锁之前对共享数据做出的更改对于随后获得该锁的另一个线程是可见的 —— 如果没有同步机制提供的这种可见性保证，线程看到的共享变量可能是修改前的值或不一致的值，这将引发许多严重问题。</p>
-<h2 id="互斥"><a href="#互斥" class="headerlink" title="互斥"></a>互斥</h2><ul>
-<li>使用 <code>synchronized</code> 来确保线程的互斥,也就是确保线程对共享数据的原子性操作.</li>
+        <h2 id="基本开发工具"><a href="#基本开发工具" class="headerlink" title="基本开发工具"></a>基本开发工具</h2><ul>
+<li><a href="http://mirror.rise.ph/eclipse/technology/epp/downloads/release/oxygen/R/eclipse-php-oxygen-R-win32-x86_64.zip" target="_blank" rel="external">eclipse-php-oxygen-R-win32-x86_64.zip</a></li>
+<li><a href="https://wampserver-64bit.en.softonic.com/" target="_blank" rel="external">wampserver3.0.6_x64_apache2.4.23_mysql5.7.14_php5.6.25-7.0.10.exe</a></li>
+<li><a href="https://git-for-windows.github.io/" target="_blank" rel="external">git-for-windows-2.13.2</a></li>
 </ul>
-<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><ul>
-<li><p>使用 <code>volatile</code> 来确保可见性,多个线程总能读到共享变量的最新值</p>
-</li>
-<li><p>要使 <code>volatile</code> 变量提供理想的线程安全，必须同时满足下面两个条件：</p>
-<ol>
-<li><p>对变量的写操作不依赖于当前值(也就是不能进行 读取-&gt;修改-&gt;写入 的操作, 只能进行 修改-&gt;写入)。</p>
-</li>
-<li><p>该变量没有包含在具有其他变量的不变式中。</p>
-</li>
-</ol>
-</li>
+<p>其中 wampserver 安装在 <code>C:\wamp64</code></p>
+<p>eclipse-php 需要在 <code>Window -&gt; Preferences -&gt; PHP</code> 设置安装好的 PHP,Debug,Execution Environments 等信息,具体参考-&gt;<a href="http://tiame.iteye.com/blog/1454234" target="_blank" rel="external">这里</a></p>
+<h2 id="Phabricator-部署"><a href="#Phabricator-部署" class="headerlink" title="Phabricator 部署"></a>Phabricator 部署</h2><p>在 eclipse-php 中新建一个 php 项目, 地址在 <code>D:\php-workspace\phabricator</code>, 在 Git Bash 中进入该目录, 执行如下命令拉取 Phabricator 代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/phacility/libphutil.git</span><br><span class="line">git clone https://github.com/phacility/arcanist.git</span><br><span class="line">git clone https://github.com/phacility/phabricator.git</span><br></pre></td></tr></table></figure>
+<p>完毕后, 将 arcanist, libphutil, phabricator 三个文件夹 以 File System 的形式导入到php项目中</p>
+<p>启动 wampserver, 在浏览器中打开 <code>http://localhost/index.php</code> 进入 WampServer 管理页面,在下面的 Tools 栏中点击 <code>Add a Virtual Host</code> 链接创建一个VirtualHost, </p>
+<p>第一栏填写 test.pha.com<br>第二栏不填<br>第三栏填写 D:\php-workspace\phabricator\phabricator\webroot</p>
+<p>点击保存, 成功后会在 WampServer 主页下面的 Your VirtualHost 栏中增加 test.pha.com 站点, 这时候在 <code>C:\Windows\System32\drivers\etc</code> 中会增加如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">::1 test.pha.com</span><br></pre></td></tr></table></figure>
+<p>在 <code>C:\wamp64\bin\apache\apache2.4.23\conf\extra\httpd-vhosts.conf</code> 中会增加如下信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">	ServerName test.pha.com</span><br><span class="line">	DocumentRoot &quot;d:/php-workspace/phabricator/phabricator/webroot&quot;</span><br><span class="line">	</span><br><span class="line">	RewriteEngine on</span><br><span class="line">    RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]</span><br><span class="line">	&lt;Directory  &quot;d:/php-workspace/phabricator/phabricator/webroot/&quot;&gt;</span><br><span class="line">		Options +Indexes +Includes +FollowSymLinks +MultiViews</span><br><span class="line">		AllowOverride All</span><br><span class="line">		Require local</span><br><span class="line">	&lt;/Directory&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
+<p>这个时候就可以通过 <code>test.pha.com</code> 访问 Phabricator 了,如果提示数据库未配置,或者需要执行 <code>upgrade</code> 操作</p>
+<p>那么通过 Git Bash cd 到 <code>D:\php-workspace\phabricator\phabricator</code> 目录, 执行如下命令来设置 mysql 的相关信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php setup/manage_config.php set mysql.host localhost</span><br><span class="line">php setup/manage_config.php set mysql.port 3306</span><br><span class="line">php setup/manage_config.php set mysql.user root</span><br><span class="line">php setup/manage_config.php set mysql.pass 123</span><br></pre></td></tr></table></figure>
+<p>通过如下命令进行 upgrade</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php scripts/sql/manage_storage.php upgrade</span><br></pre></td></tr></table></figure>
+<p>这里之所以不能和官方wiki那样通过 <code>./bin/config set mysql.host localhost</code> 的原因是 bin 目录下面在 Linux 环境中都是符号链接, 通过 Git Clone 到 Windows 环境后变成了文件</p>
+<h2 id="扩展phabricator验证"><a href="#扩展phabricator验证" class="headerlink" title="扩展phabricator验证"></a>扩展phabricator验证</h2><ul>
+<li><a href="https://popozhu.github.io/2016/05/31/扩展phabricator验证/" target="_blank" rel="external">扩展phabricator验证</a></li>
 </ul>
-<ul>
-<li>对于第二个条件,具体的例子如下</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@NotThreadSafe</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NumberRange</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> lower, upper;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getLower</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> lower; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getUpper</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> upper; &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setLower</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (value &gt; upper) </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(...);</span><br><span class="line">        lower = value;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUpper</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123; </span><br><span class="line">        <span class="keyword">if</span> (value &lt; lower) </span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(...);</span><br><span class="line">        upper = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>对于上面的例子,如果初始状态是 (0, 5)，同一时间内，线程 A 调用 setLower(4) 并且线程 B 调用 setUpper(3)，显然这两个操作交叉存入的值是不符合条件的，那么两个线程都会通过用于保护不变式的检查，使得最后的范围值是 (4, 3) —— 一个无效值。至于针对范围的其他操作，我们需要使 setLower() 和 setUpper() 操作原子化 —— 而将字段定义为 volatile 类型是无法实现这一目的的。</li>
-</ul>
-<h2 id="synchronized-和-volatile-组合使用"><a href="#synchronized-和-volatile-组合使用" class="headerlink" title="synchronized 和 volatile 组合使用"></a>synchronized 和 volatile 组合使用</h2><ul>
-<li>结合使用的一个例子, 其中 <code>synchronized</code>一次只允许一个线程访问值, <code>volatile</code> 允许多个线程执行读操作, 这样组合使用后既可以保证操作的原子性,也可以确保所有的线程在<strong>读</strong>上能够取得很好的性能</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ThreadSafe</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CheesyCounter</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Employs the cheap read-write lock trick</span></span><br><span class="line">    <span class="comment">// All mutative operations MUST be done with the 'this' lock held</span></span><br><span class="line">    <span class="meta">@GuardedBy</span>(<span class="string">"this"</span>) <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> value; &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">int</span> <span class="title">increment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">正确使用 Volatile 变量</a></li>
+<li><a href="https://admin.phacility.com/book/phacility/" target="_blank" rel="external">Phabricator 用户手册</a></li>
+<li><a href="https://httpd.apache.org/docs/2.4/vhosts/examples.html" target="_blank" rel="external">VirtualHost 配置参考</a></li>
+<li><a href="http://pjdong1990.iteye.com/blog/1610305" target="_blank" rel="external">Eclipse集成PDT+XDebug调试PHP脚本</a></li>
+<li><a href="https://secure.phabricator.com/diviner/" target="_blank" rel="external">Phabricator 技术文档</a></li>
+<li><a href="https://secure.phabricator.com/book/phabcontrib/" target="_blank" rel="external">Phabricator 二次开发入门</a></li>
 </ul>
 
       
@@ -379,13 +391,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag">#Java</a>
-          
-            <a href="/tags/synchronized/" rel="tag">#synchronized</a>
-          
-            <a href="/tags/volatile/" rel="tag">#volatile</a>
-          
-            <a href="/tags/锁/" rel="tag">#锁</a>
+            <a href="/tags/Phabricator/" rel="tag">#Phabricator</a>
           
         </div>
       
@@ -394,16 +400,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/23/Spring-Annotation/" rel="next" title="对 Spring 中一些常见的 Annotation 的理解">
-                <i class="fa fa-chevron-left"></i> 对 Spring 中一些常见的 Annotation 的理解
+              <a href="/2017/06/14/Swagger2-SpringMVC/" rel="next" title="Swagger2 在 SpringMVC 项目中的应用">
+                <i class="fa fa-chevron-left"></i> Swagger2 在 SpringMVC 项目中的应用
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/06/14/Swagger2-SpringMVC/" rel="prev" title="Swagger2 在 SpringMVC 项目中的应用">
-                Swagger2 在 SpringMVC 项目中的应用 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/07/03/PHP-basic/" rel="prev" title="PHP 基本语法">
+                PHP 基本语法 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -430,8 +436,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/06/09/lock-synchronized-volatile/"
-           data-title="对锁的理解" data-url="http://ckjava.com/2017/06/09/lock-synchronized-volatile/">
+      <div class="ds-thread" data-thread-key="2017/07/03/Phabricator-Windows-setup/"
+           data-title="Phabricator 在 Windows 环境上的部署与二次开发" data-url="http://ckjava.com/2017/07/03/Phabricator-Windows-setup/">
       </div>
     
   </div>
@@ -529,7 +535,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于锁的基本概念"><span class="nav-number">1.</span> <span class="nav-text">关于锁的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#互斥"><span class="nav-number">2.</span> <span class="nav-text">互斥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可见性"><span class="nav-number">3.</span> <span class="nav-text">可见性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized-和-volatile-组合使用"><span class="nav-number">4.</span> <span class="nav-text">synchronized 和 volatile 组合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本开发工具"><span class="nav-number">1.</span> <span class="nav-text">基本开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Phabricator-部署"><span class="nav-number">2.</span> <span class="nav-text">Phabricator 部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展phabricator验证"><span class="nav-number">3.</span> <span class="nav-text">扩展phabricator验证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
         </section>
