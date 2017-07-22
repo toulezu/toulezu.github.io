@@ -4,147 +4,154 @@
   <url>
     <loc>http://ckjava.com/2017/07/03/PHP-basic/</loc>
     
-    <lastmod>2017-07-03T09:25:11.486Z</lastmod>
+    <lastmod>2017-07-22T15:16:34.039Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/07/03/Phabricator-Windows-setup/</loc>
     
-    <lastmod>2017-07-03T09:23:43.125Z</lastmod>
+    <lastmod>2017-07-22T15:14:46.688Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
+    <loc>http://ckjava.com/2017/07/22/Phabricator-project-Herald/</loc>
     
-    <lastmod>2017-06-15T02:53:37.230Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
-    
-    <lastmod>2017-06-14T03:19:04.893Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
-    
-    <lastmod>2017-06-14T03:18:53.535Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2017/05/23/Spring-Annotation/</loc>
-    
-    <lastmod>2017-06-14T03:12:20.727Z</lastmod>
+    <lastmod>2017-07-22T15:10:09.944Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/06/09/lock-synchronized-volatile/</loc>
     
-    <lastmod>2017-06-14T03:06:18.526Z</lastmod>
+    <lastmod>2017-06-20T14:11:14.006Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2017/05/15/Linux-monitor-Tomcat/</loc>
+    <loc>http://ckjava.com/2017/05/23/Spring-Annotation/</loc>
     
-    <lastmod>2017-05-27T01:59:30.690Z</lastmod>
+    <lastmod>2017-06-20T14:11:14.004Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</loc>
     
-    <lastmod>2017-05-27T01:39:06.683Z</lastmod>
+    <lastmod>2017-06-20T14:11:13.992Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/05/15/Linux-monitor-Tomcat/</loc>
+    
+    <lastmod>2017-06-20T14:11:13.974Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
+    
+    <lastmod>2017-06-20T14:11:13.937Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
+    
+    <lastmod>2017-06-20T14:11:13.923Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
+    
+    <lastmod>2017-06-20T14:11:13.891Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/11/17/load-jar-file-class/</loc>
     
-    <lastmod>2017-05-27T01:38:56.412Z</lastmod>
+    <lastmod>2017-05-26T14:35:31.154Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/10/31/java-read-file-piece/</loc>
     
-    <lastmod>2017-05-27T01:38:56.392Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/tags/index.html</loc>
-    
-    <lastmod>2016-10-10T01:58:06.857Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/categories/index.html</loc>
-    
-    <lastmod>2016-10-10T01:58:06.850Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/about/index.html</loc>
-    
-    <lastmod>2016-10-10T01:58:06.843Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
-    
-    <lastmod>2016-10-10T01:58:06.795Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
-    
-    <lastmod>2016-10-10T01:58:06.791Z</lastmod>
+    <lastmod>2017-05-26T14:31:01.382Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/</loc>
     
-    <lastmod>2016-10-10T01:58:06.787Z</lastmod>
+    <lastmod>2016-09-04T04:29:37.309Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/tags/index.html</loc>
+    
+    <lastmod>2016-09-03T13:51:05.889Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/categories/index.html</loc>
+    
+    <lastmod>2016-09-03T13:49:39.410Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/about/index.html</loc>
+    
+    <lastmod>2016-09-03T13:49:04.946Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    
+    <lastmod>2016-08-23T13:43:30.706Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    
+    <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/07/11/Maven-profiles-testResource-Junit/</loc>
     
-    <lastmod>2016-10-10T01:58:06.781Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.705Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/07/05/log4j-logstash-practice/</loc>
     
-    <lastmod>2016-10-10T01:58:06.776Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.704Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</loc>
     
-    <lastmod>2016-10-10T01:58:06.772Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.704Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2016/06/10/ELK-introduce-setup/</loc>
     
-    <lastmod>2016-10-10T01:58:06.768Z</lastmod>
+    <lastmod>2016-08-23T13:43:30.703Z</lastmod>
     
   </url>
   

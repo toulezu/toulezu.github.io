@@ -1,0 +1,895 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Phabricator," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Phabricator 在创建项目的时候自动创建一个 Herald 规则">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phabricator 在创建项目的时候自动创建一个 Herald 规则">
+<meta property="og:url" content="http://ckjava.com/2017/07/22/Phabricator-project-Herald/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="Phabricator 在创建项目的时候自动创建一个 Herald 规则">
+<meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/herald1.PNG">
+<meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/herald3.PNG">
+<meta property="og:updated_time" content="2017-07-22T15:10:09.944Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Phabricator 在创建项目的时候自动创建一个 Herald 规则">
+<meta name="twitter:description" content="Phabricator 在创建项目的时候自动创建一个 Herald 规则">
+<meta name="twitter:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/herald1.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2017/07/22/Phabricator-project-Herald/"/>
+
+
+
+
+
+  <title>Phabricator 在创建项目的时候自动创建一个 Herald 规则 | ckJava</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2017/07/22/Phabricator-project-Herald/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Phabricator 在创建项目的时候自动创建一个 Herald 规则</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-22T00:00:00+08:00">
+                2017-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Phabricator/" itemprop="url" rel="index">
+                    <span itemprop="name">Phabricator</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/22/Phabricator-project-Herald/" class="leancloud_visitors" data-flag-title="Phabricator 在创建项目的时候自动创建一个 Herald 规则">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Phabricator 在创建项目的时候自动创建一个 Herald 规则
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>Phabricator 默认在添加一个新的项目成员的时候是不会给新成员发生邮件的，需要手工创建一个 Herald 规则。<br>所以为了便于维护，需要扩展一个功能，具体就是：Phabricator 在创建项目的时候自动创建一个 Herald 规则。这个规则具体如下</p>
+<p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/herald1.PNG" alt="herald1"></p>
+<p>从代码角度理解如下</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 手动插入规则信息, $object 是保存成功后的项目对象</span></span><br><span class="line">$projectInfo = <span class="keyword">array</span>($object-&gt;getPHID() =&gt; $object-&gt;getDisplayName());</span><br><span class="line">$data[<span class="string">'conditions'</span>] = <span class="keyword">array</span>(<span class="keyword">array</span>(<span class="string">"projects.exact"</span>,<span class="string">"any"</span>,$projectInfo));</span><br><span class="line">$data[<span class="string">'actions'</span>] = <span class="keyword">array</span>(<span class="keyword">array</span>(<span class="string">"email.other"</span>, $projectInfo));</span><br></pre></td></tr></table></figure>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><ul>
+<li><p>具体就是要在项目保存成功后获取到新项目的id和名称，然后再保存一个 Herald 规则</p>
+</li>
+<li><p>并且项目更新的时候避免再新增 Herald 规则</p>
+</li>
+</ul>
+<p>在 Phabricator 现有的代码基础上新增的代码如下</p>
+<p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/herald3.PNG" alt="herald2"></p>
+<p>新增的 saveProjectNotificationRule 方法具体如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 新增加项目的时候自动增加一个通知规则 herald</span><br><span class="line"> *</span><br><span class="line"> * author ck</span><br><span class="line"> *</span><br><span class="line"> * <span class="doctag">@param</span> AphrontRequest $request</span><br><span class="line"> * <span class="doctag">@param</span> PhabricatorUser $viewer</span><br><span class="line"> * <span class="doctag">@param</span> PhabricatorProject $object</span><br><span class="line"> * <span class="doctag">@return</span> array</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">saveProjectNotificationRule</span><span class="params">(AphrontRequest $request, PhabricatorUser $viewer, PhabricatorProject $object)</span> </span>&#123;</span><br><span class="line">  $adapter = HeraldAdapter::getAdapterForContentType(<span class="string">'PhabricatorProjectHeraldAdapter'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 手动构造一个form请求</span></span><br><span class="line">  $request_data = <span class="keyword">array</span>();</span><br><span class="line">  $request_data[<span class="string">'name'</span>] = <span class="string">'herald_rule_for_'</span>.$object-&gt;getDisplayName();</span><br><span class="line">  $request_data[<span class="string">'must_match'</span>] = <span class="string">'all'</span>;</span><br><span class="line">  $request_data[<span class="string">'repetition_policy'</span>] = <span class="string">'every'</span>;</span><br><span class="line">  $request_data[<span class="string">'__csrf__'</span>] = $request-&gt;getRequestData()[<span class="string">'__csrf__'</span>]; <span class="comment">//保留token否则添加失败</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 手动构造一个通知规则</span></span><br><span class="line">  $rule = <span class="keyword">new</span> HeraldRule();</span><br><span class="line">  $rule-&gt;setAuthorPHID($viewer-&gt;getPHID());</span><br><span class="line">  $rule-&gt;setMustMatchAll(<span class="number">1</span>);</span><br><span class="line">  $rule-&gt;setContentType(<span class="string">'PhabricatorProjectHeraldAdapter'</span>);</span><br><span class="line">  $rule-&gt;setRuleType(<span class="string">'global'</span>);</span><br><span class="line">  $rule-&gt;setConfigVersion(<span class="number">38</span>);</span><br><span class="line"></span><br><span class="line">  $rule_conditions = $rule-&gt;loadConditions();</span><br><span class="line">  $rule_actions = $rule-&gt;loadActions();</span><br><span class="line"></span><br><span class="line">  $rule-&gt;attachConditions($rule_conditions);</span><br><span class="line">  $rule-&gt;attachActions($rule_actions);</span><br><span class="line">      </span><br><span class="line">  $request-&gt;setRequestData($request_data);</span><br><span class="line">  </span><br><span class="line">  $new_name = $request-&gt;getStr(<span class="string">'name'</span>);</span><br><span class="line">  $match_all = ($request-&gt;getStr(<span class="string">'must_match'</span>) == <span class="string">'all'</span>);</span><br><span class="line">  </span><br><span class="line">  $repetition_policy_param = $request-&gt;getStr(<span class="string">'repetition_policy'</span>);</span><br><span class="line">  </span><br><span class="line">  $e_name = <span class="keyword">true</span>;</span><br><span class="line">  $errors = <span class="keyword">array</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 手动插入规则信息</span></span><br><span class="line">  $projectInfo = <span class="keyword">array</span>($object-&gt;getPHID() =&gt; $object-&gt;getDisplayName());</span><br><span class="line">  $data[<span class="string">'conditions'</span>] = <span class="keyword">array</span>(<span class="keyword">array</span>(<span class="string">"projects.exact"</span>,<span class="string">"any"</span>,$projectInfo));</span><br><span class="line">  $data[<span class="string">'actions'</span>] = <span class="keyword">array</span>(<span class="keyword">array</span>(<span class="string">"email.other"</span>, $projectInfo));</span><br><span class="line"></span><br><span class="line">  $conditions = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">foreach</span> ($data[<span class="string">'conditions'</span>] <span class="keyword">as</span> $condition) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($condition === <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="comment">// We manage this as a sparse array on the client, so may receive</span></span><br><span class="line">          <span class="comment">// NULL if conditions have been removed.</span></span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      $obj = <span class="keyword">new</span> HeraldCondition();</span><br><span class="line">      $obj-&gt;setFieldName($condition[<span class="number">0</span>]);</span><br><span class="line">      $obj-&gt;setFieldCondition($condition[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (is_array($condition[<span class="number">2</span>])) &#123;</span><br><span class="line">          $obj-&gt;setValue(array_keys($condition[<span class="number">2</span>]));</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          $obj-&gt;setValue($condition[<span class="number">2</span>]);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          $adapter-&gt;willSaveCondition($obj);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (HeraldInvalidConditionException $ex) &#123;</span><br><span class="line">          $errors[] = $ex-&gt;getMessage();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      $conditions[] = $obj;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $actions = <span class="keyword">array</span>();</span><br><span class="line">  <span class="keyword">foreach</span> ($data[<span class="string">'actions'</span>] <span class="keyword">as</span> $action) &#123;</span><br><span class="line">      <span class="keyword">if</span> ($action === <span class="keyword">null</span>) &#123;</span><br><span class="line">          <span class="comment">// Sparse on the client; removals can give us NULLs.</span></span><br><span class="line">          <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (!<span class="keyword">isset</span>($action[<span class="number">1</span>])) &#123;</span><br><span class="line">          <span class="comment">// Legitimate for any action which doesn't need a target, like</span></span><br><span class="line">          <span class="comment">// "Do nothing".</span></span><br><span class="line">          $action[<span class="number">1</span>] = <span class="keyword">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      $obj = <span class="keyword">new</span> HeraldActionRecord();</span><br><span class="line">      $obj-&gt;setAction($action[<span class="number">0</span>]);</span><br><span class="line">      $obj-&gt;setTarget($action[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          $adapter-&gt;willSaveAction($rule, $obj);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (HeraldInvalidActionException $ex) &#123;</span><br><span class="line">          $errors[] = $ex-&gt;getMessage();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      $actions[] = $obj;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!$errors) &#123;</span><br><span class="line">      $new_state = id(<span class="keyword">new</span> HeraldRuleSerializer())-&gt;serializeRuleComponents(</span><br><span class="line">          $match_all,</span><br><span class="line">          $conditions,</span><br><span class="line">          $actions,</span><br><span class="line">          $repetition_policy_param);</span><br><span class="line"></span><br><span class="line">      $xactions = <span class="keyword">array</span>();</span><br><span class="line">      $xactions[] = id(<span class="keyword">new</span> HeraldRuleTransaction())</span><br><span class="line">      -&gt;setTransactionType(HeraldRuleTransaction::TYPE_EDIT)</span><br><span class="line">      -&gt;setNewValue($new_state);</span><br><span class="line">      $xactions[] = id(<span class="keyword">new</span> HeraldRuleTransaction())</span><br><span class="line">      -&gt;setTransactionType(HeraldRuleTransaction::TYPE_NAME)</span><br><span class="line">      -&gt;setNewValue($new_name);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          id(<span class="keyword">new</span> HeraldRuleEditor())</span><br><span class="line">          -&gt;setActor($viewer)</span><br><span class="line">          -&gt;setContinueOnNoEffect(<span class="keyword">true</span>)</span><br><span class="line">          -&gt;setContentSourceFromRequest($request)</span><br><span class="line">          -&gt;applyTransactions($rule, $xactions);</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">array</span>(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> $ex) &#123;</span><br><span class="line">          $errors[] = $ex-&gt;getMessage();</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">array</span>($e_name, $errors);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在完成这个功能的时候具体需要了解 Herald 规则的具体创建过程，具体参考 <code>phabricator\src\applications\herald\controller\HeraldRuleController.php</code> 中的 <code>saveRule</code> 方法。</p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>在所有的工作快完成的时候遇到了如下的一个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">You are trying to save some data to Phabricator, but the request your browser made included an incorrect token. Reload the page and try again. You may need to clear your cookies.</span><br><span class="line">This was a Web request.</span><br><span class="line">This request had no CSRF token.</span><br><span class="line">To avoid this error, use phabricator_form() to construct forms. If you are already using phabricator_form(), make sure the form &apos;action&apos; uses a relative URI (i.e., begins with a &apos;/&apos;). Forms using absolute URIs do not include CSRF tokens, to prevent leaking tokens to external sites.</span><br><span class="line"></span><br><span class="line">If this page performs writes which do not require CSRF protection (usually, filling caches or logging), you can use AphrontWriteGuard::beginScopedUnguardedWrites() to temporarily bypass CSRF protection while writing. You should use this only for writes which can not be protected with normal CSRF mechanisms.</span><br><span class="line"></span><br><span class="line">Some UI elements (like PhabricatorActionListView) also have methods which will allow you to render links as forms (like setRenderAsForm(true)).</span><br></pre></td></tr></table></figure>
+<p>具体出现在</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  id(<span class="keyword">new</span> HeraldRuleEditor())</span><br><span class="line">  -&gt;setActor($viewer)</span><br><span class="line">  -&gt;setContinueOnNoEffect(<span class="keyword">true</span>)</span><br><span class="line">  -&gt;setContentSourceFromRequest($request)</span><br><span class="line">  -&gt;applyTransactions($rule, $xactions);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">array</span>(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (<span class="keyword">Exception</span> $ex) &#123;</span><br><span class="line">  $errors[] = $ex-&gt;getMessage();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>找了很多地方，最终发现 <code>$request</code> 对象的 <code>$request_data</code> 数组中缺少了 <code>__csrf__</code>, 通过如下的方式加上后不再报错</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$request_data[<span class="string">'__csrf__'</span>] = $request-&gt;getRequestData()[<span class="string">'__csrf__'</span>]; <span class="comment">//保留token否则添加失败</span></span><br></pre></td></tr></table></figure>
+<p>本人猜测这个属性在保存对象的时候与请求绑定，并不与具体的对象绑定，因为这个请求是本来是用来保存项目对象的。</p>
+<h2 id="具体的代码"><a href="#具体的代码" class="headerlink" title="具体的代码"></a>具体的代码</h2><ul>
+<li><a href="https://github.com/toulezu/phabricator/commit/99ac508712b39e316ce07597acc6208b3b6193dc" target="_blank" rel="external">提交</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Phabricator/" rel="tag"># Phabricator</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/03/PHP-basic/" rel="next" title="PHP 基本语法">
+                <i class="fa fa-chevron-left"></i> PHP 基本语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="ck" />
+          <p class="site-author-name" itemprop="name">ck</p>
+           
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决"><span class="nav-number">2.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#遇到的问题"><span class="nav-number">3.</span> <span class="nav-text">遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#具体的代码"><span class="nav-number">4.</span> <span class="nav-text">具体的代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("qlNVttmPMKkEP5UaKHYPllFN-gzGzoHsz", "tpBGsHqHFJRLI3KTv8Azk9ui");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

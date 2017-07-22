@@ -101,7 +101,7 @@
 <meta property="og:url" content="http://ckjava.com/2017/07/03/Phabricator-Windows-setup/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="Phabricator 在 Windows 环境上的部署与二次开发">
-<meta property="og:updated_time" content="2017-07-03T09:23:43.125Z">
+<meta property="og:updated_time" content="2017-07-22T15:14:46.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Phabricator 在 Windows 环境上的部署与二次开发">
 <meta name="twitter:description" content="Phabricator 在 Windows 环境上的部署与二次开发">
@@ -339,8 +339,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/Phabricator/" itemprop="url" rel="index">
+                    <span itemprop="name">Phabricator</span>
                   </a>
                 </span>
 
@@ -350,7 +350,7 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/PHP/" itemprop="url" rel="index">
+                  <a href="/categories/Phabricator/PHP/" itemprop="url" rel="index">
                     <span itemprop="name">PHP</span>
                   </a>
                 </span>
@@ -406,6 +406,9 @@
 </ul>
 <p>其中 wampserver 安装在 <code>C:\wamp64</code></p>
 <p>eclipse-php 需要在 <code>Window -&gt; Preferences -&gt; PHP</code> 设置安装好的 PHP,Debug,Execution Environments 等信息,具体参考-&gt;<a href="http://tiame.iteye.com/blog/1454234" target="_blank" rel="external">这里</a></p>
+<ul>
+<li>这里最终推荐使用 PhpStorm 来二次开发 Phabricator，因为本人在使用 eclipse-php 和 xdebug 来 debug Phabricator 的时候 eclipse-php 很容易崩溃，而 PhpStorm 就没有任何问题，总之，花钱的东西就是好用。</li>
+</ul>
 <h2 id="Phabricator-部署"><a href="#Phabricator-部署" class="headerlink" title="Phabricator 部署"></a>Phabricator 部署</h2><p>在 eclipse-php 中新建一个 php 项目, 地址在 <code>D:\php-workspace\phabricator</code>, 在 Git Bash 中进入该目录, 执行如下命令拉取 Phabricator 代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/phacility/libphutil.git</span><br><span class="line">git clone https://github.com/phacility/arcanist.git</span><br><span class="line">git clone https://github.com/phacility/phabricator.git</span><br></pre></td></tr></table></figure>
 <p>完毕后, 将 arcanist, libphutil, phabricator 三个文件夹 以 File System 的形式导入到php项目中</p>
@@ -417,7 +420,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">	ServerName test.pha.com</span><br><span class="line">	DocumentRoot &quot;d:/php-workspace/phabricator/phabricator/webroot&quot;</span><br><span class="line">	</span><br><span class="line">	RewriteEngine on</span><br><span class="line">    RewriteRule ^(.*)$          /index.php?__path__=$1  [B,L,QSA]</span><br><span class="line">	&lt;Directory  &quot;d:/php-workspace/phabricator/phabricator/webroot/&quot;&gt;</span><br><span class="line">		Options +Indexes +Includes +FollowSymLinks +MultiViews</span><br><span class="line">		AllowOverride All</span><br><span class="line">		Require local</span><br><span class="line">	&lt;/Directory&gt;</span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
 <p>这个时候就可以通过 <code>test.pha.com</code> 访问 Phabricator 了,如果提示数据库未配置,或者需要执行 <code>upgrade</code> 操作</p>
 <p>那么通过 Git Bash cd 到 <code>D:\php-workspace\phabricator\phabricator</code> 目录, 执行如下命令来设置 mysql 的相关信息</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php setup/manage_config.php set mysql.host localhost</span><br><span class="line">php setup/manage_config.php set mysql.port 3306</span><br><span class="line">php setup/manage_config.php set mysql.user root</span><br><span class="line">php setup/manage_config.php set mysql.pass 123</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php scripts/setup/manage_config.php set mysql.host localhost</span><br><span class="line">php scripts/setup/manage_config.php set mysql.port 3306</span><br><span class="line">php scripts/setup/manage_config.php set mysql.user root</span><br><span class="line">php scripts/setup/manage_config.php set mysql.pass 123</span><br></pre></td></tr></table></figure>
 <p>通过如下命令进行 upgrade</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php scripts/sql/manage_storage.php upgrade</span><br></pre></td></tr></table></figure>
 <p>这里之所以不能和官方wiki那样通过 <code>./bin/config set mysql.host localhost</code> 的原因是 bin 目录下面在 Linux 环境中都是符号链接, 通过 Git Clone 到 Windows 环境后变成了文件</p>
@@ -430,6 +433,8 @@
 <li><a href="http://pjdong1990.iteye.com/blog/1610305" target="_blank" rel="external">Eclipse集成PDT+XDebug调试PHP脚本</a></li>
 <li><a href="https://secure.phabricator.com/diviner/" target="_blank" rel="external">Phabricator 技术文档</a></li>
 <li><a href="https://secure.phabricator.com/book/phabcontrib/" target="_blank" rel="external">Phabricator 二次开发入门</a></li>
+<li><a href="https://secure.phabricator.com/book/phabcontrib/article/phabricator_code_layout/" target="_blank" rel="external">Phabricator 基本代码结构</a></li>
+<li><a href="https://xdebug.org/wizard.php" target="_blank" rel="external">xdebug 配置向导</a></li>
 </ul>
 
       
@@ -473,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/03/PHP-basic/" rel="next" title="PHP 基本语法">
-                <i class="fa fa-chevron-left"></i> PHP 基本语法
+              <a href="/2017/06/14/Swagger2-SpringMVC/" rel="next" title="Swagger2 在 SpringMVC 项目中的应用">
+                <i class="fa fa-chevron-left"></i> Swagger2 在 SpringMVC 项目中的应用
               </a>
             
           </div>
@@ -482,6 +487,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/03/PHP-basic/" rel="prev" title="PHP 基本语法">
+                PHP 基本语法 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -553,7 +562,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -564,7 +573,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
