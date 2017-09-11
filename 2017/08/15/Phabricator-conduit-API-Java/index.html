@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/pha-api-param.PNG">
 <meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/pha-api-param-2.PNG">
 <meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/pha-api-param-1.PNG">
-<meta property="og:updated_time" content="2017-08-15T10:25:24.806Z">
+<meta property="og:updated_time" content="2017-08-15T10:34:59.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Phabricator 的 conduit API 使用说明">
 <meta name="twitter:description" content="Phabricator 的 conduit API 使用说明">
@@ -404,10 +404,10 @@
 
       
         <h2 id="基本介绍"><a href="#基本介绍" class="headerlink" title="基本介绍"></a>基本介绍</h2><p>Phabricator 的 conduit API 地址在 <code>http://test.pha.com/conduit/</code>, 在使用 API 前需要生成一个访问用的 Token,地址在 <code>http://test.pha.com/settings/user/chen_k/page/apitokens/</code> 其中 <code>chen_k</code> 是自己的用户名.</p>
-<p>这里举一个查询任务的API，地址在<code>http://test.pha.com/conduit/method/maniphest.search/</code>,</p>
+<p>这里举一个查询任务的API，地址在<code>http://test.pha.com/conduit/method/maniphest.search/</code>.</p>
 <h2 id="参数介绍"><a href="#参数介绍" class="headerlink" title="参数介绍"></a>参数介绍</h2><p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/pha-api-param.PNG" alt="pha-api-param"></p>
 <ul>
-<li>其中 queryKey 表示 Phabricator 内置的查询对象，具体有 “assigned”, “authored”, “subscribed”, “open”, “all”, 当然也可以自定义查询后在这里使用</li>
+<li>queryKey 表示 Phabricator 内置的查询对象，具体有 “assigned”, “authored”, “subscribed”, “open”, “all”, 当然也可以自定义查询后在这里使用</li>
 <li>constraints ： 查询条件，<code>{&quot;statuses&quot;: [&quot;open&quot;]}</code> 表示任务状态为 open 的</li>
 <li>attachments 任务对象关联其他对象查询， <code>{ &quot;subscribers&quot;: true}</code> 表示查询任务的订阅者</li>
 <li>order 排序，内置的有 “priority”,”updated”,”outdated”,”newest”,”oldest”,”title”, “priority” 表示 <code>order by priority, subpriority, id</code></li>
@@ -482,6 +482,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/09/11/understand-crc/" rel="prev" title="对循环冗余校验码CRC的理解">
+                对循环冗余校验码CRC的理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -552,7 +556,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -563,7 +567,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -574,7 +578,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

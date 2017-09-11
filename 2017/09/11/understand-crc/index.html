@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Spring,Annotation," />
+  <meta name="keywords" content="计算机网络," />
 
 
 
@@ -95,16 +95,19 @@
 
 
 
-<meta name="description" content="对 Spring 中一些常见的 Annotation 的理解">
+<meta name="description" content="对循环冗余校验码CRC的理解,演示CRC校验码的详细计算过程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="对 Spring 中一些常见的 Annotation 的理解">
-<meta property="og:url" content="http://ckjava.com/2017/05/23/Spring-Annotation/index.html">
+<meta property="og:title" content="对循环冗余校验码CRC的理解">
+<meta property="og:url" content="http://ckjava.com/2017/09/11/understand-crc/index.html">
 <meta property="og:site_name" content="ckJava">
-<meta property="og:description" content="对 Spring 中一些常见的 Annotation 的理解">
-<meta property="og:updated_time" content="2017-06-14T03:12:20.727Z">
+<meta property="og:description" content="对循环冗余校验码CRC的理解,演示CRC校验码的详细计算过程">
+<meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/crc-1.jpg">
+<meta property="og:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/crc-2.jpg">
+<meta property="og:updated_time" content="2017-09-11T03:33:58.565Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="对 Spring 中一些常见的 Annotation 的理解">
-<meta name="twitter:description" content="对 Spring 中一些常见的 Annotation 的理解">
+<meta name="twitter:title" content="对循环冗余校验码CRC的理解">
+<meta name="twitter:description" content="对循环冗余校验码CRC的理解,演示CRC校验码的详细计算过程">
+<meta name="twitter:image" content="http://7xt8a6.com1.z0.glb.clouddn.com/crc-1.jpg">
 
 
 
@@ -132,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://ckjava.com/2017/05/23/Spring-Annotation/"/>
+  <link rel="canonical" href="http://ckjava.com/2017/09/11/understand-crc/"/>
 
 
 
 
 
-  <title>对 Spring 中一些常见的 Annotation 的理解 | ckJava</title>
+  <title>对循环冗余校验码CRC的理解 | ckJava</title>
   
 
 
@@ -287,7 +290,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2017/05/23/Spring-Annotation/">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2017/09/11/understand-crc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ck">
@@ -304,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">对 Spring 中一些常见的 Annotation 的理解</h1>
+          <h1 class="post-title" itemprop="name headline">对循环冗余校验码CRC的理解</h1>
         
 
         <div class="post-meta">
@@ -316,8 +319,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-23T00:00:00+08:00">
-                2017-05-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-11T00:00:00+08:00">
+                2017-09-11
               </time>
             
 
@@ -339,8 +342,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
                   </a>
                 </span>
 
@@ -356,7 +359,7 @@
 
           
           
-             <span id="/2017/05/23/Spring-Annotation/" class="leancloud_visitors" data-flag-title="对 Spring 中一些常见的 Annotation 的理解">
+             <span id="/2017/09/11/understand-crc/" class="leancloud_visitors" data-flag-title="对循环冗余校验码CRC的理解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -374,7 +377,7 @@
 
           
               <div class="post-description">
-                  对 Spring 中一些常见的 Annotation 的理解
+                  对循环冗余校验码CRC的理解,演示CRC校验码的详细计算过程
               </div>
           
 
@@ -388,29 +391,40 @@
       
 
       
-        <h2 id="Service"><a href="#Service" class="headerlink" title="@Service"></a><code>@Service</code></h2><p>作用于类上,自动根据bean的类名实例化一个首写字母为小写的bean，如果需要自己改名字则:<code>@Service(&quot;你自己改的bean名&quot;)</code>, 默认是单例模式(singleton),用于业务层.</p>
-<h2 id="Component"><a href="#Component" class="headerlink" title="@Component"></a><code>@Component</code></h2><p>功能和 <code>@Service</code> 类似,用于一些功能组件,或者帮助类.</p>
-<h2 id="Repository"><a href="#Repository" class="headerlink" title="@Repository"></a><code>@Repository</code></h2><p>功能和 <code>@Service</code> 类似,用于持久层(Dao)</p>
-<h2 id="Controller"><a href="#Controller" class="headerlink" title="@Controller"></a><code>@Controller</code></h2><p>功能和 <code>@Service</code> 类似,用于控制层(Controller),或者Web层</p>
-<h2 id="Autowired-和-Resource"><a href="#Autowired-和-Resource" class="headerlink" title="@Autowired 和 @Resource"></a><code>@Autowired</code> 和 <code>@Resource</code></h2><ul>
-<li>都作用于类成员变量、方法及构造函数上,用于成员变量自动注入</li>
-<li>只不过 <code>@Resource</code> 默认按 byName 自动注入,而 <code>@Autowired</code> 默认安装 byType 而已.</li>
-<li><code>@Resource</code> 可以带上 <code>@Resource(name=&quot;myCar&quot;)</code> 或者 <code>@Resource(type=Car.class)</code> 来区分是通过 byName 还是 byType 自动注入.</li>
+        <h2 id="模2加法"><a href="#模2加法" class="headerlink" title="模2加法"></a>模2加法</h2><p>1+1=0, 0+1=1, 1+0=1, 0+0=0</p>
+<h2 id="模2减法"><a href="#模2减法" class="headerlink" title="模2减法"></a>模2减法</h2><p>1-1=0, 0-1=1, 1-0=1, 0-0=0</p>
+<p>相当于二进制中的逻辑异或运算。也就是比较后两者对应位相同则结果为“0”，不同则结果为“1”.</p>
+<h2 id="模2除法"><a href="#模2除法" class="headerlink" title="模2除法"></a>模2除法</h2><p>基于模2减法.</p>
+<h2 id="模2乘法"><a href="#模2乘法" class="headerlink" title="模2乘法"></a>模2乘法</h2><p>基于模2加法</p>
+<h2 id="模运算举例"><a href="#模运算举例" class="headerlink" title="模运算举例"></a>模运算举例</h2><p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/crc-1.jpg" alt="crc-1"></p>
+<h2 id="CRC校验码的位数"><a href="#CRC校验码的位数" class="headerlink" title="CRC校验码的位数"></a>CRC校验码的位数</h2><blockquote>
+<p>余数的位数一定要是比除数位数只能少一位，哪怕前面位是0，甚至是全为0（附带好整除时）</p>
+</blockquote>
+<p>余数 是指 CRC校验码<br>除数 是指 生成多项式转成的二进制位<br>生成多项式位数 = CRC校验码位数 + 1</p>
+<h2 id="将多项式转成二进制位"><a href="#将多项式转成二进制位" class="headerlink" title="将多项式转成二进制位"></a>将多项式转成二进制位</h2><p>由<code>G（X）= X4 + X3 + 1</code>可以知道，它一共是5位（总位数等于最高位的幂次加1，即4+1=5），然后根据多项式各项的含义（多项式只列出二进制值为1的位，也就是这个二进制的第4位、第3位、第0位的二进制均为1，其它位均为0）很快就可得到它的二进制比特串为11001。</p>
+<p><code>g（x）= x16 + x15 + x2 +1</code> 对应二进制比特串为：11000000000000101<br><code>g（x）= x16 + x15 + x5 +1</code> 对应二进制比特串为：11000000000100001</p>
+<p><strong>按照国际上通行的标准, 多项式转成二进制位后最高位和最低位必须均为“1”.</strong></p>
+<h2 id="生成多项式"><a href="#生成多项式" class="headerlink" title="生成多项式"></a>生成多项式</h2><p>用于在接收端进行校验时，对接收的帧进行除法运算的<strong>除数</strong>,通常是以多项方式表示.</p>
+<h2 id="CRC校验码"><a href="#CRC校验码" class="headerlink" title="CRC校验码"></a>CRC校验码</h2><p>所选定的除数二进制位数（假设为k位），然后在要发送的数据帧（假设为m位）后面加上k-1位“0”，然后以这个加了k-1个“0“的新帧（一共是m+k-1位）以“模2除法”方式除以上面这个除数，所得到的余数（也是二进制的比特串）就是该帧的CRC校验码.</p>
+<h2 id="接收端处理"><a href="#接收端处理" class="headerlink" title="接收端处理"></a>接收端处理</h2><p>将校验码(上面的余数)附加在原数据帧（就是m位的帧）后面，构建一个新帧发送到接收端；最后在接收端再把这个新帧以“模2除法”方式除以前面选择的除数(上面的生成多项式转成的二进制位)，如果没有余数，则表明该帧在传输过程中没出错，否则出现了差错。</p>
+<h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>发送端要发送的 m 位二进制数据为 10110011, 一共8位.选择的生成多项式为 G(x) = X4 + X3 + 1, 将G(x) 转成二进制位:11001, 一共5位,那么将 4 位 0000 附加到 m位二进制数据 后为: 101100110000, 现在 被除数是 101100110000, 除数是 11001, 得到的余数为 0100, 最后将 m 位二进制数据 加上 余数 0100 得到 101100110100  发送给接收端.</p>
+<p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/crc-2.jpg" alt="crc-2"></p>
+<h2 id="练习1"><a href="#练习1" class="headerlink" title="练习1"></a>练习1</h2><ul>
+<li>信息字段代码为: 1011001, 对应 m(x)=x6+x4+x3+1(第6,4,3,0位为1,其他位为0)；</li>
+<li>假设生成多项式为：g(x)=x4+x3+1；则对应g(x)的代码为: 11001(第4,3,0位为1,其他位均为0)</li>
+<li>将信息字段后追加 4个零得到 10110010000(生成多项式一共5位所以要加4个零)</li>
+<li>将 10110010000 除以 11001 得到余数 1010,也就是说 CRC校验码为 1010</li>
+<li>最后的发送数据: 10110011010 (也就是原始数据加上CRC校验码)</li>
 </ul>
-<h2 id="Qualifier"><a href="#Qualifier" class="headerlink" title="@Qualifier"></a><code>@Qualifier</code></h2><ul>
-<li>对于 <code>@Autowired</code> 如果容器中有多个类型相同而名称不同的类型需要自动注入,需要多加一个 <code>@Qualifier(&quot;office&quot;)</code> 来区分不同的类型<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Boss &#123;  </span><br><span class="line"></span><br><span class="line">    @Autowired  </span><br><span class="line">    @Qualifier(&quot;office&quot;)  </span><br><span class="line">    private Office office;  </span><br><span class="line">    …  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<h2 id="练习2"><a href="#练习2" class="headerlink" title="练习2"></a>练习2</h2><ul>
+<li>已知信息位为 1100，</li>
+<li>生成多项式G(x) = x3+x+1, 对应的二进制位为 1011</li>
+<li>信息位加上3个零为 1100000</li>
+<li>1100000 除以 1011 得到的 CRC校验码为 010</li>
+<li>最后发送的信息为 1100010</li>
 </ul>
-<p>这种情况如果都通过注解来定义Bean是不会存在的.</p>
-<h2 id="PostConstruct-和-PreDestroy"><a href="#PostConstruct-和-PreDestroy" class="headerlink" title="@PostConstruct 和 @PreDestroy"></a><code>@PostConstruct</code> 和 <code>@PreDestroy</code></h2><p>这两个注释只能应用于方法上。标注了 <code>@PostConstruct</code> 注释的方法将在类实例化后调用，而标注了 <code>@PreDestroy</code> 的方法将在类销毁之前调用。  </p>
-<h2 id="关于-context-annotation-config"><a href="#关于-context-annotation-config" class="headerlink" title="关于 context:annotation-config"></a>关于 context:annotation-config</h2><p>使用以上注解都必须在 Spring 的核心配置文件中加入如下配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> <span class="meta">?&gt;</span></span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span>  </span><br><span class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span>  </span><br><span class="line">     <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span>  </span><br><span class="line">     <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans   </span><br><span class="line"> http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  </span><br><span class="line"> http://www.springframework.org/schema/context   </span><br><span class="line"> http://www.springframework.org/schema/context/spring-context-2.5.xsd"</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">context:annotation-config</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"boss"</span> <span class="attr">class</span>=<span class="string">"com.test.Boss"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"office"</span> <span class="attr">class</span>=<span class="string">"com.test.Office"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"officeNo"</span> <span class="attr">value</span>=<span class="string">"001"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"car"</span> <span class="attr">class</span>=<span class="string">"com.test.Car"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"brand"</span> <span class="attr">value</span>=<span class="string">" 红旗 CA72"</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"price"</span> <span class="attr">value</span>=<span class="string">"2000"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>&lt;context:annotation-config/&gt;</code> 将隐式地向 Spring 容器注册 AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、PersistenceAnnotationBeanPostProcessor 以及 equiredAnnotationBeanPostProcessor 这 4 个 BeanPostProcessor。<br>该配置将处理容器中已有的Bean的依赖注入问题,在容器初始化的时候将容器中的实体中含有 <code>@Autowired</code> 或者 <code>@Resource</code> 的Bean自动注入相应的依赖Bean</p>
-<h2 id="关于-context-component-scan"><a href="#关于-context-component-scan" class="headerlink" title="关于 context:component-scan"></a>关于 context:component-scan</h2><p>这个配置更强大,不但启用了对类包进行扫描以实现注解驱动的<strong>Bean定义</strong>的功能，同时还启用了注解驱动的<strong>依赖注入</strong>的功能（即还隐式地在内部注册了 AutowiredAnnotationBeanPostProcessor 和 CommonAnnotationBeanPostProcessor），因此当使用 <code>&lt;context:component-scan/&gt;</code> 后，就可以将 <code>&lt;context:annotation-config/&gt;</code> 移除了。<br>最终的配置可以简化成如下的样子</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span> <span class="meta">?&gt;</span></span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span>  </span><br><span class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span>  </span><br><span class="line">     <span class="attr">xmlns:context</span>=<span class="string">"http://www.springframework.org/schema/context"</span>  </span><br><span class="line">     <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans   </span><br><span class="line"> http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  </span><br><span class="line"> http://www.springframework.org/schema/context   </span><br><span class="line"> http://www.springframework.org/schema/context/spring-context-2.5.xsd"</span>&gt;</span>  </span><br><span class="line">   </span><br><span class="line">    <span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.test"</span>/&gt;</span></span><br><span class="line">    </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="http://crabboy.iteye.com/blog/339840" target="_blank" rel="external">使用Spring2.5的Autowired实现注释型的IOC</a></li>
-<li><a href="http://wiki.jikexueyuan.com/project/spring/annotation-based-configuration/spring-qualifier-annotation.html" target="_blank" rel="external">Spring @Qualifier 注释</a></li>
+<li><a href="http://winda.blog.51cto.com/55153/1063951" target="_blank" rel="external">最通俗的CRC校验原理剖析</a></li>
 </ul>
 
       
@@ -441,9 +455,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spring/" rel="tag"># Spring</a>
-          
-            <a href="/tags/Annotation/" rel="tag"># Annotation</a>
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
           
         </div>
       
@@ -456,8 +468,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/15/Linux-MariaDB-setup-MySql/" rel="next" title="MariaDB 在 RedHat Linux 上的安装过程以及 MySQL 相关命令的使用">
-                <i class="fa fa-chevron-left"></i> MariaDB 在 RedHat Linux 上的安装过程以及 MySQL 相关命令的使用
+              <a href="/2017/08/15/Phabricator-conduit-API-Java/" rel="next" title="Phabricator 的 conduit API 使用说明">
+                <i class="fa fa-chevron-left"></i> Phabricator 的 conduit API 使用说明
               </a>
             
           </div>
@@ -465,10 +477,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/09/lock-synchronized-volatile/" rel="prev" title="对锁的理解">
-                对锁的理解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -604,7 +612,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service"><span class="nav-number">1.</span> <span class="nav-text">@Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Component"><span class="nav-number">2.</span> <span class="nav-text">@Component</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repository"><span class="nav-number">3.</span> <span class="nav-text">@Repository</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller"><span class="nav-number">4.</span> <span class="nav-text">@Controller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Autowired-和-Resource"><span class="nav-number">5.</span> <span class="nav-text">@Autowired 和 @Resource</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Qualifier"><span class="nav-number">6.</span> <span class="nav-text">@Qualifier</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PostConstruct-和-PreDestroy"><span class="nav-number">7.</span> <span class="nav-text">@PostConstruct 和 @PreDestroy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-context-annotation-config"><span class="nav-number">8.</span> <span class="nav-text">关于 context:annotation-config</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-context-component-scan"><span class="nav-number">9.</span> <span class="nav-text">关于 context:component-scan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#模2加法"><span class="nav-number">1.</span> <span class="nav-text">模2加法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模2减法"><span class="nav-number">2.</span> <span class="nav-text">模2减法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模2除法"><span class="nav-number">3.</span> <span class="nav-text">模2除法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模2乘法"><span class="nav-number">4.</span> <span class="nav-text">模2乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模运算举例"><span class="nav-number">5.</span> <span class="nav-text">模运算举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRC校验码的位数"><span class="nav-number">6.</span> <span class="nav-text">CRC校验码的位数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#将多项式转成二进制位"><span class="nav-number">7.</span> <span class="nav-text">将多项式转成二进制位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生成多项式"><span class="nav-number">8.</span> <span class="nav-text">生成多项式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CRC校验码"><span class="nav-number">9.</span> <span class="nav-text">CRC校验码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接收端处理"><span class="nav-number">10.</span> <span class="nav-text">接收端处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举个例子"><span class="nav-number">11.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习1"><span class="nav-number">12.</span> <span class="nav-text">练习1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#练习2"><span class="nav-number">13.</span> <span class="nav-text">练习2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">14.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
