@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/</loc>
+    
+    <lastmod>2017-12-14T11:21:03.232Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2017/09/15/AngularJS-basic/</loc>
     
     <lastmod>2017-12-12T12:09:51.266Z</lastmod>

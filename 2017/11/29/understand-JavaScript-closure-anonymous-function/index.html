@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Spring," />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -95,16 +95,16 @@
 
 
 
-<meta name="description" content="总结一下关于Spring中bean的scope属性，主要是Controller的singleton和prototype的区别，并举例说明">
+<meta name="description" content="JavaScript 中对闭包和匿名函数的理解">
 <meta property="og:type" content="article">
-<meta property="og:title" content="总结一下关于Spring中bean的scope属性">
-<meta property="og:url" content="http://ckjava.com/2016/07/13/Spring-bean-scope-usage/index.html">
+<meta property="og:title" content="JavaScript 中对闭包和匿名函数的理解">
+<meta property="og:url" content="http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/index.html">
 <meta property="og:site_name" content="ckJava">
-<meta property="og:description" content="总结一下关于Spring中bean的scope属性，主要是Controller的singleton和prototype的区别，并举例说明">
-<meta property="og:updated_time" content="2016-10-10T01:58:06.795Z">
+<meta property="og:description" content="JavaScript 中对闭包和匿名函数的理解">
+<meta property="og:updated_time" content="2017-12-14T11:21:03.232Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="总结一下关于Spring中bean的scope属性">
-<meta name="twitter:description" content="总结一下关于Spring中bean的scope属性，主要是Controller的singleton和prototype的区别，并举例说明">
+<meta name="twitter:title" content="JavaScript 中对闭包和匿名函数的理解">
+<meta name="twitter:description" content="JavaScript 中对闭包和匿名函数的理解">
 
 
 
@@ -132,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://ckjava.com/2016/07/13/Spring-bean-scope-usage/"/>
+  <link rel="canonical" href="http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/"/>
 
 
 
 
 
-  <title>总结一下关于Spring中bean的scope属性 | ckJava</title>
+  <title>JavaScript 中对闭包和匿名函数的理解 | ckJava</title>
   
 
 
@@ -287,7 +287,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2016/07/13/Spring-bean-scope-usage/">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ck">
@@ -304,7 +304,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">总结一下关于Spring中bean的scope属性</h1>
+          <h1 class="post-title" itemprop="name headline">JavaScript 中对闭包和匿名函数的理解</h1>
         
 
         <div class="post-meta">
@@ -316,8 +316,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-13T00:00:00+08:00">
-                2016-07-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T00:00:00+08:00">
+                2017-11-29
               </time>
             
 
@@ -339,8 +339,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
                   </a>
                 </span>
 
@@ -356,7 +356,7 @@
 
           
           
-             <span id="/2016/07/13/Spring-bean-scope-usage/" class="leancloud_visitors" data-flag-title="总结一下关于Spring中bean的scope属性">
+             <span id="/2017/11/29/understand-JavaScript-closure-anonymous-function/" class="leancloud_visitors" data-flag-title="JavaScript 中对闭包和匿名函数的理解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -374,7 +374,7 @@
 
           
               <div class="post-description">
-                  总结一下关于Spring中bean的scope属性，主要是Controller的singleton和prototype的区别，并举例说明
+                  JavaScript 中对闭包和匿名函数的理解
               </div>
           
 
@@ -388,49 +388,23 @@
       
 
       
-        <h2 id="关于Spring-bean的scope属性"><a href="#关于Spring-bean的scope属性" class="headerlink" title="关于Spring bean的scope属性"></a>关于Spring bean的scope属性</h2><ul>
-<li><p>Spring的bean默认是singleton-单例模式的，即Spring容器只存在一个共享的bean实例</p>
-</li>
-<li><p>对于singleton-单例模式，如果有共享变量会导致线程不安全</p>
-</li>
-<li><p>如果为prototype-原型模式，那么每次对bean的请求都会创建一个新的bean实例</p>
-</li>
-<li><p>prototype-原型模式是线程安全的，Spring中的Controller默认是singleton</p>
-</li>
-<li><p>可以在类上面通过<code>@Scope(&quot;prototype&quot;)</code>设置为多例，或者在xml中设置<code>scope=&quot;prototype&quot;</code></p>
-</li>
-<li><p>singleton-单例模式相对prototype-原型模式性能更高，因为不会每次对bean的请求都会创建一个新的bean实例</p>
-</li>
-<li><p>二者选择的原则：有状态的bean都使用prototype，而对无状态的bean则应该使用singleton</p>
-</li>
-<li><p>有无状态是指bean中有无成员变量</p>
-</li>
-<li><p>Struts2的Action默认是多例的，原因在于Struts2将表单数据作为Action的成员变量</p>
-</li>
-<li><p>scope还可以设置成request、session和global session</p>
-</li>
-</ul>
-<h2 id="举例说明Controller的singleton和prototype的区别"><a href="#举例说明Controller的singleton和prototype的区别" class="headerlink" title="举例说明Controller的singleton和prototype的区别"></a>举例说明Controller的singleton和prototype的区别</h2><ul>
-<li><p>TestController如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/test"</span>)</span><br><span class="line"><span class="meta">@Api</span>(basePath = <span class="string">"/test"</span>, value = <span class="string">"test"</span>, description = <span class="string">"测试相关接口"</span>, position = <span class="number">8</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Map&lt;String, String&gt; cacheData = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;String, String&gt;());</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ResponseBody</span></span><br><span class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"/test_cache"</span>, method = RequestMethod.GET, produces = <span class="string">"application/json; charset=utf-8"</span>)</span><br><span class="line">	<span class="meta">@ApiOperation</span>(value = <span class="string">"测试scope"</span>, notes = <span class="string">"测试scope"</span>, response = KVBean.class, responseContainer = <span class="string">"List"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> List&lt;KVBean&gt; <span class="title">getTestCache</span><span class="params">(@RequestParam String key, @RequestParam String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(Thread.currentThread().getName());</span><br><span class="line">		cacheData.put(key, value);</span><br><span class="line">		</span><br><span class="line">		List&lt;KVBean&gt; data = <span class="keyword">new</span> ArrayList&lt;KVBean&gt;();</span><br><span class="line">		<span class="keyword">for</span> (Entry&lt;String, String&gt; it : cacheData.entrySet()) &#123;</span><br><span class="line">			data.add(<span class="keyword">new</span> KVBean(it.getKey(), it.getValue()));</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> data;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>第一次在浏览器中输入<br><code>http://localhost:8080/plainWebApi/test/test_cache?key=1&amp;value=1</code><br>返回<br><code>[{&quot;key&quot;:&quot;1&quot;,&quot;value&quot;:&quot;1&quot;,&quot;next&quot;:null}]</code><br>第二次在浏览器中输入<br><code>http://localhost:8080/plainWebApi/test/test_cache?key=2&amp;value=2</code><br>返回<br><code>[{&quot;key&quot;:&quot;1&quot;,&quot;value&quot;:&quot;1&quot;,&quot;next&quot;:null},{&quot;key&quot;:&quot;2&quot;,&quot;value&quot;:&quot;2&quot;,&quot;next&quot;:null}]</code><br>可见对于两次请求cacheData都是同一个对象，TestController当然也没有被new。</p>
-</li>
-<li><p>增加<code>@Scope(value = &quot;prototype&quot;)</code>的TestController如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/test"</span>)</span><br><span class="line"><span class="meta">@Api</span>(basePath = <span class="string">"/test"</span>, value = <span class="string">"test"</span>, description = <span class="string">"测试相关接口"</span>, position = <span class="number">8</span>)</span><br><span class="line"><span class="meta">@Scope</span>(value = <span class="string">"prototype"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">private</span> Map&lt;String, String&gt; cacheData = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;String, String&gt;());</span><br><span class="line"></span><br><span class="line">	<span class="meta">@ResponseBody</span></span><br><span class="line">	<span class="meta">@RequestMapping</span>(value = <span class="string">"/test_cache"</span>, method = RequestMethod.GET, produces = <span class="string">"application/json; charset=utf-8"</span>)</span><br><span class="line">	<span class="meta">@ApiOperation</span>(value = <span class="string">"测试scope"</span>, notes = <span class="string">"测试scope"</span>, response = KVBean.class, responseContainer = <span class="string">"List"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> List&lt;KVBean&gt; <span class="title">getTestCache</span><span class="params">(@RequestParam String key, @RequestParam String value)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		</span><br><span class="line">		System.out.println(Thread.currentThread().getName());</span><br><span class="line">		cacheData.put(key, value);</span><br><span class="line">		</span><br><span class="line">		List&lt;KVBean&gt; data = <span class="keyword">new</span> ArrayList&lt;KVBean&gt;();</span><br><span class="line">		<span class="keyword">for</span> (Entry&lt;String, String&gt; it : cacheData.entrySet()) &#123;</span><br><span class="line">			data.add(<span class="keyword">new</span> KVBean(it.getKey(), it.getValue()));</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">return</span> data;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>同样第一次在浏览器中输入<br><code>http://localhost:8080/plainWebApi/test/test_cache?key=1&amp;value=1</code><br>返回<br><code>[{&quot;key&quot;:&quot;1&quot;,&quot;value&quot;:&quot;1&quot;,&quot;next&quot;:null}]</code><br>第二次在浏览器中输入<br><code>http://localhost:8080/plainWebApi/test/test_cache?key=2&amp;value=2</code><br>返回<br><code>[{&quot;key&quot;:&quot;2&quot;,&quot;value&quot;:&quot;2&quot;,&quot;next&quot;:null}]</code><br>可见对于两次请求cacheData都是不是一个对象，TestController当然也不是同一个。</p>
-</li>
-</ul>
-<h2 id="例子的详细代码"><a href="#例子的详细代码" class="headerlink" title="例子的详细代码"></a>例子的详细代码</h2><ul>
-<li><a href="https://github.com/toulezu/play/tree/master/plainWebApi" target="_blank" rel="external">点这里</a></li>
-</ul>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><ul>
-<li><a href="http://my.oschina.net/davidzhang/blog/67429" target="_blank" rel="external">Struts action的单例与多例</a></li>
-<li><a href="http://www.cnblogs.com/shipengzhi/articles/2099694.html" target="_blank" rel="external">在spring来管理实例对象prototype和singleton的选择.针对action如何使用</a></li>
-<li><a href="http://lavasoft.blog.51cto.com/62575/1394669" target="_blank" rel="external">Spring MVC Controller单例陷阱</a></li>
-<li><a href="http://www.cnblogs.com/JemBai/archive/2010/11/10/1873954.html" target="_blank" rel="external">struts+spring action应配置为scope=”prototype”</a></li>
-<li><a href="http://blog.csdn.net/lsh6688/article/details/7863322" target="_blank" rel="external">struts2 Action获取表单数据</a></li>
+        <h2 id="从一个例子带出的问题"><a href="#从一个例子带出的问题" class="headerlink" title="从一个例子带出的问题"></a>从一个例子带出的问题</h2><p>完整的使用如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">function checkTaskMainJobStatus() &#123;</span><br><span class="line">      for (var i=0; i &lt;$scope.taskMains.length; i ++) &#123;</span><br><span class="line">          (function (taskMain) &#123;</span><br><span class="line">              JobInfoService.searchJob(&#123; &apos;param&apos;:taskMain.id &#125;)</span><br><span class="line">                  .then(</span><br><span class="line">                      function (response) &#123;</span><br><span class="line">                          if (response != null &amp;&amp; response.length &gt; 0) &#123;</span><br><span class="line">                              if (response[0].activity) &#123;</span><br><span class="line">                                  taskMain.jobStatus = true;</span><br><span class="line">                                  taskMain.jobStatusLabel = &apos;开启&apos;;</span><br><span class="line">                              &#125; else &#123;</span><br><span class="line">                                  taskMain.jobStatus = false;</span><br><span class="line">                                  taskMain.jobStatusLabel = &apos;关闭&apos;;</span><br><span class="line">                              &#125;</span><br><span class="line">                          &#125; else &#123;</span><br><span class="line">                              taskMain.jobStatus = false;</span><br><span class="line">                              taskMain.jobStatusLabel = &apos;关闭&apos;;</span><br><span class="line">                          &#125;</span><br><span class="line">                      &#125;,</span><br><span class="line">                      function (errResponse) &#123;</span><br><span class="line">                          console.error(&apos;loadJobDetail has error, errResponse = &apos; + JSON.stringify(errResponse));</span><br><span class="line">                      &#125;</span><br><span class="line">                  );</span><br><span class="line">          &#125;)($scope.taskMains[i]);</span><br><span class="line">    </span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>简写如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">function checkTaskMainJobStatus() &#123;</span><br><span class="line">      for (var i=0; i &lt;$scope.taskMains.length; i ++) &#123;</span><br><span class="line">            (function (taskMain) &#123;</span><br><span class="line">                JobInfoService.searchJob(&#123; &apos;param&apos;:taskMain.id &#125;)</span><br><span class="line">                  .then(</span><br><span class="line">                      function (response) &#123;</span><br><span class="line">                         // 使用 taskMain 的逻辑</span><br><span class="line">                      &#125;,</span><br><span class="line">                      function (errResponse) &#123;</span><br><span class="line">                         // 使用 taskMain 的逻辑</span><br><span class="line">                      &#125;</span><br><span class="line">                  );</span><br><span class="line">            &#125;)($scope.taskMains[i]);</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果按照下面的写法就会出现问题 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function checkTaskMainJobStatus() &#123;</span><br><span class="line">      for (var i=0; i &lt;$scope.taskMains.length; i ++) &#123;</span><br><span class="line">            JobInfoService.searchJob(&#123; &apos;param&apos;:$scope.taskMains[i].id &#125;)</span><br><span class="line">                  .then(</span><br><span class="line">                      function (response) &#123;</span><br><span class="line">                         // 使用 $scope.taskMains[i] 的逻辑</span><br><span class="line">                      &#125;,</span><br><span class="line">                      function (errResponse) &#123;</span><br><span class="line">                         // 使用 $scope.taskMains[i] 的逻辑</span><br><span class="line">                      &#125;</span><br><span class="line">                  );</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原因在于 <code>$scope.taskMains[i]</code> 是 for 循环带来的一个局部变量, 而 searchJob 函数返回的 <code>$promise</code> 对象在循环结束后仍然使用了无效的局部变量.</p>
+<p>而通过匿名函数的方式将 <code>$scope.taskMains[i]</code> 局部变量传递给 <code>$promise</code> 使用, 在 <code>$promise</code> 中使用 <code>$scope.taskMains[i]</code> 变量就是闭包使用. </p>
+<p>闭包可以维持（keep alive）这些变量。在上面的例子中，外部函数创建局部变量 <code>$scope.taskMains[i]</code> ，并且最终退出；但是，如果任何一个或多个内部函数在外部函数退出后却没有退出，那么内部函数就维持了外部函数的局部数据, 这里的内部函数就是匿名函数.</p>
+<h2 id="对闭包的理解"><a href="#对闭包的理解" class="headerlink" title="对闭包的理解"></a>对闭包的理解</h2><p>只要在一个函数内部出现了另一个函数, 那么内部的函数就是闭包, 外部函数即使已经执行完毕退出了,内部的函数仍然可以使用外部函数的变量,并且该变量对于内部函数来说是不变的.</p>
+<p>类似 Java 中的内部类, 外部传递给内部类中方法的变量是 final 修饰过的.</p>
+<h2 id="对匿名函数的理解"><a href="#对匿名函数的理解" class="headerlink" title="对匿名函数的理解"></a>对匿名函数的理解</h2><p>基本形式如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(function ([p1,p2...pN]) &#123;</span><br><span class="line">    // 使用 param1,param2...paramN 的业务逻辑</span><br><span class="line">    // p1 对应 param1, p2 对应 param2, PN 对应 paramN</span><br><span class="line">&#125;)([param1,param2...paramN]);</span><br></pre></td></tr></table></figure>
+<p>在 JavaScript 中 <code>();</code> 表示执行, 写成  <code>(function(){});</code> 也可以执行, 写成 <code>(function(){})();</code> 也可以执行,<br>如果在第二个小括号中传入参数就相当于给第一个小括号中的函数传入对应的参数.</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.cnblogs.com/frankfang/archive/2011/08/03/2125663.html" target="_blank" rel="external">闭包，懂不懂由你，反正我是懂了</a></li>
+<li><a href="https://stackoverflow.com/questions/111102/how-do-javascript-closures-work" target="_blank" rel="external">How do JavaScript closures work?</a></li>
 </ul>
 
       
@@ -461,7 +435,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Spring/" rel="tag"># Spring</a>
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
         </div>
       
@@ -474,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/07/11/Maven-profiles-testResource-Junit/" rel="next" title="使用Maven的profiles和testResource进行Junit单元测试">
-                <i class="fa fa-chevron-left"></i> 使用Maven的profiles和testResource进行Junit单元测试
+              <a href="/2017/09/15/AngularJS-basic/" rel="next" title="AngularJS 知识点积累">
+                <i class="fa fa-chevron-left"></i> AngularJS 知识点积累
               </a>
             
           </div>
@@ -483,10 +457,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/30/Java-Thread-Runnable-Executor-Practice/" rel="prev" title="关于Java多线程在提升程序性能上的一些实践">
-                关于Java多线程在提升程序性能上的一些实践 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -622,7 +592,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Spring-bean的scope属性"><span class="nav-number">1.</span> <span class="nav-text">关于Spring bean的scope属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#举例说明Controller的singleton和prototype的区别"><span class="nav-number">2.</span> <span class="nav-text">举例说明Controller的singleton和prototype的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子的详细代码"><span class="nav-number">3.</span> <span class="nav-text">例子的详细代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考："><span class="nav-number">4.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#从一个例子带出的问题"><span class="nav-number">1.</span> <span class="nav-text">从一个例子带出的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对闭包的理解"><span class="nav-number">2.</span> <span class="nav-text">对闭包的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对匿名函数的理解"><span class="nav-number">3.</span> <span class="nav-text">对匿名函数的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
