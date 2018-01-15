@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    
+    <lastmod>2018-01-15T07:08:21.495Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    
+    <lastmod>2018-01-15T02:31:49.845Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/</loc>
     
     <lastmod>2017-12-14T11:21:03.232Z</lastmod>
