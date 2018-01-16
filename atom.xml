@@ -983,6 +983,54 @@
   </entry>
   
   <entry>
+    <title>MariaDB 在 RedHat Linux 上的安装过程以及 MySQL 相关命令的使用</title>
+    <link href="http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/"/>
+    <id>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</id>
+    <published>2017-05-14T16:00:00.000Z</published>
+    <updated>2017-06-14T03:19:04.893Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install mariadb-server mariadb&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果提示已经有存在的包了,通过以下命令卸载&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum -y remove mysql-libs*&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;启动-MariaDB-service&quot;&gt;&lt;a href=&quot;#启动-MariaDB-service&quot; class=&quot;headerlink&quot; title=&quot;启动 MariaDB.service&quot;&gt;&lt;/a&gt;启动 MariaDB.service&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;systemctl start mariadb.service&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;设置开机启动-MariaDB-service&quot;&gt;&lt;a href=&quot;#设置开机启动-MariaDB-service&quot; class=&quot;headerlink&quot; title=&quot;设置开机启动 MariaDB.service&quot;&gt;&lt;/a&gt;设置开机启动 MariaDB.service&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;systemctl enable mariadb.service&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;验证是否安装成功&quot;&gt;&lt;a href=&quot;#验证是否安装成功&quot; class=&quot;headerlink&quot; title=&quot;验证是否安装成功&quot;&gt;&lt;/a&gt;验证是否安装成功&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ps -wef | grep mariadb | grep -v grep&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;修改root密码&quot;&gt;&lt;a href=&quot;#修改root密码&quot; class=&quot;headerlink&quot; title=&quot;修改root密码&quot;&gt;&lt;/a&gt;修改root密码&lt;/h2&gt;&lt;p&gt;MariaDB Server 默认root密码为空,这里通过登入mysql后修改密码&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[root@localhost ~]# mysql -u root&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;输入上面的命令后提示 &lt;code&gt;MariaDB [(none)]&amp;gt;&lt;/code&gt;,然后输入以下命令:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;use mysql;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;update user set password=PASSWORD(&amp;apos;new_password&amp;apos;) where User=&amp;apos;root&amp;apos;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;flush privileges;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;quit&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;通过命令登录mysql&quot;&gt;&lt;a href=&quot;#通过命令登录mysql&quot; class=&quot;headerlink&quot; title=&quot;通过命令登录mysql&quot;&gt;&lt;/a&gt;通过命令登录mysql&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[root@localhost ~]# mysql -u root -p&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;输入上面的命令后提示输入密码.&lt;/p&gt;
+&lt;h2 id=&quot;mysql-命令行窗口基本使用&quot;&gt;&lt;a href=&quot;#mysql-命令行窗口基本使用&quot; class=&quot;headerlink&quot; title=&quot;mysql 命令行窗口基本使用&quot;&gt;&lt;/a&gt;mysql 命令行窗口基本使用&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;show databases;&lt;/code&gt; 显示数据库列表&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;use datamonitor;&lt;/code&gt; 切换到指定的数据库&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;show tables;&lt;/code&gt; 显示某个数据库下所有&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;desc dm_mail_info;&lt;/code&gt; 显示某个表的详细信息&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;source /etc/appData/datamonitor.sql&lt;/code&gt; 将sql备份数据导入到数据库中&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/chenjinge7/article/details/46582527&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;RedHat Linux RPM方式安装MySQL5.6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      MariaDB 在 RedHat Linux 上的安装过程以及 MySQL 相关命令的使用
+    
+    </summary>
+    
+      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Linux" scheme="http://ckjava.com/tags/Linux/"/>
+    
+      <category term="MariaDB" scheme="http://ckjava.com/tags/MariaDB/"/>
+    
+      <category term="MySql" scheme="http://ckjava.com/tags/MySql/"/>
+    
+  </entry>
+  
+  <entry>
     <title>在 Linux 上监控 Tomcat 是否关闭, 如果关闭自动重启</title>
     <link href="http://ckjava.com/2017/05/15/Linux-monitor-Tomcat/"/>
     <id>http://ckjava.com/2017/05/15/Linux-monitor-Tomcat/</id>
@@ -1040,54 +1088,6 @@
       <category term="系统监控" scheme="http://ckjava.com/tags/%E7%B3%BB%E7%BB%9F%E7%9B%91%E6%8E%A7/"/>
     
       <category term="Tomcat" scheme="http://ckjava.com/tags/Tomcat/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MariaDB 在 RedHat Linux 上的安装过程以及 MySQL 相关命令的使用</title>
-    <link href="http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/"/>
-    <id>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</id>
-    <published>2017-05-14T16:00:00.000Z</published>
-    <updated>2017-06-14T03:19:04.893Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum install mariadb-server mariadb&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果提示已经有存在的包了,通过以下命令卸载&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;yum -y remove mysql-libs*&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;启动-MariaDB-service&quot;&gt;&lt;a href=&quot;#启动-MariaDB-service&quot; class=&quot;headerlink&quot; title=&quot;启动 MariaDB.service&quot;&gt;&lt;/a&gt;启动 MariaDB.service&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;systemctl start mariadb.service&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;设置开机启动-MariaDB-service&quot;&gt;&lt;a href=&quot;#设置开机启动-MariaDB-service&quot; class=&quot;headerlink&quot; title=&quot;设置开机启动 MariaDB.service&quot;&gt;&lt;/a&gt;设置开机启动 MariaDB.service&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;systemctl enable mariadb.service&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;验证是否安装成功&quot;&gt;&lt;a href=&quot;#验证是否安装成功&quot; class=&quot;headerlink&quot; title=&quot;验证是否安装成功&quot;&gt;&lt;/a&gt;验证是否安装成功&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ps -wef | grep mariadb | grep -v grep&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;修改root密码&quot;&gt;&lt;a href=&quot;#修改root密码&quot; class=&quot;headerlink&quot; title=&quot;修改root密码&quot;&gt;&lt;/a&gt;修改root密码&lt;/h2&gt;&lt;p&gt;MariaDB Server 默认root密码为空,这里通过登入mysql后修改密码&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[root@localhost ~]# mysql -u root&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;输入上面的命令后提示 &lt;code&gt;MariaDB [(none)]&amp;gt;&lt;/code&gt;,然后输入以下命令:&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;use mysql;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;update user set password=PASSWORD(&amp;apos;new_password&amp;apos;) where User=&amp;apos;root&amp;apos;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;flush privileges;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;quit&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;通过命令登录mysql&quot;&gt;&lt;a href=&quot;#通过命令登录mysql&quot; class=&quot;headerlink&quot; title=&quot;通过命令登录mysql&quot;&gt;&lt;/a&gt;通过命令登录mysql&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;[root@localhost ~]# mysql -u root -p&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;输入上面的命令后提示输入密码.&lt;/p&gt;
-&lt;h2 id=&quot;mysql-命令行窗口基本使用&quot;&gt;&lt;a href=&quot;#mysql-命令行窗口基本使用&quot; class=&quot;headerlink&quot; title=&quot;mysql 命令行窗口基本使用&quot;&gt;&lt;/a&gt;mysql 命令行窗口基本使用&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;show databases;&lt;/code&gt; 显示数据库列表&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;use datamonitor;&lt;/code&gt; 切换到指定的数据库&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;show tables;&lt;/code&gt; 显示某个数据库下所有&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;desc dm_mail_info;&lt;/code&gt; 显示某个表的详细信息&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;source /etc/appData/datamonitor.sql&lt;/code&gt; 将sql备份数据导入到数据库中&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://blog.csdn.net/chenjinge7/article/details/46582527&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;RedHat Linux RPM方式安装MySQL5.6&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      MariaDB 在 RedHat Linux 上的安装过程以及 MySQL 相关命令的使用
-    
-    </summary>
-    
-      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Linux" scheme="http://ckjava.com/tags/Linux/"/>
-    
-      <category term="MariaDB" scheme="http://ckjava.com/tags/MariaDB/"/>
-    
-      <category term="MySql" scheme="http://ckjava.com/tags/MySql/"/>
     
   </entry>
   
