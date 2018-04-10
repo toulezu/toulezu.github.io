@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2018/04/10/git-remote-branch-command/</loc>
+    
+    <lastmod>2018-04-10T12:51:33.936Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/about/index.html</loc>
     
     <lastmod>2018-03-17T10:36:21.951Z</lastmod>
@@ -9,14 +16,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
