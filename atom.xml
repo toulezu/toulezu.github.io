@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ckjava.com/"/>
-  <updated>2018-04-10T12:51:33.936Z</updated>
+  <updated>2018-05-03T13:40:47.407Z</updated>
   <id>http://ckjava.com/</id>
   
   <author>
@@ -14,6 +14,171 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>对 byte &amp; 0xFF 的理解</title>
+    <link href="http://ckjava.com/2018/05/03/java-byte-0XFF/"/>
+    <id>http://ckjava.com/2018/05/03/java-byte-0XFF/</id>
+    <published>2018-05-02T16:00:00.000Z</published>
+    <updated>2018-05-03T13:40:47.407Z</updated>
+    
+    <content type="html">&lt;p&gt;这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.&lt;/p&gt;
+&lt;h2 id=&quot;由一段代码引入的思考&quot;&gt;&lt;a href=&quot;#由一段代码引入的思考&quot; class=&quot;headerlink&quot; title=&quot;由一段代码引入的思考&quot;&gt;&lt;/a&gt;由一段代码引入的思考&lt;/h2&gt;&lt;p&gt;先看看下面一段代码&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/** 字节数组转成16进制字符串 **/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;public static String byte2hex(byte[] b) &amp;#123; // 一个字节的数，&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    StringBuffer sb = new StringBuffer(b.length * 2);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    String tmp = &amp;quot;&amp;quot;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    for (int n = 0; n &amp;lt; b.length; n++) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        // 整数转成十六进制表示&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        tmp = Integer.toHexString(b[n] &amp;amp; 0XFF);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        if (tmp.length() == 1) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            sb.append(&amp;quot;0&amp;quot;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        sb.append(tmp);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    return sb.toString().toUpperCase(); // 转成大写&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其中关键是 &lt;code&gt;b[n] &amp;amp; 0XFF&lt;/code&gt;, 为什么要一个 byte 要和&lt;code&gt;0XFF&lt;/code&gt;进行与(&amp;amp;)运算后再传给 &lt;code&gt;toHexString&lt;/code&gt; 方法?&lt;/p&gt;
+&lt;p&gt;目前知道的一点是 &lt;code&gt;0XFF&lt;/code&gt; 也就是 int 类型的 255, 在 Java 中可以使用八进制、十六进制的数据直接给long, int, short, byte类型的数据赋值.&lt;/p&gt;
+&lt;h2 id=&quot;关于原码-反码-补码&quot;&gt;&lt;a href=&quot;#关于原码-反码-补码&quot; class=&quot;headerlink&quot; title=&quot;关于原码, 反码, 补码&quot;&gt;&lt;/a&gt;关于原码, 反码, 补码&lt;/h2&gt;&lt;p&gt;计算机要使用一定的编码方式进行存储. 原码, 反码, 补码是机器存储一个具体数字的编码方式.&lt;/p&gt;
+&lt;h4 id=&quot;1-原码&quot;&gt;&lt;a href=&quot;#1-原码&quot; class=&quot;headerlink&quot; title=&quot;1. 原码&quot;&gt;&lt;/a&gt;1. 原码&lt;/h4&gt;&lt;p&gt;原码就是符号位加上真值的绝对值, 即用第一位表示符号, 其余位表示值. 比如如果是8位二进制:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[+1]原 = 0000 0001&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[-1]原 = 1000 0001&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;第一位是符号位. 因为第一位是符号位, 所以8位二进制数的取值范围就是:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[1111 1111 , 0111 1111]&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;即&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[-127 , 127]&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id=&quot;2-反码&quot;&gt;&lt;a href=&quot;#2-反码&quot; class=&quot;headerlink&quot; title=&quot;2. 反码&quot;&gt;&lt;/a&gt;2. 反码&lt;/h4&gt;&lt;p&gt;反码的表示方法是:&lt;/p&gt;
+&lt;p&gt;正数的反码是其本身&lt;/p&gt;
+&lt;p&gt;负数的反码是在其原码的基础上, 符号位不变，其余各个位取反.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[+1] = [00000001]原 = [00000001]反&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[-1] = [10000001]原 = [11111110]反&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;可见如果一个反码表示的是负数, 人脑无法直观的看出来它的数值. 通常要将其转换成原码再计算.&lt;/p&gt;
+&lt;h4 id=&quot;3-补码&quot;&gt;&lt;a href=&quot;#3-补码&quot; class=&quot;headerlink&quot; title=&quot;3. 补码&quot;&gt;&lt;/a&gt;3. 补码&lt;/h4&gt;&lt;p&gt;补码的表示方法是:&lt;/p&gt;
+&lt;p&gt;正数的补码就是其本身&lt;/p&gt;
+&lt;p&gt;负数的补码是在其原码的基础上, 符号位不变, 其余各位取反, 最后+1. (即在反码的基础上+1)&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[+1] = [00000001]原 = [00000001]反 = [00000001]补&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;[-1] = [10000001]原 = [11111110]反 = [11111111]补&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;对于负数, 补码表示方式也是人脑无法直观看出其数值的. 通常也需要转换成原码在计算其数值.&lt;/p&gt;
+&lt;p&gt;从上面可以看到, 对于正数: 原码, 反码, 补码都是一样的, 对于负数:原码, 反码, 补码都不一样.&lt;/p&gt;
+&lt;h2 id=&quot;关于-amp-与运算&quot;&gt;&lt;a href=&quot;#关于-amp-与运算&quot; class=&quot;headerlink&quot; title=&quot;关于&amp;amp;与运算&quot;&gt;&lt;/a&gt;关于&lt;code&gt;&amp;amp;&lt;/code&gt;与运算&lt;/h2&gt;&lt;p&gt;&lt;code&gt;&amp;amp;&lt;/code&gt;运算是二进制数据的计算方式, 两个操作位都为1，结果才为1，否则结果为0. 在上面的 &lt;code&gt;b[n] &amp;amp; 0XFF&lt;/code&gt; 计算过程中, byte 有 8bit, &lt;code&gt;OXFF&lt;/code&gt; 是16进制的255, 表示的是 int 类型, int 有 32bit.&lt;/p&gt;
+&lt;p&gt;如果b[n]为 &lt;code&gt;-118&lt;/code&gt;, 那么其原码表示为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 10001010&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;反码为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;11111111 11111111 11111111 11110101 &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;补码为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;11111111 11111111 11111111 11110110&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;0XFF&lt;/code&gt; 表示16进制的数据255, 原码, 反码, 补码都是一样的, 其二进制数据为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 11111111&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;0XFF&lt;/code&gt; 和 &lt;code&gt;-118&lt;/code&gt; 进行&lt;code&gt;&amp;amp;&lt;/code&gt;运算后结果为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 11110110&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;还原为原码后为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 10001010&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;其表示的 int 值为 138, 可见将 byte 类型的 -118 与 &lt;code&gt;0XFF&lt;/code&gt; 进行与运算后值由 -118 变成了 int 类型的 138, 其中低8位和byte的-118完全一致.&lt;/p&gt;
+&lt;p&gt;如果b[n]为0或者正数, 其原码, 反码, 补码都是一样的, 和 &lt;code&gt;0XFF&lt;/code&gt; 进行与运算后的结果不变.&lt;/p&gt;
+&lt;p&gt;byte 的取值范围为 [-128, 127], 根据上面的转换过程我们可以发现, 只有当 byte 的值为负数的时候才有必要和&lt;code&gt;0XFF&lt;/code&gt; 进行与运算, 为0或者为正数的时候byte的值和对应int的值完全一致.&lt;/p&gt;
+&lt;h2 id=&quot;关于无符号-gt-gt-gt-右移运算&quot;&gt;&lt;a href=&quot;#关于无符号-gt-gt-gt-右移运算&quot; class=&quot;headerlink&quot; title=&quot;关于无符号&amp;gt;&amp;gt;&amp;gt;右移运算&quot;&gt;&lt;/a&gt;关于无符号&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt;右移运算&lt;/h2&gt;&lt;p&gt;通过上面的对 原码, 反码, 补码 和 &lt;code&gt;&amp;amp;&lt;/code&gt;与运算的理解已经可以解答:&lt;strong&gt;为什么一个字节要和&lt;code&gt;0XFF&lt;/code&gt;进行与(&amp;amp;)运算后再传给 &lt;code&gt;toHexString&lt;/code&gt; 方法?&lt;/strong&gt;这个问题. 这里再深入了解一下 int 和 byte 互转的问题.&lt;/p&gt;
+&lt;h4 id=&quot;int-转-byte数组&quot;&gt;&lt;a href=&quot;#int-转-byte数组&quot; class=&quot;headerlink&quot; title=&quot;int 转 byte数组&quot;&gt;&lt;/a&gt;int 转 byte数组&lt;/h4&gt;&lt;p&gt;int 有 32bit, byte 有 8bit, 那么一个 int 转成 byte 后有 4 个byte. 过程如下&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[] intToBytes(&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a) &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[] intbyte = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;[&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; b = (&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;) (a &amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;number&quot;&gt;24&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; c = (&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;) (a &amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; d = (&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;) (a &amp;gt;&amp;gt;&amp;gt; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; e = (&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;) (a);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	intbyte[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] = b;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	intbyte[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] = c;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	intbyte[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;] = d;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	intbyte[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;] = e;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;	&lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; intbyte;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其中用到了无符号&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt;右移运算, 为什么不用有符号&lt;code&gt;&amp;gt;&amp;gt;&lt;/code&gt;右移运算呢? 两者的区别在于前者向右移动后无论当前数据是正数还是负数都用 &lt;code&gt;0&lt;/code&gt; 来填充.&lt;/p&gt;
+&lt;p&gt;这里拿值为 -10 的 byte 举个例子.&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;int a = -120;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&amp;quot;toBinaryString(a)=&amp;quot;+Integer.toBinaryString(a));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int b = a &amp;gt;&amp;gt;&amp;gt; 2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int c = a &amp;gt;&amp;gt; 2;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&amp;quot;int b=&amp;quot;+b);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&amp;quot;toBinaryString(b)=&amp;quot;+Integer.toBinaryString(b));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&amp;quot;int c=&amp;quot;+c);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&amp;quot;toBinaryString(c)=&amp;quot;+Integer.toBinaryString(c));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;输出如下&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;toBinaryString(a)=11111111111111111111111110001000&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;b=1073741794&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;toBinaryString(b)=111111111111111111111111100010&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;c=-30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;toBinaryString(c)=11111111111111111111111111100010&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可见对b进行无符号&lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt;右移运算2位后, 高2位变成了&lt;code&gt;00&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;还有一点需要注意的是:无符号右移运算符 &lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt; 只对32位和64位的值有意义.&lt;/p&gt;
+&lt;p&gt;回到上面 int 转 byte 的例子. 如果传入的 int 值为 55588, 其二进制表示为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 11011001 00100100&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; 24&lt;/code&gt; 无符号向右移动 24 位后为(把&lt;code&gt;00000000 11011001 00100100&lt;/code&gt;挤掉了,高位用&lt;code&gt;0&lt;/code&gt;填充)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 &lt;strong&gt;00000000&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转成 byte 后为 &lt;code&gt;00000000&lt;/code&gt; (其实就是低8位), intbyte数组下标0的值为 &lt;code&gt;00000000&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; 16&lt;/code&gt; 无符号向右移动 16 位后为(把&lt;code&gt;11011001 00100100&lt;/code&gt;挤掉了,高位用&lt;code&gt;0&lt;/code&gt;填充)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 &lt;strong&gt;00000000 00000000&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转成 byte 后为 &lt;code&gt;00000000&lt;/code&gt;, intbyte数组下标1的值为 &lt;code&gt;00000000&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; 8&lt;/code&gt; 无符号向右移动 8 位后为(把&lt;code&gt;00100100&lt;/code&gt;挤掉了,高位用&lt;code&gt;0&lt;/code&gt;填充)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 &lt;strong&gt;11011001&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转成 byte 后为 &lt;code&gt;11011001&lt;/code&gt;, intbyte数组下标2的值为 &lt;code&gt;11011001&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;最后intbyte数组下标3的值为 &lt;code&gt;00100100&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;经过上面的计算, 就将一个 int 转成了长度为4的 byte 数组.&lt;/p&gt;
+&lt;h4 id=&quot;byte数组-转-int&quot;&gt;&lt;a href=&quot;#byte数组-转-int&quot; class=&quot;headerlink&quot; title=&quot;byte数组 转 int&quot;&gt;&lt;/a&gt;byte数组 转 int&lt;/h4&gt;&lt;p&gt;对于上面的 byte 数组如何转回 int 呢? 方法如下&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a = (intbyte[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;] &amp;amp; &lt;span class=&quot;number&quot;&gt;0xFF&lt;/span&gt;) &amp;lt;&amp;lt; &lt;span class=&quot;number&quot;&gt;24&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; b = (intbyte[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;] &amp;amp; &lt;span class=&quot;number&quot;&gt;0xFF&lt;/span&gt;) &amp;lt;&amp;lt; &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; c = (intbyte[&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;] &amp;amp; &lt;span class=&quot;number&quot;&gt;0xFF&lt;/span&gt;) &amp;lt;&amp;lt; &lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; d = (intbyte[&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;] &amp;amp; &lt;span class=&quot;number&quot;&gt;0xFF&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;a|b|c|d = &quot;&lt;/span&gt; + (a|b|c|d));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其中想当然会用到&lt;code&gt;&amp;lt;&amp;lt;&lt;/code&gt;左移动, 因为前面用到了右移嘛.&lt;/p&gt;
+&lt;p&gt;第一个 byte 先跟 &lt;code&gt;0XFF&lt;/code&gt; 进行与运算转成 int, 然后向左移动 24 位变成 a&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;00000000&lt;/strong&gt; 00000000 00000000 00000000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;第二个 byte 先跟 &lt;code&gt;0XFF&lt;/code&gt; 进行与运算转成 int, 然后向左移动 16 位变成 b&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 &lt;strong&gt;00000000&lt;/strong&gt; 00000000 00000000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;第三个 byte 先跟 &lt;code&gt;0XFF&lt;/code&gt; 进行与运算转成 int, 然后向左移动 8 位变成 c&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 &lt;strong&gt;11011001&lt;/strong&gt; 00000000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;第四个 byte 跟 &lt;code&gt;0XFF&lt;/code&gt; 进行与运算转成 int d&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;00000000 00000000 00000000 &lt;strong&gt;00100100&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最后还要用到&lt;code&gt;|&lt;/code&gt;或运算, 或运算规律：两个位只要有一个为1，那么结果就是1，否则就为0. &lt;/p&gt;
+&lt;p&gt;a 和 b 的或运算结果为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;00000000&lt;/strong&gt; &lt;strong&gt;00000000&lt;/strong&gt; 00000000 00000000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;上面的结果再和 c 的或运算结果为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;00000000&lt;/strong&gt; &lt;strong&gt;00000000&lt;/strong&gt; &lt;strong&gt;11011001&lt;/strong&gt; 00000000&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;上面的结果再和 d 的或运算结果为&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;00000000&lt;/strong&gt; &lt;strong&gt;00000000&lt;/strong&gt; &lt;strong&gt;11011001&lt;/strong&gt; &lt;strong&gt;00100100&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;最终将 byte 数组又转成了 int.&lt;/p&gt;
+&lt;h4 id=&quot;单个-byte-转成-int&quot;&gt;&lt;a href=&quot;#单个-byte-转成-int&quot; class=&quot;headerlink&quot; title=&quot;单个 byte 转成 int&quot;&gt;&lt;/a&gt;单个 byte 转成 int&lt;/h4&gt;&lt;p&gt;根据上面的分析, 单个 byte 转成 int 其实就是将 byte 和 int 类型的 255 进行(&amp;amp;)与运算即可. &lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;byte b = 25;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;int a = b &amp;amp; 0XFF; // 或者 b &amp;amp; 255;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;现在已经知道了在 Java 中通过补码来表示负数, 对于0和正数来说:原码,反码,补码都是一样的. 那么可以得出的结论是:&lt;strong&gt;对于 byte[-128,127], 其[0,127]范围的数据和 int 中的 [0,127] 完全一致,不需要 &lt;code&gt;&amp;amp; 0XFF&lt;/code&gt;, 只有对于 [-128,-1] 的 byte 数据才需要 &lt;code&gt;&amp;amp; 0XFF&lt;/code&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString((&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;)&lt;span class=&quot;number&quot;&gt;138&lt;/span&gt; &amp;amp; &lt;span class=&quot;number&quot;&gt;0XFF&lt;/span&gt;).toUpperCase());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString(&lt;span class=&quot;number&quot;&gt;138&lt;/span&gt;).toUpperCase());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString((&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;)-&lt;span class=&quot;number&quot;&gt;138&lt;/span&gt; &amp;amp; &lt;span class=&quot;number&quot;&gt;0XFF&lt;/span&gt;).toUpperCase());&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;int&lt;/span&gt; a = (&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt;)-&lt;span class=&quot;number&quot;&gt;138&lt;/span&gt; &amp;amp; &lt;span class=&quot;number&quot;&gt;0XFF&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(&lt;span class=&quot;string&quot;&gt;&quot;a=&quot;&lt;/span&gt;+a);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString(a).toUpperCase());&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;运行结果如下&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;8A&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8A&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;a=118&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;76&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;最后一个问题&quot;&gt;&lt;a href=&quot;#最后一个问题&quot; class=&quot;headerlink&quot; title=&quot;最后一个问题&quot;&gt;&lt;/a&gt;最后一个问题&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Integer.toHexString(b[n] &amp;amp; 0XFF);&lt;/code&gt; 返回16进制的字符串，最长2个字符，最少1个字符，为什么？这个就相对简单了，无需研究 &lt;code&gt;toHexString&lt;/code&gt; 方法的具体实现，实验的方法如下&lt;/p&gt;
+&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; a = -&lt;span class=&quot;number&quot;&gt;128&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; c = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;byte&lt;/span&gt; b = &lt;span class=&quot;number&quot;&gt;127&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString(a &amp;amp; &lt;span class=&quot;number&quot;&gt;0XFF&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString(c &amp;amp; &lt;span class=&quot;number&quot;&gt;0XFF&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;System.out.println(Integer.toHexString(b &amp;amp; &lt;span class=&quot;number&quot;&gt;0XFF&lt;/span&gt;));&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;返回的结果如下&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;80&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7f&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;对于 byte[-128,127] 转成16进制后都小于 &lt;code&gt;OXFF&lt;/code&gt;（255）, 因此是不会超过3个字符串的。&lt;/p&gt;
+&lt;h2 id=&quot;参考&quot;&gt;&lt;a href=&quot;#参考&quot; class=&quot;headerlink&quot; title=&quot;参考&quot;&gt;&lt;/a&gt;参考&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://zim.logdown.com/posts/397666-0xff-is&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;0xFF 是什么?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.htm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;原码, 反码, 补码 详解&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/LVGAOYANH/article/details/53486933&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;浅谈 &amp;amp;0xFF操作&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/xiaochunyong/article/details/7748713&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Java 位运算(移位、位与、或、异或、非）&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.
+    
+    </summary>
+    
+      <category term="Java" scheme="http://ckjava.com/categories/Java/"/>
+    
+    
+      <category term="Java" scheme="http://ckjava.com/tags/Java/"/>
+    
+  </entry>
   
   <entry>
     <title>总结 git 中有关远端仓库和本地仓库的命令</title>
@@ -1160,53 +1325,6 @@
       <category term="MariaDB" scheme="http://ckjava.com/tags/MariaDB/"/>
     
       <category term="MySql" scheme="http://ckjava.com/tags/MySql/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Windows下自动上传war到Linux服务器，自动部署，自动重启Tomcat的系列脚本</title>
-    <link href="http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/"/>
-    <id>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</id>
-    <published>2016-12-19T16:00:00.000Z</published>
-    <updated>2017-06-20T14:11:13.937Z</updated>
-    
-    <content type="html">&lt;h2 id=&quot;Windows-下自动上传-war-到-Linux-服务器&quot;&gt;&lt;a href=&quot;#Windows-下自动上传-war-到-Linux-服务器&quot; class=&quot;headerlink&quot; title=&quot;Windows 下自动上传 war 到 Linux 服务器&quot;&gt;&lt;/a&gt;Windows 下自动上传 war 到 Linux 服务器&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;下面的 cmd 脚本通过 Maven 命令执行打包，生成 war&lt;/li&gt;
-&lt;li&gt;通过 pscp 将 war 上传到服务器&lt;/li&gt;
-&lt;li&gt;通过 plink 远程调用 Linux 上的 shell 脚本&lt;/li&gt;
-&lt;li&gt;其中 pscp 来自 PUTTY&lt;/li&gt;
-&lt;li&gt;putty_privatekey 用于 plink 无密码登录 Linux，也可以通过用户名和密码的方式&lt;/li&gt;
-&lt;li&gt;其中 test-web-deploy.sh 用于自动部署 war&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;@echo off&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set project_path=D:\svn-workspace\test-web&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set local_file=%project_path%\target\test-web.war&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set putty_privatekey=D:\soft\keys\test-privatekey.ppk&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set deploy-shell=test-web-deploy.sh&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set server_user_1=dev&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set server_passwd_1=123&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set server_ip_1=10.32.22.61&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;set server_path=/usr/local/apps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;echo ---------------------------------------------- execute mvn clean install&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;D:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cd %project_path%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;call mvn clean install -Dmaven.test.skip=true -Ptest&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;echo ---------------------------------------------- upload war file to server &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;call pscp -l %server_user_1% -pw %server_passwd_1% -r %local_file% %server_ip_1%:%server_path%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;echo ---------------------------------------------- execute %deploy-shell%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;call plink -i %putty_privatekey% %server_user_1%@%server_ip_1% sh %deploy-shell%&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;pause&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;Linux-自动部署-war&quot;&gt;&lt;a href=&quot;#Linux-自动部署-war&quot; class=&quot;headerlink&quot; title=&quot;Linux 自动部署 war&quot;&gt;&lt;/a&gt;Linux 自动部署 war&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;在下面的脚本是 test-web-deploy.sh，会调用 tomcat_restart.sh，用于重启 Tomcat&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#!/bin/bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app_name=test-web&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;app_path=/usr/local/apps&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tomcat_path=/usr/local/soft/tomcat-test-web&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cd $app_path&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if [ -f $&amp;#123;app_name&amp;#125;.war ];then&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    echo find $&amp;#123;app_name&amp;#125;.war, unpack the file then restart the tomcat&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    rm -rvf ./$&amp;#123;app_name&amp;#125;/*&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    mv ./$&amp;#123;app_name&amp;#125;.war $app_path/$&amp;#123;app_name&amp;#125;/&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    cd $app_path/$&amp;#123;app_name&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    jar -xvf $&amp;#123;app_name&amp;#125;.war&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    rm -rvf $&amp;#123;app_name&amp;#125;.war&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  else&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    echo not find $&amp;#123;app_name&amp;#125;.war, only restart the tomcat&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fi&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;cd $tomcat_path&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh tomcat_restart.sh&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;自动重启-Tomcat&quot;&gt;&lt;a href=&quot;#自动重启-Tomcat&quot; class=&quot;headerlink&quot; title=&quot;自动重启 Tomcat&quot;&gt;&lt;/a&gt;自动重启 Tomcat&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;下面的脚本是 tomcat_restart.sh，基本思路是通过 Tomcat 安装路径找到进程pid，杀死后再重启&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;24&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;#!/bin/bash&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 首先找到tomcat根目录， 确保当前脚本在tomcat根目录下&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tomcat_path=/usr/local/soft/tomcat-test-web&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;echo tomcat path is $tomcat_path&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 找到tomcat的进程id&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tomcat_pid=$(ps -ef|grep $tomcat_path|gawk &amp;apos;$0 !~/grep/ &amp;#123;print $2&amp;#125;&amp;apos; |tr -s &amp;apos;\n&amp;apos; &amp;apos; &amp;apos;)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;if [ &amp;quot;$tomcat_pid&amp;quot; ];then&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo tomcat process id is $tomcat_pid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  # 杀掉tomcat进程&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  if&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    kill -9 $tomcat_pid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  then&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    echo kill tomcat process success&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  else&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;   echo kill tomcat process fail&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  fi&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;else&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;  echo tomcat is already dead&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;fi&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;# 启动tomcat并重定向到日志输出&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sh $tomcat_path/bin/startup.sh&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;tail -f $tomcat_path/logs/catalina.out&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;可能遇到的问题&quot;&gt;&lt;a href=&quot;#可能遇到的问题&quot; class=&quot;headerlink&quot; title=&quot;可能遇到的问题&quot;&gt;&lt;/a&gt;可能遇到的问题&lt;/h2&gt;&lt;h3 id=&quot;执行-jar-xvf-xxx-war-的时候提示-bin-bash-jar-command-not-found&quot;&gt;&lt;a href=&quot;#执行-jar-xvf-xxx-war-的时候提示-bin-bash-jar-command-not-found&quot; class=&quot;headerlink&quot; title=&quot;执行 jar -xvf xxx.war 的时候提示:/bin/bash: jar: command not found&quot;&gt;&lt;/a&gt;执行 &lt;code&gt;jar -xvf xxx.war&lt;/code&gt; 的时候提示:&lt;code&gt;/bin/bash: jar: command not found&lt;/code&gt;&lt;/h3&gt;&lt;h3 id=&quot;解决如下&quot;&gt;&lt;a href=&quot;#解决如下&quot; class=&quot;headerlink&quot; title=&quot;解决如下&quot;&gt;&lt;/a&gt;解决如下&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cd /usr/bin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sudo ln -s -f /usr/lib/jvm/jdk1.6.0_30/bin/jar&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;&lt;strong&gt;jdk安装目录按自己实际情况更改&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;如果提示&lt;code&gt;javah：commond not found&lt;/code&gt;，于是照葫芦画瓢，输入命令&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;cd /usr/bin&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ln -s -f /usr/lib/jvm/jdk1.6.0_30/bin/javah&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;h2 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;该系列脚本解决了自动部署问题，非常适用于敏捷开发&lt;/li&gt;
-&lt;li&gt;基于该系列脚本可以实现自动发布系统的开发 :)&lt;/li&gt;
-&lt;/ul&gt;
-</content>
-    
-    <summary type="html">
-    
-      Windows下自动上传war到Linux服务器，自动部署，自动重启Tomcat的系列脚本,用于本地自动化部署
-    
-    </summary>
-    
-      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="自动部署" scheme="http://ckjava.com/tags/%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2/"/>
     
   </entry>
   

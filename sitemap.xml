@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2018/05/03/java-byte-0XFF/</loc>
+    
+    <lastmod>2018-05-03T13:40:47.407Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2018/04/10/git-remote-branch-command/</loc>
     
     <lastmod>2018-04-10T12:51:33.936Z</lastmod>
@@ -16,14 +23,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
@@ -191,14 +198,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
