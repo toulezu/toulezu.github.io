@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,并发,JUC,CyclicBarrier," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="对 JUC 中 CyclicBarrier 的理解和使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对 JUC 中 CyclicBarrier 的理解和使用">
+<meta property="og:url" content="http://ckjava.com/2018/09/13/JUC-CyclicBarrier-understand-practice/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="对 JUC 中 CyclicBarrier 的理解和使用">
+<meta property="og:updated_time" content="2018-09-13T15:03:54.717Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对 JUC 中 CyclicBarrier 的理解和使用">
+<meta name="twitter:description" content="对 JUC 中 CyclicBarrier 的理解和使用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2018/09/13/JUC-CyclicBarrier-understand-practice/"/>
+
+
+
+
+
+  <title>对 JUC 中 CyclicBarrier 的理解和使用 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2018/09/13/JUC-CyclicBarrier-understand-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">对 JUC 中 CyclicBarrier 的理解和使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-13T00:00:00+08:00">
+                2018-09-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/" itemprop="url" rel="index">
+                    <span itemprop="name">并发</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/并发/Java/JUC/" itemprop="url" rel="index">
+                    <span itemprop="name">JUC</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/09/13/JUC-CyclicBarrier-understand-practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/09/13/JUC-CyclicBarrier-understand-practice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  对 JUC 中 CyclicBarrier 的理解和使用
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="CyclicBarrier-基本概念"><a href="#CyclicBarrier-基本概念" class="headerlink" title="CyclicBarrier 基本概念"></a>CyclicBarrier 基本概念</h2><p>字面意思循环栅栏，它要做的事情是，让一组线程到达一个屏障（也可以叫同步点）时被阻塞，直到最后一个线程到达屏障时，屏障才会开门，所有被屏障拦截的线程才会继续干活.</p>
+<p>CyclicBarrier 默认的构造方法是 <code>CyclicBarrier(int parties)</code>，其参数表示屏障拦截的线程数量，每个线程调用 await 方法告诉 <code>CyclicBarrier</code> 我已经到达了屏障，然后当前线程被阻塞。</p>
+<h2 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h2><p>CyclicBarrier 可以用于多线程计算数据，最后合并计算结果的应用场景。</p>
+<ul>
+<li>场景1: 我们用一个Excel保存了用户所有银行流水，每个Sheet保存一个帐户近一年的每笔银行流水，现在需要统计用户的日均银行流水，先用多线程处理每个sheet里的银行流水，都执行完之后，得到每个sheet的日均银行流水，最后，再用barrierAction用这些线程的计算结果，计算出整个Excel的日均银行流水。</li>
+<li>场景2: 有一亿条数据需要处理, 需要控制线程的数量和内存使用率不要太高, 只能并行10个线程每次处理1千万条后再处理下一个1千万条, 每次处理1千万条后还要发邮件通知一下.</li>
+</ul>
+<h2 id="场景1-实现代码"><a href="#场景1-实现代码" class="headerlink" title="场景1: 实现代码"></a>场景1: 实现代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.RandomUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.MessageFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 只有所有线程的 await() 方法阻塞时, totalRunner 线程才开始执行</span></span><br><span class="line"><span class="comment">// 被 await() 方法阻塞的线程, 在 totalRunner 线程执行完毕后才能继续执行</span></span><br><span class="line"><span class="comment">// CyclicBarrier 中的第一个参数表示被 await() 方法阻塞的线程的数目</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyclicBarrierTestBarrierAction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 1. 首先获取excel sheet 的个数</span></span><br><span class="line">        <span class="keyword">int</span> sheetSize = <span class="number">3</span>;</span><br><span class="line">        <span class="comment">// 2. 初始化队列, 并设置大小, 和 sheet 数目一致, 用于存储每个线程获取到的数据</span></span><br><span class="line">        ArrayBlockingQueue arrayBlockingQueue = <span class="keyword">new</span> ArrayBlockingQueue(sheetSize);</span><br><span class="line"></span><br><span class="line">        TotalRunner totalRunner = <span class="keyword">new</span> TotalRunner(<span class="string">"total"</span>, arrayBlockingQueue);</span><br><span class="line">        <span class="comment">// 3. 创建 CyclicBarrier 对象, await 线程数目和 sheet 数目一致</span></span><br><span class="line">        <span class="comment">// totalRunner 用于等所有 await 线程执行完毕后优先执行的逻辑</span></span><br><span class="line">        CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(sheetSize, totalRunner);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 创建线程池, 并设置大小, 和 sheet 数目一致, 用于 await 线程执行</span></span><br><span class="line">        ExecutorService executorService = Executors.newFixedThreadPool(sheetSize);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. 提交到线程池中执行</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; sheetSize; i++) &#123;</span><br><span class="line">            executorService.submit(<span class="keyword">new</span> ExcelRunner(cyclicBarrier, arrayBlockingQueue, String.valueOf(i+<span class="number">1</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        executorService.shutdown();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 多个线程并行计算数据</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ExcelRunner</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> CyclicBarrier cyclicBarrier;</span><br><span class="line">        <span class="keyword">private</span> ArrayBlockingQueue arrayBlockingQueue;</span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">ExcelRunner</span><span class="params">(CyclicBarrier cyclicBarrier, ArrayBlockingQueue arrayBlockingQueue, String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.cyclicBarrier = cyclicBarrier;</span><br><span class="line">            <span class="keyword">this</span>.arrayBlockingQueue = arrayBlockingQueue;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            Integer data = RandomUtils.nextInt(<span class="number">100</span>, <span class="number">5000</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                arrayBlockingQueue.put(data);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//</span></span><br><span class="line">                cyclicBarrier.await();</span><br><span class="line">                System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; produce data is &#123;1&#125;"</span>, <span class="keyword">new</span> Object[]&#123;name, data&#125;));</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (BrokenBarrierException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 等所有线程执行完毕后, 这个线程统计最终数据</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TotalRunner</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line">        <span class="keyword">private</span> ArrayBlockingQueue arrayBlockingQueue;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TotalRunner</span><span class="params">(String name, ArrayBlockingQueue arrayBlockingQueue)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">this</span>.arrayBlockingQueue = arrayBlockingQueue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; start ..."</span>, <span class="keyword">new</span> Object[]&#123;name&#125;));</span><br><span class="line">            Integer t = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (Iterator it = arrayBlockingQueue.iterator(); it.hasNext();) &#123;</span><br><span class="line">                Object object = it.next();</span><br><span class="line">                t += Integer.parseInt(object.toString());</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; sum is &#123;1&#125;"</span>, <span class="keyword">new</span> Object[]&#123;name, t&#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">total start ...</span><br><span class="line">total sum is 7,545</span><br><span class="line">1 produce data is 3,879</span><br><span class="line">3 produce data is 1,585</span><br><span class="line">2 produce data is 2,081</span><br></pre></td></tr></table></figure>
+<p>其中需要注意的地方如下</p>
+<ul>
+<li>只有所有线程的 await() 方法阻塞时, totalRunner 线程才开始执行.</li>
+<li>被 await() 方法阻塞的线程, 在 totalRunner 线程执行完毕后才能继续执行.</li>
+<li>CyclicBarrier 中的第一个参数表示被 await() 方法阻塞的线程的数目.</li>
+</ul>
+<h2 id="场景2-实现代码"><a href="#场景2-实现代码" class="headerlink" title="场景2: 实现代码"></a>场景2: 实现代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.RandomUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.text.MessageFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.*;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.atomic.AtomicInteger;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 这里假设 startRow 是从数据库中读取数据的起始行数 mysql 中相当于 limit 中的第一个参数</span><br><span class="line"> * 使用 AtomicInteger 确保每个并行线程从数据库中可以读取到自己唯一的100万数据</span><br><span class="line"> * do...while 循环可以确保 10个线程同时到达 await() 方法后可以循环执行,直到达到某个条件</span><br><span class="line"> * 这里才能最能体现 CyclicBarrier 对象的含义:循环栅栏, 所有线程都到达  await() 方法后(到达栅栏后)又可以回过头继续重复执行</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SyclicBarrierTestBarrierActionPlus</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> threadNumber = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> AtomicInteger startRow = <span class="keyword">new</span> AtomicInteger();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CyclicBarrier cyclicBarrier = <span class="keyword">new</span> CyclicBarrier(threadNumber, <span class="keyword">new</span> SendEmailRunner(<span class="string">"total"</span>));</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        ExecutorService executorService = Executors.newFixedThreadPool(threadNumber);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; threadNumber; i++) &#123;</span><br><span class="line">            executorService.submit(<span class="keyword">new</span> DataProcessRunner(String.valueOf(i + <span class="number">1</span>)));</span><br><span class="line">        &#125;</span><br><span class="line">        executorService.shutdown();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 ExecutorService 对象的 shutdown() 方法 和 isTerminated() 方法组合判断 1 亿数据是否全部处理完毕</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (executorService.isTerminated()) &#123;</span><br><span class="line">                System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; finish, total &#123;1&#125;"</span>, <span class="keyword">new</span> Object[]&#123;<span class="string">"main"</span>, startRow.get()&#125;));</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 多个线程并行计算数据</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">DataProcessRunner</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">DataProcessRunner</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// do while 循环可以确保循环执行,直到达到某个条件</span></span><br><span class="line">            do &#123;</span><br><span class="line">                <span class="comment">// 获取读取的起始记录和记录数</span></span><br><span class="line">                Integer rows = <span class="number">100</span>;</span><br><span class="line">                Integer start = startRow.getAndAdd(rows);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 模拟读取和处理的过程</span></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    TimeUnit.SECONDS.sleep(RandomUtils.nextInt(<span class="number">1</span>, <span class="number">5</span>));</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; process data limit &#123;1&#125;,&#123;2&#125;"</span>, <span class="keyword">new</span> Object[]&#123;name, start, rows&#125;));</span><br><span class="line">                    <span class="comment">// 等所有10个线程全部处理完各自的 100 万数据后再会进入下一次循环</span></span><br><span class="line">                    <span class="comment">// 这里才能最能体现 CyclicBarrier 对象的含义:循环栅栏, 所有线程都到达  await() 方法后(到达栅栏后)又可以回过头继续重复执行</span></span><br><span class="line">                    cyclicBarrier.await();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (BrokenBarrierException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">while</span> (startRow.get() &lt; <span class="number">10000</span>); <span class="comment">// 循环处理到达了某个条件, 这里是处理完了 1 亿数据</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// CycBarrier 的模板代码</span></span><br><span class="line">            <span class="comment">/*do &#123;</span><br><span class="line">                // doing work</span><br><span class="line">                cyclicBarrier.await();</span><br><span class="line">            &#125; while (condition_true);*/</span></span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * 等所有线程到达 await() 方法后, 这个线程统计最终数据</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SendEmailRunner</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">SendEmailRunner</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(MessageFormat.format(<span class="string">"&#123;0&#125; process finish, total &#123;1&#125;, sendEmail success"</span>, <span class="keyword">new</span> Object[]&#123;name, startRow.get()&#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中关键点如下</p>
+<ul>
+<li>这里假设 startRow 是从数据库中读取数据的起始行数, 在 mysql 中相当于 limit 中的第一个参数</li>
+<li>使用 AtomicInteger 确保每个并行线程从数据库中可以读取到自己唯一的100万数据</li>
+<li><code>do...while</code> 循环可以确保 10个线程同时到达 await() 方法后可以循环执行,直到达到某个条件</li>
+<li>这里才能最能体现 CyclicBarrier 对象的含义:循环栅栏, 所有线程都到达  await() 方法后(到达栅栏后)又可以回过头继续重复执行</li>
+<li>CyclicBarrier 需要配合 while 循环才能实现 Cyclic 功能,模板代码如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">do &#123;</span><br><span class="line">    // doing work</span><br><span class="line">    cyclicBarrier.await();</span><br><span class="line">&#125; while (condition);</span><br></pre></td></tr></table></figure>
+<p>结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">7 process data limit 600,100</span><br><span class="line">5 process data limit 400,100</span><br><span class="line">10 process data limit 900,100</span><br><span class="line">2 process data limit 100,100</span><br><span class="line">1 process data limit 0,100</span><br><span class="line">8 process data limit 700,100</span><br><span class="line">9 process data limit 800,100</span><br><span class="line">4 process data limit 300,100</span><br><span class="line">3 process data limit 200,100</span><br><span class="line">6 process data limit 500,100</span><br><span class="line">total process finish, total 1,000, sendEmail success</span><br><span class="line">1 process data limit 1,500,100</span><br><span class="line">9 process data limit 1,700,100</span><br><span class="line">6 process data limit 1,000,100</span><br><span class="line">4 process data limit 1,800,100</span><br><span class="line">7 process data limit 1,100,100</span><br><span class="line">10 process data limit 1,300,100</span><br><span class="line">8 process data limit 1,600,100</span><br><span class="line">3 process data limit 1,900,100</span><br><span class="line">2 process data limit 1,400,100</span><br><span class="line">5 process data limit 1,200,100</span><br><span class="line">total process finish, total 2,000, sendEmail success</span><br><span class="line">3 process data limit 2,800,100</span><br><span class="line">2 process data limit 2,900,100</span><br><span class="line">10 process data limit 2,600,100</span><br><span class="line">4 process data limit 2,400,100</span><br><span class="line">5 process data limit 2,000,100</span><br><span class="line">9 process data limit 2,200,100</span><br><span class="line">6 process data limit 2,300,100</span><br><span class="line">7 process data limit 2,500,100</span><br><span class="line">1 process data limit 2,100,100</span><br><span class="line">8 process data limit 2,700,100</span><br><span class="line">total process finish, total 3,000, sendEmail success</span><br><span class="line">5 process data limit 3,500,100</span><br><span class="line">6 process data limit 3,700,100</span><br><span class="line">2 process data limit 3,200,100</span><br><span class="line">10 process data limit 3,300,100</span><br><span class="line">7 process data limit 3,800,100</span><br><span class="line">9 process data limit 3,600,100</span><br><span class="line">4 process data limit 3,400,100</span><br><span class="line">3 process data limit 3,100,100</span><br><span class="line">8 process data limit 3,000,100</span><br><span class="line">1 process data limit 3,900,100</span><br><span class="line">total process finish, total 4,000, sendEmail success</span><br><span class="line">8 process data limit 4,900,100</span><br><span class="line">9 process data limit 4,600,100</span><br><span class="line">4 process data limit 4,800,100</span><br><span class="line">7 process data limit 4,500,100</span><br><span class="line">2 process data limit 4,300,100</span><br><span class="line">5 process data limit 4,100,100</span><br><span class="line">1 process data limit 4,000,100</span><br><span class="line">10 process data limit 4,400,100</span><br><span class="line">6 process data limit 4,200,100</span><br><span class="line">3 process data limit 4,700,100</span><br><span class="line">total process finish, total 5,000, sendEmail success</span><br><span class="line">2 process data limit 5,500,100</span><br><span class="line">5 process data limit 5,600,100</span><br><span class="line">4 process data limit 5,200,100</span><br><span class="line">8 process data limit 5,100,100</span><br><span class="line">9 process data limit 5,300,100</span><br><span class="line">3 process data limit 5,000,100</span><br><span class="line">7 process data limit 5,400,100</span><br><span class="line">10 process data limit 5,800,100</span><br><span class="line">6 process data limit 5,900,100</span><br><span class="line">1 process data limit 5,700,100</span><br><span class="line">total process finish, total 6,000, sendEmail success</span><br><span class="line">2 process data limit 6,100,100</span><br><span class="line">5 process data limit 6,200,100</span><br><span class="line">1 process data limit 6,000,100</span><br><span class="line">10 process data limit 6,800,100</span><br><span class="line">9 process data limit 6,500,100</span><br><span class="line">7 process data limit 6,700,100</span><br><span class="line">3 process data limit 6,600,100</span><br><span class="line">8 process data limit 6,400,100</span><br><span class="line">6 process data limit 6,900,100</span><br><span class="line">4 process data limit 6,300,100</span><br><span class="line">total process finish, total 7,000, sendEmail success</span><br><span class="line">10 process data limit 7,400,100</span><br><span class="line">7 process data limit 7,600,100</span><br><span class="line">1 process data limit 7,300,100</span><br><span class="line">9 process data limit 7,500,100</span><br><span class="line">8 process data limit 7,800,100</span><br><span class="line">6 process data limit 7,900,100</span><br><span class="line">3 process data limit 7,700,100</span><br><span class="line">4 process data limit 7,000,100</span><br><span class="line">5 process data limit 7,200,100</span><br><span class="line">2 process data limit 7,100,100</span><br><span class="line">total process finish, total 8,000, sendEmail success</span><br><span class="line">6 process data limit 8,600,100</span><br><span class="line">10 process data limit 8,100,100</span><br><span class="line">5 process data limit 8,900,100</span><br><span class="line">2 process data limit 8,000,100</span><br><span class="line">8 process data limit 8,500,100</span><br><span class="line">9 process data limit 8,400,100</span><br><span class="line">1 process data limit 8,300,100</span><br><span class="line">7 process data limit 8,200,100</span><br><span class="line">3 process data limit 8,700,100</span><br><span class="line">4 process data limit 8,800,100</span><br><span class="line">total process finish, total 9,000, sendEmail success</span><br><span class="line">1 process data limit 9,700,100</span><br><span class="line">6 process data limit 9,100,100</span><br><span class="line">10 process data limit 9,200,100</span><br><span class="line">4 process data limit 9,000,100</span><br><span class="line">2 process data limit 9,400,100</span><br><span class="line">9 process data limit 9,600,100</span><br><span class="line">3 process data limit 9,900,100</span><br><span class="line">5 process data limit 9,300,100</span><br><span class="line">7 process data limit 9,800,100</span><br><span class="line">8 process data limit 9,500,100</span><br><span class="line">total process finish, total 10,000, sendEmail success</span><br><span class="line">main finish, total 10,000</span><br></pre></td></tr></table></figure>
+<h2 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h2><ul>
+<li><code>public CyclicBarrier(int parties)</code> 带有 await() 方法的线程数目的构造函数.</li>
+<li><code>public CyclicBarrier(int parties, Runnable barrierAction)</code> 带有 barrierAction 对象的构造函数, 所有线程到达 await() 方法后才会执行.</li>
+<li><code>public void reset()</code> 触发带有 await() 方法的线程抛出 <code>java.util.concurrent.BrokenBarrierException</code> 异常, 退出阻塞状态, 并且不再循环执行, 相当于将循环栅栏破坏了.</li>
+<li><code>public int getNumberWaiting()</code> 获取当前到达 await() 方法的线程数目, 用于调试.</li>
+<li><code>public int await()</code> 阻塞当前线程</li>
+<li><code>public int await(long timeout, TimeUnit unit)</code> 阻塞当前线程, 当超时的时候抛出 <code>java.util.concurrent.BrokenBarrierException</code> 异常</li>
+<li><code>public boolean isBroken()</code> 判断循环栅栏是否被破坏</li>
+</ul>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p><code>await()</code> 方法会阻塞当前线程, 如果其他线程调用当前线程的 <code>interrupt()</code> 方法或者 <code>await(long timeout, TimeUnit unit)</code> 方法抛出 <code>java.util.concurrent.TimeoutException</code> 异常都会破坏循环栅栏, 这时可以通过 <code>isBroken()</code> 方法判断循环栅栏是否被破坏.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">public static class DataProcessRunner implements Runnable &#123;</span><br><span class="line"></span><br><span class="line">    private String name;</span><br><span class="line">    private CyclicBarrier cyclicBarrier;</span><br><span class="line"></span><br><span class="line">    public DataProcessRunner(String name, CyclicBarrier cyclicBarrier) &#123;</span><br><span class="line">        this.name = name;</span><br><span class="line">        this.cyclicBarrier = cyclicBarrier;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void run() &#123;</span><br><span class="line">        // do while 循环可以确保循环执行,直到达到某个条件</span><br><span class="line">        do &#123;</span><br><span class="line">            // 获取读取的起始记录和记录数</span><br><span class="line">            Integer rows = 100;</span><br><span class="line">            Integer start = startRow.getAndAdd(rows);</span><br><span class="line"></span><br><span class="line">            // 模拟读取和处理的过程</span><br><span class="line">            try &#123;</span><br><span class="line">                TimeUnit.SECONDS.sleep(RandomUtils.nextInt(1, 5));</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                System.out.println(MessageFormat.format(&quot;&#123;0&#125; process data limit &#123;1&#125;,&#123;2&#125;&quot;, new Object[]&#123;name, start, rows&#125;));</span><br><span class="line">                // 等所有10个线程全部处理完各自的 100 万数据后再会进入下一次循环</span><br><span class="line">                // 这里才能最能体现 CyclicBarrier 对象的含义:循环栅栏, 所有线程都到达  await() 方法后(到达栅栏后)又可以回过头继续重复执行</span><br><span class="line">                cyclicBarrier.await(1, TimeUnit.SECONDS);</span><br><span class="line">            &#125; catch (TimeoutException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; catch (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125; catch (BrokenBarrierException e) &#123;</span><br><span class="line">                System.out.println(&quot;BrokenBarrierException&quot;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (cyclicBarrier.isBroken()) &#123;</span><br><span class="line">                // do....</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; while (startRow.get() &lt; 10000 &amp;&amp; !cyclicBarrier.isBroken()); // 循环处理到达了某个条件, 这里是处理完了 1 亿数据</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面这个 Runnable 对象在循环栅栏被破坏后会主动退出执行, 并且可以做一些回滚操作.</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>ReentrantLock</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://ifeve.com/concurrency-cyclicbarrier/" target="_blank" rel="external">并发工具类（二）同步屏障CyclicBarrier</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+            <a href="/tags/JUC/" rel="tag"># JUC</a>
+          
+            <a href="/tags/CyclicBarrier/" rel="tag"># CyclicBarrier</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/09/13/JUC-CountDownLatch-understand-practice/" rel="next" title="对 JUC 中 CountDownLatch 的理解与使用">
+                <i class="fa fa-chevron-left"></i> 对 JUC 中 CountDownLatch 的理解与使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CyclicBarrier-基本概念"><span class="nav-number">1.</span> <span class="nav-text">CyclicBarrier 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用场景"><span class="nav-number">2.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景1-实现代码"><span class="nav-number">3.</span> <span class="nav-text">场景1: 实现代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景2-实现代码"><span class="nav-number">4.</span> <span class="nav-text">场景2: 实现代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的方法"><span class="nav-number">5.</span> <span class="nav-text">常用的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">6.</span> <span class="nav-text">中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现原理"><span class="nav-number">7.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
