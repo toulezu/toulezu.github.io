@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -20,8 +20,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -40,7 +40,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -48,9 +48,9 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
@@ -68,13 +68,13 @@
 
 
 
-  <meta name="keywords" content="Java,Thread,Runnable,Executor," />
+  <meta name="keywords" content="Java,Thread,Runnable,Executor,">
 
 
 
 
 
-  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
 
 
 
@@ -82,11 +82,13 @@
 
 
 <meta name="description" content="关于Java多线程在提升程序性能上的一些实践">
+<meta name="keywords" content="Java,Thread,Runnable,Executor">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于Java多线程在提升程序性能上的一些实践">
 <meta property="og:url" content="http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="关于Java多线程在提升程序性能上的一些实践">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2016-10-10T01:58:06.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于Java多线程在提升程序性能上的一些实践">
@@ -120,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/"/>
+  <link rel="canonical" href="http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/">
 
 
 
@@ -131,6 +133,15 @@
 
 
 
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
 
 
   <script type="text/javascript">
@@ -164,7 +175,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">ckJava</span>
         <span class="logo-line-after"><i></i></span>
@@ -194,7 +205,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -204,7 +215,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -214,7 +225,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -224,7 +235,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -234,7 +245,7 @@
         <li class="menu-item menu-item-sitemap">
           <a href="/sitemap.xml" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
             站点地图
           </a>
@@ -244,7 +255,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -287,7 +298,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ck">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
@@ -323,7 +334,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -348,20 +359,19 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/08/30/Java-Thread-Runnable-Executor-Practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2016/08/30/Java-Thread-Runnable-Executor-Practice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
-          
-             <span id="/2016/08/30/Java-Thread-Runnable-Executor-Practice/" class="leancloud_visitors" data-flag-title="关于Java多线程在提升程序性能上的一些实践">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
           
 
           
@@ -396,10 +406,10 @@
 </li>
 </ul>
 <p>在以上条件下无需过多考虑同步问题，能使用的线程数只取决于机器的性能。</p>
-<h2 id="使用串行执行的方式带来的性能问题"><a href="#使用串行执行的方式带来的性能问题" class="headerlink" title="使用串行执行的方式带来的性能问题"></a>使用串行执行的方式带来的性能问题</h2><p>程序的执行逻辑是从上到下，从左到右。长期的编程习惯使我们想当然的在日常开发中使用串行的开发思维来编写程序，使本来可以通过多线程并行的方式来执行任务，由于习惯还是通过单线程串行的方式。具体如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设有10个任务，每个任务花费的时间如下</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">long</span>[] spendTime = <span class="keyword">new</span> <span class="keyword">long</span>[] &#123; <span class="number">1000</span>, <span class="number">2000</span>, <span class="number">3000</span>, <span class="number">5000</span>, <span class="number">500</span>, <span class="number">100</span>, <span class="number">10</span>, <span class="number">9000</span>, <span class="number">1000</span>, <span class="number">6000</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 在单线程的情况下</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"static-access"</span>)</span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestWithoutExecuteService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">long</span> l : spendTime) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.currentThread().sleep(l);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">"total spend : "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="通过-Thread-和-Runnable-来实现"><a href="#通过-Thread-和-Runnable-来实现" class="headerlink" title="通过 Thread 和 Runnable 来实现"></a>通过 Thread 和 Runnable 来实现</h2><p>上面通过串行的方式执行任务，所花时间是所有任务执行时间之和。如果通过多个线程并行执行任务，那么在确保所有任务执行完毕，所花时间取决于耗时最长的那个任务。<br>通过 Thread 和 Runnable 来实现需要维持一个变量来确保所有的任务都执行完毕了，引入同步变量增加了程序的复杂度，具体实现如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 使用一般的多线程来完成并行任务，也就是 Thread,Runnable</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestWithMultiThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">	<span class="comment">// 通过一个同步的Map来确保所有的任务都执行完毕</span></span><br><span class="line">	Map&lt;String, String&gt; result = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;String, String&gt;());</span><br><span class="line"></span><br><span class="line">	List&lt;Thread&gt; taskList = <span class="keyword">new</span> ArrayList&lt;Thread&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">long</span> l : spendTime) &#123;</span><br><span class="line">		Thread taskThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> TaskThread2(l, result));</span><br><span class="line">		taskList.add(taskThread);</span><br><span class="line">		taskThread.start();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (<span class="keyword">true</span>) &#123; <span class="comment">// 这部分代码可以确保所有的线程都执行完毕了</span></span><br><span class="line">		<span class="keyword">if</span> (result.size() == taskList.size()) &#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (Iterator&lt;String&gt; it = result.keySet().iterator(); it.hasNext();) &#123;</span><br><span class="line">		String key = it.next();</span><br><span class="line">		System.out.println(key + result.get(key));</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.println(<span class="string">"total spend : "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * 使用Runnable来实现线程</span><br><span class="line"> * </span><br><span class="line"> * <span class="doctag">@author</span> ck</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskThread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> processTime;</span><br><span class="line">	<span class="keyword">private</span> Map&lt;String, String&gt; result;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TaskThread2</span><span class="params">(<span class="keyword">long</span> processTime, Map&lt;String, String&gt; result)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.processTime = processTime;</span><br><span class="line">		<span class="keyword">this</span>.result = result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@SuppressWarnings</span>(<span class="string">"static-access"</span>)</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.currentThread().sleep(processTime);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		result.put(Thread.currentThread().getName(), <span class="string">": SUCCESS, spend: "</span> + processTime);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="通过ExecutorService来实现"><a href="#通过ExecutorService来实现" class="headerlink" title="通过ExecutorService来实现"></a>通过ExecutorService来实现</h2><p>在传统的方法中需要引入同步的变量来确保所有的任务都执行完毕，增加了程序的复杂程度，因为线程在执行完毕后无法通知调用者是否执行完毕，缺少通知机制。如果通过ExecutorService来实现，那么在提交任务后，只需要调用invokeAll方法，调用者线程将会阻塞，直到所有的任务都执行完毕，调用者线程才能继续向下执行，大大简化了程度复杂度。具体如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span><br><span class="line"> * 在使用 ExecuteService 的情况下，通过invokeAll确保所有的线程都执行完毕</span><br><span class="line"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestWithExecuteService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">	ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">	List&lt;TaskThread&gt; taskList = <span class="keyword">new</span> ArrayList&lt;TaskThread&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">long</span> l : spendTime) &#123;</span><br><span class="line">		taskList.add(<span class="keyword">new</span> TaskThread(l));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		List&lt;Future&lt;String&gt;&gt; taskResult = executorService.invokeAll(taskList); <span class="comment">// 可以确保所有的线程都执行完成</span></span><br><span class="line">		<span class="keyword">if</span> (taskResult != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">for</span> (Future&lt;String&gt; future : taskResult) &#123;</span><br><span class="line">				System.out.println(future.get()); <span class="comment">// 获取线程的执行结果</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		executorService.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">"total spend : "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>java.util.concurrent</code> 包下面还有很多有意思的类和接口方便多线程的开发，以后还会继续探索，以具体的例子和对比来显示使用和不使用这些类和接口带来的好处。关于Java多线程方面的知识，最近在看一本书，强烈推荐=&gt;《Java并发编程实践》。<br>关于本页面涉及到的所有的代码点击<a href="https://github.com/toulezu/play/tree/master/TestThread01" target="_blank" rel="external">这里</a>。</p>
+<h2 id="使用串行执行的方式带来的性能问题"><a href="#使用串行执行的方式带来的性能问题" class="headerlink" title="使用串行执行的方式带来的性能问题"></a>使用串行执行的方式带来的性能问题</h2><p>程序的执行逻辑是从上到下，从左到右。长期的编程习惯使我们想当然的在日常开发中使用串行的开发思维来编写程序，使本来可以通过多线程并行的方式来执行任务，由于习惯还是通过单线程串行的方式。具体如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 假设有10个任务，每个任务花费的时间如下</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">long</span>[] spendTime = <span class="keyword">new</span> <span class="keyword">long</span>[] &#123; <span class="number">1000</span>, <span class="number">2000</span>, <span class="number">3000</span>, <span class="number">5000</span>, <span class="number">500</span>, <span class="number">100</span>, <span class="number">10</span>, <span class="number">9000</span>, <span class="number">1000</span>, <span class="number">6000</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在单线程的情况下</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"static-access"</span>)</span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestWithoutExecuteService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">long</span> l : spendTime) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.currentThread().sleep(l);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">"total spend : "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="通过-Thread-和-Runnable-来实现"><a href="#通过-Thread-和-Runnable-来实现" class="headerlink" title="通过 Thread 和 Runnable 来实现"></a>通过 Thread 和 Runnable 来实现</h2><p>上面通过串行的方式执行任务，所花时间是所有任务执行时间之和。如果通过多个线程并行执行任务，那么在确保所有任务执行完毕，所花时间取决于耗时最长的那个任务。<br>通过 Thread 和 Runnable 来实现需要维持一个变量来确保所有的任务都执行完毕了，引入同步变量增加了程序的复杂度，具体实现如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用一般的多线程来完成并行任务，也就是 Thread,Runnable</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestWithMultiThread</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line">	<span class="comment">// 通过一个同步的Map来确保所有的任务都执行完毕</span></span><br><span class="line">	Map&lt;String, String&gt; result = Collections.synchronizedMap(<span class="keyword">new</span> HashMap&lt;String, String&gt;());</span><br><span class="line"></span><br><span class="line">	List&lt;Thread&gt; taskList = <span class="keyword">new</span> ArrayList&lt;Thread&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">long</span> l : spendTime) &#123;</span><br><span class="line">		Thread taskThread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> TaskThread2(l, result));</span><br><span class="line">		taskList.add(taskThread);</span><br><span class="line">		taskThread.start();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span> (<span class="keyword">true</span>) &#123; <span class="comment">// 这部分代码可以确保所有的线程都执行完毕了</span></span><br><span class="line">		<span class="keyword">if</span> (result.size() == taskList.size()) &#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (Iterator&lt;String&gt; it = result.keySet().iterator(); it.hasNext();) &#123;</span><br><span class="line">		String key = it.next();</span><br><span class="line">		System.out.println(key + result.get(key));</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.println(<span class="string">"total spend : "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用Runnable来实现线程</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ck</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">TaskThread2</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">long</span> processTime;</span><br><span class="line">	<span class="keyword">private</span> Map&lt;String, String&gt; result;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">TaskThread2</span><span class="params">(<span class="keyword">long</span> processTime, Map&lt;String, String&gt; result)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.processTime = processTime;</span><br><span class="line">		<span class="keyword">this</span>.result = result;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@SuppressWarnings</span>(<span class="string">"static-access"</span>)</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Thread.currentThread().sleep(processTime);</span><br><span class="line">		&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		result.put(Thread.currentThread().getName(), <span class="string">": SUCCESS, spend: "</span> + processTime);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="通过ExecutorService来实现"><a href="#通过ExecutorService来实现" class="headerlink" title="通过ExecutorService来实现"></a>通过ExecutorService来实现</h2><p>在传统的方法中需要引入同步的变量来确保所有的任务都执行完毕，增加了程序的复杂程度，因为线程在执行完毕后无法通知调用者是否执行完毕，缺少通知机制。如果通过ExecutorService来实现，那么在提交任务后，只需要调用invokeAll方法，调用者线程将会阻塞，直到所有的任务都执行完毕，调用者线程才能继续向下执行，大大简化了程度复杂度。具体如下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在使用 ExecuteService 的情况下，通过invokeAll确保所有的线程都执行完毕</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TestWithExecuteService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">long</span> begin = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">	ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line"></span><br><span class="line">	List&lt;TaskThread&gt; taskList = <span class="keyword">new</span> ArrayList&lt;TaskThread&gt;();</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">long</span> l : spendTime) &#123;</span><br><span class="line">		taskList.add(<span class="keyword">new</span> TaskThread(l));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		List&lt;Future&lt;String&gt;&gt; taskResult = executorService.invokeAll(taskList); <span class="comment">// 可以确保所有的线程都执行完成</span></span><br><span class="line">		<span class="keyword">if</span> (taskResult != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">for</span> (Future&lt;String&gt; future : taskResult) &#123;</span><br><span class="line">				System.out.println(future.get()); <span class="comment">// 获取线程的执行结果</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		executorService.shutdown();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	System.out.println(<span class="string">"total spend : "</span> + (System.currentTimeMillis() - begin));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>java.util.concurrent</code> 包下面还有很多有意思的类和接口方便多线程的开发，以后还会继续探索，以具体的例子和对比来显示使用和不使用这些类和接口带来的好处。关于Java多线程方面的知识，最近在看一本书，强烈推荐=&gt;《Java并发编程实践》。<br>关于本页面涉及到的所有的代码点击<a href="https://github.com/toulezu/play/tree/master/TestThread01" target="_blank" rel="noopener">这里</a>。</p>
 
       
     </div>
@@ -420,7 +430,7 @@
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付"/>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
         <p>微信支付</p>
       </div>
     
@@ -503,7 +513,9 @@
 
   
     <div class="comments" id="comments">
-      <div id="uyan_frame"></div>
+      
+        <div id="gitment-container"></div>
+      
     </div>
 
   
@@ -554,7 +566,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -565,7 +577,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -576,7 +588,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -636,7 +648,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -782,146 +794,73 @@
 
 
   
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
     
 
     
-      <!-- UY BEGIN -->
-      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2155201"></script>
-      <!-- UY END -->
-    
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("qlNVttmPMKkEP5UaKHYPllFN-gzGzoHsz", "tpBGsHqHFJRLI3KTv8Azk9ui");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
       }
-    });
-  </script>
+
+      
+      renderGitment();
+      
+      </script>
+    
 
 
+
+
+
+
+
+  
+
+
+
+
+
+  
 
   
 
