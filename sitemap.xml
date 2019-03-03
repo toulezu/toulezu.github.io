@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
+    
+    <lastmod>2019-03-03T12:51:58.362Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/02/24/Java-SLF4J-Logback/</loc>
     
     <lastmod>2019-02-24T11:42:13.538Z</lastmod>
@@ -72,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
@@ -247,14 +254,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
