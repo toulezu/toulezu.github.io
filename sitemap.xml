@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/03/05/SpringBoot-CORS-practice/</loc>
+    
+    <lastmod>2019-03-05T14:21:23.855Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
     
     <lastmod>2019-03-03T13:13:04.973Z</lastmod>
