@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="Java Servlet 中两种重定向 forward 和 sendRedirect 的区分">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-25T13:27:36.100Z">
+<meta property="og:updated_time" content="2019-04-25T13:44:25.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java Servlet 中两种重定向 forward 和 sendRedirect 的区分">
 <meta name="twitter:description" content="Java Servlet 中两种重定向 forward 和 sendRedirect 的区分">
@@ -397,14 +397,14 @@
       
 
       
-        <h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &quot;/&quot;, method = RequestMethod.GET, produces = &quot;text/plain;charset=UTF-8&quot;)</span><br><span class="line">public void index(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;</span><br><span class="line">    //request.getRequestDispatcher(&quot;/swagger-ui.html&quot;).forward(request, response);</span><br><span class="line">    response.sendRedirect(&quot;/swagger-ui.html&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="forward"><a href="#forward" class="headerlink" title="forward"></a>forward</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器不告知浏览器真正的资源在 /b，直接将 /b 的内容返回给浏览器。</p>
+        <h2 id="1-示例代码"><a href="#1-示例代码" class="headerlink" title="1 示例代码"></a>1 示例代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>, method = RequestMethod.GET, produces = <span class="string">"text/plain;charset=UTF-8"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">index</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//request.getRequestDispatcher("/swagger-ui.html").forward(request, response);</span></span><br><span class="line">    response.sendRedirect(<span class="string">"/swagger-ui.html"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-forward"><a href="#2-forward" class="headerlink" title="2 forward"></a>2 forward</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器不告知浏览器真正的资源在 /b，直接将 /b 的内容返回给浏览器。</p>
 <ul>
 <li>服务器将 url 的资源直接解析后返回给浏览器</li>
 <li>属于服务器内部跳转，浏览器地址栏的 url 不会发生变化</li>
 <li>浏览器一共进行了一次请求</li>
 </ul>
-<h2 id="sendRedirect"><a href="#sendRedirect" class="headerlink" title="sendRedirect"></a>sendRedirect</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器告知真实的资源在 /b 那里，随后浏览器又去请求 /b 的资源。</p>
+<h2 id="3-sendRedirect"><a href="#3-sendRedirect" class="headerlink" title="3 sendRedirect"></a>3 sendRedirect</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器告知真实的资源在 /b 那里，随后浏览器又去请求 /b 的资源。</p>
 <p>关键点如下：</p>
 <ul>
 <li>服务器将 url 告知浏览器，浏览器随后再次请求 url，</li>
@@ -629,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例代码"><span class="nav-number">1.</span> <span class="nav-text">示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#forward"><span class="nav-number">2.</span> <span class="nav-text">forward</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sendRedirect"><span class="nav-number">3.</span> <span class="nav-text">sendRedirect</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-示例代码"><span class="nav-number">1.</span> <span class="nav-text">1 示例代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-forward"><span class="nav-number">2.</span> <span class="nav-text">2 forward</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sendRedirect"><span class="nav-number">3.</span> <span class="nav-text">3 sendRedirect</span></a></li></ol></div>
             
 
           </div>
