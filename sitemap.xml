@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/05/14/understand-Java-8-method-reference/</loc>
+    
+    <lastmod>2019-05-14T13:17:23.181Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/</loc>
     
     <lastmod>2019-04-25T13:44:25.578Z</lastmod>
@@ -107,14 +114,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
@@ -282,14 +289,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
