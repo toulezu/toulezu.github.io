@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ckjava.com/"/>
-  <updated>2019-05-14T13:17:23.181Z</updated>
+  <updated>2019-05-17T14:44:20.871Z</updated>
   <id>http://ckjava.com/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Java 8 Lambda 表达式介绍</title>
+    <link href="http://ckjava.com/2019/05/17/understand-Java-8-Lambda/"/>
+    <id>http://ckjava.com/2019/05/17/understand-Java-8-Lambda/</id>
+    <published>2019-05-16T16:00:00.000Z</published>
+    <updated>2019-05-17T14:44:20.871Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-概要"><a href="#1-概要" class="headerlink" title="1 概要"></a>1 概要</h2><ul><li>Lambda 表达式，也可称为闭包或者内部类，返回的是一个接口的实例，是 Java 8 的最重要新特性。</li><li>使用 Lambda 表达式可以使代码变的更加简洁紧凑。</li></ul><h2 id="2-语法"><a href="#2-语法" class="headerlink" title="2 语法"></a>2 语法</h2><p>lambda 表达式的语法格式如下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(parameters) -&gt; expression</span><br></pre></td></tr></table></figure><p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(parameters) -&gt; &#123; statements; &#125;</span><br></pre></td></tr></table></figure></p><p>以下是 lambda 表达式的重要特征:</p><ol><li>可选类型声明：不需要声明参数类型，编译器可以统一识别参数值。</li><li>可选的参数圆括号：一个参数无需定义圆括号，但多个参数需要定义圆括号。</li><li>可选的大括号：如果主体包含了一个语句，就不需要使用大括号。</li><li>可选的返回关键字：如果主体只有一个表达式返回值则编译器会自动返回值，大括号需要指定明表达式返回了一个数值。</li></ol><h4 id="2-1-可选类型声明"><a href="#2-1-可选类型声明" class="headerlink" title="2.1 可选类型声明"></a>2.1 可选类型声明</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Append</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">doAppend</span><span class="params">(T t1, T t2)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppendUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">String <span class="title">append</span><span class="params">(T t1, T t2, Append&lt;T&gt; append)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> append.doAppend(t1, t2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    String str = AppendUtils.append(<span class="number">1</span>, <span class="number">2</span>, (Integer t1, Integer t2) -&gt; &#123;<span class="keyword">return</span> t1.toString() + t2.toString();&#125;);</span><br><span class="line">    System.out.println(str);</span><br><span class="line">    str = AppendUtils.append(<span class="number">1</span>, <span class="number">2</span>, (t1, t2) -&gt; &#123;<span class="keyword">return</span> t1.toString() + t2.toString();&#125;);</span><br><span class="line">    System.out.println(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><code>(Integer t1, Integer t2) -&gt; {return t1.toString() + t2.toString();}</code></li><li><code>(t1, t2) -&gt; {return t1.toString() + t2.toString();}</code></li></ul><p>上面的 Lambda 表达式实现的效果是一样的。</p><h4 id="2-2-可选的参数圆括号"><a href="#2-2-可选的参数圆括号" class="headerlink" title="2.2 可选的参数圆括号"></a>2.2 可选的参数圆括号</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FunctionalInterface</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StringParse</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function">String <span class="title">parseString</span><span class="params">(T t)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StringParseUtils</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">String <span class="title">parse</span><span class="params">(T t, StringParse&lt;T&gt; stringParse)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> stringParse.parseString(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String str = StringParseUtils.parse(<span class="number">1</span>, (t) -&gt; t.toString());</span><br><span class="line">    System.out.println(str);</span><br><span class="line">    str = StringParseUtils.parse(<span class="number">1</span>, t -&gt; t.toString());</span><br><span class="line">    System.out.println(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><code>(t) -&gt; t.toString()</code></li><li><code>t -&gt; t.toString()</code></li></ul><p>上面的 Lambda 表达式实现的效果是一样的。</p><h4 id="2-3-可选的大括号"><a href="#2-3-可选的大括号" class="headerlink" title="2.3 可选的大括号"></a>2.3 可选的大括号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test2 () &#123;</span><br><span class="line">    String str = AppendUtils.append(1, 2, (Integer t1, Integer t2) -&gt; &#123;return t1.toString() + t2.toString();&#125;);</span><br><span class="line">    System.out.println(str);</span><br><span class="line">    str = AppendUtils.append(1, 2, (t1, t2) -&gt; t1.toString() + t2.toString());</span><br><span class="line">    System.out.println(str);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><code>(Integer t1, Integer t2) -&gt; {return t1.toString() + t2.toString();}</code></li><li><code>(t1, t2) -&gt; t1.toString() + t2.toString()</code></li></ul><p>上面的 Lambda 表达式实现的效果是一样的, 并且忽略了 return 关键字</p><h4 id="2-4-可选的返回关键字"><a href="#2-4-可选的返回关键字" class="headerlink" title="2.4 可选的返回关键字"></a>2.4 可选的返回关键字</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test5() throws Exception &#123;</span><br><span class="line">    ExecutorService executorService = Executors.newFixedThreadPool(1);</span><br><span class="line">    /*Future&lt;String&gt; future = executorService.submit(new Callable&lt;String&gt;() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public String call() throws Exception &#123;</span><br><span class="line">            return &quot;success&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);*/</span><br><span class="line"></span><br><span class="line">    Future&lt;String&gt; future = executorService.submit(() -&gt; &quot;success&quot;);</span><br><span class="line">    executorService.shutdown();</span><br><span class="line">    System.out.println(future.get());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li><code>() -&gt; &quot;success&quot;</code> 是 <code>Callable</code> 的实例</li><li>如果没有参数必须要使用 <code>()</code></li><li>忽略了 return 关键字</li></ul><h2 id="3-需要注意的问题"><a href="#3-需要注意的问题" class="headerlink" title="3 需要注意的问题"></a>3 需要注意的问题</h2><ol><li>Lambda 表达式主要用来定义行内执行的方法类型接口，例如，一个简单方法接口。</li><li>Lambda 表达式免去了使用匿名方法的麻烦，并且给予 Java 简单但是强大的函数化的编程能力。</li></ol><h2 id="4-变量作用域"><a href="#4-变量作用域" class="headerlink" title="4 变量作用域"></a>4 变量作用域</h2><ol><li>Lambda 表达式本质上类似于内部类，跟 JavaScript 闭包一样，在 Java 中只能引用标记了 final 的外层局部变量，这就是说不能在 lambda 内部修改定义在域外的局部变量，否则会编译错误。</li></ol><p>定义接口</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface Converter&lt;T&gt; &#123;</span><br><span class="line">    String convert(T t1, T t2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>下面的 c 变量在 Lambda 表达式中不能被修改。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test6() &#123;</span><br><span class="line">    int a = 10;</span><br><span class="line">    int b = 10;</span><br><span class="line">    int c = 10;</span><br><span class="line"></span><br><span class="line">    Converter&lt;Integer&gt; converter = (t1, t2) -&gt; &#123;</span><br><span class="line">        // c += 10; 编译的时候报错</span><br><span class="line">        return String.valueOf(t1+t2+c);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    System.out.println(converter.convert(a, b));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="5-参考"><a href="#5-参考" class="headerlink" title="5 参考"></a>5 参考</h2><ul><li><a href="https://www.runoob.com/java/java8-lambda-expressions.html" target="_blank" rel="noopener">Java 8 Lambda 表达式</a></li><li><a href="http://blog.oneapm.com/apm-tech/226.html" target="_blank" rel="noopener">深入浅出 Java 8 Lambda 表达式</a></li><li><a href="https://www.cnblogs.com/figure9/p/java-8-lambdas-insideout-language-features.html" target="_blank" rel="noopener">深入理解Java 8 Lambda（语言篇——lambda，方法引用，目标类型和默认方法）</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      Java 8 Lambda 表达式介绍
+    
+    </summary>
+    
+      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="http://ckjava.com/tags/Java/"/>
+    
+      <category term="Lambda" scheme="http://ckjava.com/tags/Lambda/"/>
+    
+  </entry>
   
   <entry>
     <title>Java 8 中双冒号(method reference)的用法</title>
@@ -35,6 +59,30 @@
     
     
       <category term="Java" scheme="http://ckjava.com/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java Servlet 中两种重定向 forward 和 sendRedirect 的区分</title>
+    <link href="http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/"/>
+    <id>http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/</id>
+    <published>2019-04-24T16:00:00.000Z</published>
+    <updated>2019-04-25T13:44:25.578Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="1-示例代码"><a href="#1-示例代码" class="headerlink" title="1 示例代码"></a>1 示例代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>, method = RequestMethod.GET, produces = <span class="string">"text/plain;charset=UTF-8"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">index</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//request.getRequestDispatcher("/swagger-ui.html").forward(request, response);</span></span><br><span class="line">    response.sendRedirect(<span class="string">"/swagger-ui.html"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="2-forward"><a href="#2-forward" class="headerlink" title="2 forward"></a>2 forward</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器不告知浏览器真正的资源在 /b，直接将 /b 的内容返回给浏览器。</p><ul><li>服务器将 url 的资源直接解析后返回给浏览器</li><li>属于服务器内部跳转，浏览器地址栏的 url 不会发生变化</li><li>浏览器一共进行了一次请求</li></ul><h2 id="3-sendRedirect"><a href="#3-sendRedirect" class="headerlink" title="3 sendRedirect"></a>3 sendRedirect</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器告知真实的资源在 /b 那里，随后浏览器又去请求 /b 的资源。</p><p>关键点如下：</p><ul><li>服务器将 url 告知浏览器，浏览器随后再次请求 url，</li><li>浏览器地址栏的 url 会发生变化</li><li>服务器响应码为 302，Response Headers 的具体内容如下</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8011/swagger-ui.html</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Sun, 16 Dec 2018 03:57:12 GMT</span><br></pre></td></tr></table></figure><ul><li>浏览器一共进行了两次请求</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      Java Servlet 中两种重定向 forward 和 sendRedirect 的区分
+    
+    </summary>
+    
+      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+    
+      <category term="Java" scheme="http://ckjava.com/tags/Java/"/>
+    
+      <category term="Servlet" scheme="http://ckjava.com/tags/Servlet/"/>
     
   </entry>
   
@@ -61,30 +109,6 @@
       <category term="集合" scheme="http://ckjava.com/tags/%E9%9B%86%E5%90%88/"/>
     
       <category term="List" scheme="http://ckjava.com/tags/List/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java Servlet 中两种重定向 forward 和 sendRedirect 的区分</title>
-    <link href="http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/"/>
-    <id>http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/</id>
-    <published>2019-04-24T16:00:00.000Z</published>
-    <updated>2019-04-25T13:44:25.578Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="1-示例代码"><a href="#1-示例代码" class="headerlink" title="1 示例代码"></a>1 示例代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>, method = RequestMethod.GET, produces = <span class="string">"text/plain;charset=UTF-8"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">index</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">//request.getRequestDispatcher("/swagger-ui.html").forward(request, response);</span></span><br><span class="line">    response.sendRedirect(<span class="string">"/swagger-ui.html"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="2-forward"><a href="#2-forward" class="headerlink" title="2 forward"></a>2 forward</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器不告知浏览器真正的资源在 /b，直接将 /b 的内容返回给浏览器。</p><ul><li>服务器将 url 的资源直接解析后返回给浏览器</li><li>属于服务器内部跳转，浏览器地址栏的 url 不会发生变化</li><li>浏览器一共进行了一次请求</li></ul><h2 id="3-sendRedirect"><a href="#3-sendRedirect" class="headerlink" title="3 sendRedirect"></a>3 sendRedirect</h2><p>简单来说：浏览器想请求 /a 的资源，但是服务器告知真实的资源在 /b 那里，随后浏览器又去请求 /b 的资源。</p><p>关键点如下：</p><ul><li>服务器将 url 告知浏览器，浏览器随后再次请求 url，</li><li>浏览器地址栏的 url 会发生变化</li><li>服务器响应码为 302，Response Headers 的具体内容如下</li></ul><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 302</span><br><span class="line">Location: http://localhost:8011/swagger-ui.html</span><br><span class="line">Content-Length: 0</span><br><span class="line">Date: Sun, 16 Dec 2018 03:57:12 GMT</span><br></pre></td></tr></table></figure><ul><li>浏览器一共进行了两次请求</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      Java Servlet 中两种重定向 forward 和 sendRedirect 的区分
-    
-    </summary>
-    
-      <category term="技术" scheme="http://ckjava.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-    
-      <category term="Java" scheme="http://ckjava.com/tags/Java/"/>
-    
-      <category term="Servlet" scheme="http://ckjava.com/tags/Servlet/"/>
     
   </entry>
   
@@ -501,28 +525,6 @@
     
     
       <category term="AngularJS" scheme="http://ckjava.com/tags/AngularJS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>对循环冗余校验码CRC的理解</title>
-    <link href="http://ckjava.com/2017/09/11/understand-crc/"/>
-    <id>http://ckjava.com/2017/09/11/understand-crc/</id>
-    <published>2017-09-10T16:00:00.000Z</published>
-    <updated>2018-01-01T12:55:41.586Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="模2加法"><a href="#模2加法" class="headerlink" title="模2加法"></a>模2加法</h2><p>1+1=0, 0+1=1, 1+0=1, 0+0=0</p><h2 id="模2减法"><a href="#模2减法" class="headerlink" title="模2减法"></a>模2减法</h2><p>1-1=0, 0-1=1, 1-0=1, 0-0=0</p><p>相当于二进制中的逻辑异或运算。也就是比较后两者对应位相同则结果为“0”，不同则结果为“1”.</p><h2 id="模2除法"><a href="#模2除法" class="headerlink" title="模2除法"></a>模2除法</h2><p>基于模2减法.</p><h2 id="模2乘法"><a href="#模2乘法" class="headerlink" title="模2乘法"></a>模2乘法</h2><p>基于模2加法</p><h2 id="模运算举例"><a href="#模运算举例" class="headerlink" title="模运算举例"></a>模运算举例</h2><p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/crc-1.jpg" alt="crc-1"></p><h2 id="CRC校验码的位数"><a href="#CRC校验码的位数" class="headerlink" title="CRC校验码的位数"></a>CRC校验码的位数</h2><blockquote><p>余数的位数一定要是比除数位数只能少一位，哪怕前面位是0，甚至是全为0（附带好整除时）</p></blockquote><p>余数 是指 CRC校验码<br>除数 是指 生成多项式转成的二进制位<br>生成多项式位数 = CRC校验码位数 + 1</p><h2 id="将多项式转成二进制位"><a href="#将多项式转成二进制位" class="headerlink" title="将多项式转成二进制位"></a>将多项式转成二进制位</h2><p>由<code>G（X）= X4 + X3 + 1</code>可以知道，它一共是5位（总位数等于最高位的幂次加1，即4+1=5），然后根据多项式各项的含义（多项式只列出二进制值为1的位，也就是这个二进制的第4位、第3位、第0位的二进制均为1，其它位均为0）很快就可得到它的二进制比特串为11001。</p><p><code>g（x）= x16 + x15 + x2 +1</code> 对应二进制比特串为：11000000000000101<br><code>g（x）= x16 + x15 + x5 +1</code> 对应二进制比特串为：11000000000100001</p><p><strong>按照国际上通行的标准, 多项式转成二进制位后最高位和最低位必须均为“1”.</strong></p><h2 id="生成多项式"><a href="#生成多项式" class="headerlink" title="生成多项式"></a>生成多项式</h2><p>用于在接收端进行校验时，对接收的帧进行除法运算的<strong>除数</strong>,通常是以多项方式表示.</p><h2 id="CRC校验码"><a href="#CRC校验码" class="headerlink" title="CRC校验码"></a>CRC校验码</h2><p>所选定的除数二进制位数（假设为k位），然后在要发送的数据帧（假设为m位）后面加上k-1位“0”，然后以这个加了k-1个“0“的新帧（一共是m+k-1位）以“模2除法”方式除以上面这个除数，所得到的余数（也是二进制的比特串）就是该帧的CRC校验码.</p><h2 id="接收端处理"><a href="#接收端处理" class="headerlink" title="接收端处理"></a>接收端处理</h2><p>将校验码(上面的余数)附加在原数据帧（就是m位的帧）后面，构建一个新帧发送到接收端；最后在接收端再把这个新帧以“模2除法”方式除以前面选择的除数(上面的生成多项式转成的二进制位)，如果没有余数，则表明该帧在传输过程中没出错，否则出现了差错。</p><h2 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h2><p>发送端要发送的 m 位二进制数据为 10110011, 一共8位.选择的生成多项式为 G(x) = X4 + X3 + 1, 将G(x) 转成二进制位:11001, 一共5位,那么将 4 位 0000 附加到 m位二进制数据 后为: 101100110000, 现在 被除数是 101100110000, 除数是 11001, 得到的余数为 0100, 最后将 m 位二进制数据 加上 余数 0100 得到 101100110100  发送给接收端.</p><p><img src="http://7xt8a6.com1.z0.glb.clouddn.com/crc-2.jpg" alt="crc-2"></p><h2 id="练习1"><a href="#练习1" class="headerlink" title="练习1"></a>练习1</h2><ul><li>信息字段代码为: 1011001, 对应 m(x)=x6+x4+x3+1(第6,4,3,0位为1,其他位为0)；</li><li>假设生成多项式为：g(x)=x4+x3+1；则对应g(x)的代码为: 11001(第4,3,0位为1,其他位均为0)</li><li>将信息字段后追加 4个零得到 10110010000(生成多项式一共5位所以要加4个零)</li><li>将 10110010000 除以 11001 得到余数 1010,也就是说 CRC校验码为 1010</li><li>最后的发送数据: 10110011010 (也就是原始数据加上CRC校验码)</li></ul><h2 id="练习2"><a href="#练习2" class="headerlink" title="练习2"></a>练习2</h2><ul><li>已知信息位为 1100，</li><li>生成多项式G(x) = x3+x+1, 对应的二进制位为 1011</li><li>信息位加上3个零为 1100000</li><li>1100000 除以 1011 得到的 CRC校验码为 010</li><li>最后发送的信息为 1100010</li></ul><h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul><li><a href="http://winda.blog.51cto.com/55153/1063951" target="_blank" rel="noopener">最通俗的CRC校验原理剖析</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      对循环冗余校验码CRC的理解,演示CRC校验码的详细计算过程
-    
-    </summary>
-    
-      <category term="计算机网络" scheme="http://ckjava.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-      <category term="计算机网络" scheme="http://ckjava.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   

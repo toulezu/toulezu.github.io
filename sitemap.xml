@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/05/17/understand-Java-8-Lambda/</loc>
+    
+    <lastmod>2019-05-17T14:44:20.871Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/05/14/understand-Java-8-method-reference/</loc>
     
     <lastmod>2019-05-14T13:17:23.181Z</lastmod>
