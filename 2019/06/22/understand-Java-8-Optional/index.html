@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java8,Optional,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Optional 的完整路径是 java.util.Optional，使用它是为了避免代码中的 if (obj != null) { } 这样范式的代码，可以采用链式编程的风格。而且通过 Optional 中提供的 filter 方法可以判断对象是否符合条件，在符合条件的情况下才会返回；map 方法可以在返回对象前修改对象中的属性">
+<meta name="keywords" content="Java8,Optional">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 8 中的 Optional 使用详解">
+<meta property="og:url" content="http://ckjava.com/2019/06/22/understand-Java-8-Optional/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="Optional 的完整路径是 java.util.Optional，使用它是为了避免代码中的 if (obj != null) { } 这样范式的代码，可以采用链式编程的风格。而且通过 Optional 中提供的 filter 方法可以判断对象是否符合条件，在符合条件的情况下才会返回；map 方法可以在返回对象前修改对象中的属性">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-22T10:48:26.307Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 8 中的 Optional 使用详解">
+<meta name="twitter:description" content="Optional 的完整路径是 java.util.Optional，使用它是为了避免代码中的 if (obj != null) { } 这样范式的代码，可以采用链式编程的风格。而且通过 Optional 中提供的 filter 方法可以判断对象是否符合条件，在符合条件的情况下才会返回；map 方法可以在返回对象前修改对象中的属性">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2019/06/22/understand-Java-8-Optional/">
+
+
+
+
+
+  <title>Java 8 中的 Optional 使用详解 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2019/06/22/understand-Java-8-Optional/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 8 中的 Optional 使用详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-22T00:00:00+08:00">
+                2019-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/22/understand-Java-8-Optional/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/06/22/understand-Java-8-Optional/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  Optional 的完整路径是 java.util.Optional，使用它是为了避免代码中的 if (obj != null) { } 这样范式的代码，可以采用链式编程的风格。而且通过 Optional 中提供的 filter 方法可以判断对象是否符合条件，在符合条件的情况下才会返回；map 方法可以在返回对象前修改对象中的属性
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><ul>
+<li>Optional 的完整路径是 <code>java.util.Optional</code>，使用它是为了避免代码中的 <code>if (obj != null) { }</code> 这样范式的代码，可以采用链式编程的风格</li>
+<li>而且通过 Optional 中提供的 filter 方法可以判断对象是否符合条件，在符合条件的情况下才会返回；map 方法可以在返回对象前修改对象中的属性</li>
+<li>下面将一一分析这些方法的用法</li>
+</ul>
+<h2 id="2-方法列表"><a href="#2-方法列表" class="headerlink" title="2 方法列表"></a>2 方法列表</h2><ol>
+<li><code>public&lt;U&gt; Optional&lt;U&gt; map(Function&lt;? super T, ? extends U&gt; mapper)</code>: 将 Optional 中的对象转成 其他对象，或者修改对象中的属性</li>
+<li><code>public&lt;U&gt; Optional&lt;U&gt; flatMap(Function&lt;? super T, Optional&lt;U&gt;&gt; mapper)</code>：将 Optional 中的对象转成 Optional 对象，或者修改对象中的属性</li>
+<li><code>public T orElse(T other)</code>: 在构造 Optional 的时候，如果其中的对象为 null, 通过 orElse 方法可以给定一个默认值</li>
+<li><code>public T orElseGet(Supplier&lt;? extends T&gt; other)</code>：在构造 Optional 的时候，如果其中的对象为 null, 通过 orElseGet 方法可以动态构造一个对象;与 orElse 相比，orElseGet 的参数是 Supplier 接口对象</li>
+<li><code>public void ifPresent(Consumer&lt;? super T&gt; consumer)</code>：ifPresent 表示 Optional 中的对象存在才会执行 Consumer 接口对象中的方法</li>
+<li><code>public Optional&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)</code>：Optional 中的对象在不为空，并且满足某个条件的时候才会返回</li>
+<li><code>public &lt;X extends Throwable&gt; T orElseThrow(Supplier&lt;? extends X&gt; exceptionSupplier) throws X</code>：在使用 Optional 包装的对象前，如果对象为 null 抛出自定义的异常</li>
+</ol>
+<h2 id="3-构造函数"><a href="#3-构造函数" class="headerlink" title="3 构造函数"></a>3 构造函数</h2><p>Optional 的三种构造方式: Optional.of(obj),  Optional.ofNullable(obj) 和明确的 Optional.empty()</p>
+<ol>
+<li><code>Optional.of(obj)</code>: 它要求传入的 obj 不能是 null 值的, 否则直接报 NullPointerException 异常。</li>
+<li><code>Optional.ofNullable(obj)</code>: 它以一种智能的, 宽容的方式来构造一个 Optional 实例. 来者不拒, 传 null 进到就得到 Optional.empty(), 非 null 就调用 Optional.of(obj).</li>
+<li><code>Optional.empty()</code>：返回一个空的 Optional 对象</li>
+</ol>
+<p>具体测试如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 1. empty() 返回一个空的 Optional 对象</span></span><br><span class="line"><span class="comment"> * 2. ofNullable 传入的对象可以是 null, 如果为 null 返回一个空的 Optional 对象</span></span><br><span class="line"><span class="comment"> * 3. of 传入的对象一定不能为 null</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 1. empty() 返回一个空的 Optional 对象</span></span><br><span class="line">    Assert.assertTrue(Optional.empty().isPresent() == <span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. of 里面如果为 null 直接抛出 NullPointerException 异常</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Optional.of(<span class="keyword">null</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        Assert.assertTrue(e <span class="keyword">instanceof</span> NullPointerException);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. ofNullable 如果参数为 null，返回空的集合</span></span><br><span class="line">    Assert.assertFalse(Optional.ofNullable(<span class="keyword">null</span>).isPresent());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-使用场景"><a href="#4-使用场景" class="headerlink" title="4 使用场景"></a>4 使用场景</h2><p>这里结合具体的使用场景来使用 Optional 中的方法</p>
+<h4 id="4-1-ifPresent：调用其他方法返回一个集合，在不通过-if-判断是否为-null-就可以放心的遍历"><a href="#4-1-ifPresent：调用其他方法返回一个集合，在不通过-if-判断是否为-null-就可以放心的遍历" class="headerlink" title="4.1 ifPresent：调用其他方法返回一个集合，在不通过 if 判断是否为 null 就可以放心的遍历"></a>4.1 ifPresent：调用其他方法返回一个集合，在不通过 if 判断是否为 null 就可以放心的遍历</h4><ul>
+<li>通过 Optional 的 ofNullable 构造函数封装</li>
+<li>然后通过其中的 ifPresent 方法：如果对象不为 null, 才会执行 Consumer 接口对象中的方法</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable(userList)</span><br><span class="line">        .ifPresent()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testIfPresent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ifPresent 表示 Optional 中的对象存在才会执行 Consumer 接口对象中的方法</span></span><br><span class="line"></span><br><span class="line">    List&lt;String&gt; dataList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 不为空没有值的集合</span></span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"1"</span>); <span class="comment">// 输出 1</span></span><br><span class="line">                t.forEach(a -&gt; System.out.println(a));</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 为 null 的集合, 自动判断为 null, 没有执行 Consumer 接口对象中的方法</span></span><br><span class="line">    dataList = <span class="keyword">null</span>;</span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"2"</span>); <span class="comment">// 没有执行</span></span><br><span class="line">                t.forEach(a -&gt; System.out.println(a));</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 有值的集合</span></span><br><span class="line">    dataList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    dataList.add(<span class="string">"a"</span>);</span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                System.out.println(<span class="string">"3"</span>); <span class="comment">// 输出 3</span></span><br><span class="line">                t.forEach(a -&gt; System.out.println(a));</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 过去的方式, 多了 if 判断</span></span><br><span class="line">    <span class="keyword">if</span> (CollectionUtils.getSize(dataList) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        dataList.forEach(a -&gt; System.out.println(a));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-filter：在判断是否为-null-后，仅遍历集合中符合条件的对象"><a href="#4-2-filter：在判断是否为-null-后，仅遍历集合中符合条件的对象" class="headerlink" title="4.2 filter：在判断是否为 null 后，仅遍历集合中符合条件的对象"></a>4.2 filter：在判断是否为 null 后，仅遍历集合中符合条件的对象</h4><ul>
+<li>在通过 ifPresent 方法返回对象前通过 filter 方法设置过滤条件</li>
+<li>filter 不会减少集合中对象的数量，只要集合中的任意一个对象满足条件就会返回整个集合，否则返回空集合</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable(userList)</span><br><span class="line">        .filter()</span><br><span class="line">        .ifPresent()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> List&lt;User&gt; userList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 初始化 user 集合</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Before</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initEveryTestBefore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">22</span>, <span class="string">"王旭"</span>, <span class="string">"wang.xu"</span>,<span class="string">"123456"</span>, <span class="string">'1'</span>, <span class="keyword">true</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">21</span>, <span class="string">"孙萍"</span>, <span class="string">"sun.ping"</span>,<span class="string">"a123456"</span>, <span class="string">'2'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">23</span>, <span class="string">"步传宇"</span>, <span class="string">"bu.zhuan.yu"</span>, <span class="string">"b123456"</span>, <span class="string">'1'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">18</span>, <span class="string">"蔡明浩"</span>,  <span class="string">"cai.ming.hao"</span>,<span class="string">"c123456"</span>, <span class="string">'1'</span>, <span class="keyword">true</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">17</span>, <span class="string">"郭林杰"</span>, <span class="string">"guo.lin.jie"</span>, <span class="string">"d123456"</span>, <span class="string">'1'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">29</span>, <span class="string">"韩凯"</span>, <span class="string">"han.kai"</span>, <span class="string">"e123456"</span>, <span class="string">'1'</span>, <span class="keyword">true</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">22</span>, <span class="string">"韩天琪"</span>,  <span class="string">"han.tian.qi"</span>,<span class="string">"f123456"</span>, <span class="string">'2'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">21</span>, <span class="string">"郝玮"</span>,  <span class="string">"hao.wei"</span>,<span class="string">"g123456"</span>, <span class="string">'2'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">19</span>, <span class="string">"胡亚强"</span>,  <span class="string">"hu.ya.qing"</span>,<span class="string">"h123456"</span>, <span class="string">'1'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">14</span>, <span class="string">"季恺"</span>,  <span class="string">"ji.kai"</span>,<span class="string">"i123456"</span>, <span class="string">'1'</span>, <span class="keyword">false</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">17</span>, <span class="string">"荆帅"</span>,  <span class="string">"jing.shuai"</span>,<span class="string">"j123456"</span>, <span class="string">'1'</span>, <span class="keyword">true</span>));</span><br><span class="line">    userList.add(<span class="keyword">new</span> User(<span class="number">16</span>, <span class="string">"姜有琪"</span>,  <span class="string">"jiang.you.qi"</span>,<span class="string">"k123456"</span>, <span class="string">'1'</span>, <span class="keyword">false</span>));</span><br><span class="line">    logger.info(<span class="string">"initEveryTestBefore, size &#123;&#125;"</span>, userList.size());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// filter: optional 中的对象在不为空，并且满足某个条件的时候才会返回</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 在集合中有年龄大于 18 岁的才会返回所有对象</span></span><br><span class="line">    Optional.ofNullable(userList)</span><br><span class="line">            .filter(t -&gt; t.stream().anyMatch(u -&gt; u.getAge() &gt; <span class="number">18</span>))</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    System.out.println(<span class="string">"1:"</span> + u.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 因为集合中没有年龄大于 50 岁的，因此不会返回任何对象</span></span><br><span class="line">    Optional.ofNullable(userList)</span><br><span class="line">            .filter(t -&gt; t.stream().anyMatch(u -&gt; u.getAge() &gt; <span class="number">50</span>))</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    System.out.println(<span class="string">"2:"</span> + u.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">22:24:31.666 [main] INFO  c.toulezu.test.optional.TestOptional - initEveryTestBefore, size 12</span><br><span class="line">1:User&#123;age=22, name=&apos;王旭&apos;, enName=&apos;wang.xu&apos;, password=&apos;123456&apos;, gender=1, hasMarried=true&#125;</span><br><span class="line">1:User&#123;age=21, name=&apos;孙萍&apos;, enName=&apos;sun.ping&apos;, password=&apos;a123456&apos;, gender=2, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=23, name=&apos;步传宇&apos;, enName=&apos;bu.zhuan.yu&apos;, password=&apos;b123456&apos;, gender=1, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=18, name=&apos;蔡明浩&apos;, enName=&apos;cai.ming.hao&apos;, password=&apos;c123456&apos;, gender=1, hasMarried=true&#125;</span><br><span class="line">1:User&#123;age=17, name=&apos;郭林杰&apos;, enName=&apos;guo.lin.jie&apos;, password=&apos;d123456&apos;, gender=1, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=29, name=&apos;韩凯&apos;, enName=&apos;han.kai&apos;, password=&apos;e123456&apos;, gender=1, hasMarried=true&#125;</span><br><span class="line">1:User&#123;age=22, name=&apos;韩天琪&apos;, enName=&apos;han.tian.qi&apos;, password=&apos;f123456&apos;, gender=2, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=21, name=&apos;郝玮&apos;, enName=&apos;hao.wei&apos;, password=&apos;g123456&apos;, gender=2, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=19, name=&apos;胡亚强&apos;, enName=&apos;hu.ya.qing&apos;, password=&apos;h123456&apos;, gender=1, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=14, name=&apos;季恺&apos;, enName=&apos;ji.kai&apos;, password=&apos;i123456&apos;, gender=1, hasMarried=false&#125;</span><br><span class="line">1:User&#123;age=17, name=&apos;荆帅&apos;, enName=&apos;jing.shuai&apos;, password=&apos;j123456&apos;, gender=1, hasMarried=true&#125;</span><br><span class="line">1:User&#123;age=16, name=&apos;姜有琪&apos;, enName=&apos;jiang.you.qi&apos;, password=&apos;k123456&apos;, gender=1, hasMarried=false&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-3-orElse：在目标集合对象为-null-的时候可以设定默认值"><a href="#4-3-orElse：在目标集合对象为-null-的时候可以设定默认值" class="headerlink" title="4.3 orElse：在目标集合对象为 null 的时候可以设定默认值"></a>4.3 orElse：在目标集合对象为 null 的时候可以设定默认值</h4><ul>
+<li>通过 orElse 函数设定默认值</li>
+<li>ofNullable 函数为目标集合对象，如果为 null, 才会使用 orElse 函数设定的默认值</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable()</span><br><span class="line">        .orElse()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在构造 Optional 的时候，如果其中的对象为 null, 通过 orElse 方法可以给定一个默认值</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testOrElse</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; tempList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    tempList.add(<span class="string">"a"</span>);</span><br><span class="line">    tempList.add(<span class="string">"b"</span>);</span><br><span class="line">    tempList.add(<span class="string">"c"</span>);</span><br><span class="line">    tempList.add(<span class="string">"d"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 给定的对象为 null, 将会返回 orElse 方法提供的对象</span></span><br><span class="line">    List&lt;String&gt; dataList = <span class="keyword">null</span>;</span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElse(tempList)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"1:"</span> + t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 给定的对象不为 null, 不会返回 orElse 方法提供的对象</span></span><br><span class="line">    dataList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    dataList.add(<span class="string">"aa"</span>);</span><br><span class="line">    dataList.add(<span class="string">"ab"</span>);</span><br><span class="line">    dataList.add(<span class="string">"ac"</span>);</span><br><span class="line"></span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElse(tempList)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"2:"</span> + t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 给定的对象不为 null 但是为 empty, 不会返回 orElse 方法提供的对象</span></span><br><span class="line">    dataList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElse(tempList)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"3:"</span> + t));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1:a</span><br><span class="line">1:b</span><br><span class="line">1:c</span><br><span class="line">1:d</span><br><span class="line">2:aa</span><br><span class="line">2:ab</span><br><span class="line">2:ac</span><br></pre></td></tr></table></figure>
+<h4 id="4-4-orElseGet：在目标集合对象为-null-的时候，可以动态从其他地方加载集合"><a href="#4-4-orElseGet：在目标集合对象为-null-的时候，可以动态从其他地方加载集合" class="headerlink" title="4.4 orElseGet：在目标集合对象为 null 的时候，可以动态从其他地方加载集合"></a>4.4 orElseGet：在目标集合对象为 null 的时候，可以动态从其他地方加载集合</h4><ul>
+<li>在构造 Optional 的时候，如果其中的对象为 null, 通过 orElseGet 方法可以动态构造一个对象，比如可以再从数据库中加载</li>
+<li>orElseGet 直接返回的是 Optional 中的对象</li>
+<li>与 orElse 相比，orElseGet 的参数是 Supplier 接口对象</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable()</span><br><span class="line">        .orElseGet()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testOrElseGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; tempList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    tempList.add(<span class="string">"a"</span>);</span><br><span class="line">    tempList.add(<span class="string">"b"</span>);</span><br><span class="line">    tempList.add(<span class="string">"c"</span>);</span><br><span class="line">    tempList.add(<span class="string">"d"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 给定的对象为 null, 将会执行 orElseGet 方法提供的 Supplier 接口对象中的方法</span></span><br><span class="line">    List&lt;String&gt; dataList = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElseGet(() -&gt; tempList)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"1:"</span> + t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 给定的对象不为 null, 不会执行 orElseGet 方法提供的 Supplier 接口对象中的方法</span></span><br><span class="line">    dataList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    dataList.add(<span class="string">"aa"</span>);</span><br><span class="line">    dataList.add(<span class="string">"ab"</span>);</span><br><span class="line">    dataList.add(<span class="string">"ac"</span>);</span><br><span class="line"></span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElseGet(() -&gt; tempList)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"2:"</span> + t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 给定的对象不为 null 但是 empty, 不会执行 orElseGet 方法提供的 Supplier 接口对象中的方法</span></span><br><span class="line">    dataList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElseGet(() -&gt; tempList)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"3:"</span> + t));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-5-orElseThrow：如果目标对象为-null，-抛出自定义的异常"><a href="#4-5-orElseThrow：如果目标对象为-null，-抛出自定义的异常" class="headerlink" title="4.5 orElseThrow：如果目标对象为 null， 抛出自定义的异常"></a>4.5 orElseThrow：如果目标对象为 null， 抛出自定义的异常</h4><ul>
+<li>在使用 optional 包装的对象前，如果对象为 null 抛出自定义的异常</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable()</span><br><span class="line">        .orElseThrow()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testOrElseThrow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; tempList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    tempList.add(<span class="string">"a"</span>);</span><br><span class="line">    tempList.add(<span class="string">"b"</span>);</span><br><span class="line">    tempList.add(<span class="string">"c"</span>);</span><br><span class="line">    tempList.add(<span class="string">"d"</span>);</span><br><span class="line"></span><br><span class="line">    RuntimeException runtimeException = <span class="keyword">new</span> RuntimeException(<span class="string">"dataList 对象为空"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 给定的对象为 null, 将会抛出异常</span></span><br><span class="line">    List&lt;String&gt; dataList = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Optional.ofNullable(dataList)</span><br><span class="line">                .orElseThrow(() -&gt; runtimeException)</span><br><span class="line">                .forEach(t -&gt; System.out.println(<span class="string">"1:"</span> + t));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        Assert.assertTrue(e <span class="keyword">instanceof</span> RuntimeException);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 给定的对象不为 null, 不会抛出异常</span></span><br><span class="line">    dataList = tempList;</span><br><span class="line">    Optional.ofNullable(dataList)</span><br><span class="line">            .orElseThrow(() -&gt; runtimeException)</span><br><span class="line">            .forEach(t -&gt; System.out.println(<span class="string">"2:"</span> + t));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-6-map：将-optional-中的对象转成-其他对象，或者修改对象中的属性"><a href="#4-6-map：将-optional-中的对象转成-其他对象，或者修改对象中的属性" class="headerlink" title="4.6 map：将 optional 中的对象转成 其他对象，或者修改对象中的属性"></a>4.6 map：将 optional 中的对象转成 其他对象，或者修改对象中的属性</h4><ul>
+<li>用于修改 Optional 中的对象，并返回对象</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable()</span><br><span class="line">        .map()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 返回 optional 中的对象年龄在 18 岁以上的</span></span><br><span class="line">    Optional.ofNullable(userList)</span><br><span class="line">            .map(t -&gt; &#123;</span><br><span class="line">                List&lt;User&gt; tempList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    <span class="keyword">if</span> (u.getAge() &gt; <span class="number">18</span>) &#123;</span><br><span class="line">                        tempList.add(u);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> tempList;</span><br><span class="line">            &#125;)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    System.out.println(<span class="string">"1:"</span> + u.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 将 optional 中的 User 对象的英文名改成大写</span></span><br><span class="line">    Optional.ofNullable(userList)</span><br><span class="line">            .map(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    u.setEnName(u.getEnName().toUpperCase());</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> t;</span><br><span class="line">            &#125;)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    System.out.println(<span class="string">"2:"</span> + u.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-7-flatMap：将-optional-中的对象转成-optional-对象，或者修改对象中的属性"><a href="#4-7-flatMap：将-optional-中的对象转成-optional-对象，或者修改对象中的属性" class="headerlink" title="4.7 flatMap：将 optional 中的对象转成 optional 对象，或者修改对象中的属性"></a>4.7 flatMap：将 optional 中的对象转成 optional 对象，或者修改对象中的属性</h4><ul>
+<li>用于修改 Optional 中的对象，并返回 Optional 对象</li>
+<li>使用范式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Optional.ofNullable()</span><br><span class="line">        .flatMap()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testFlatMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 返回 Optional 中的对象年龄在 18 岁以上的</span></span><br><span class="line">    Optional.ofNullable(userList)</span><br><span class="line">            .flatMap(t -&gt; &#123;</span><br><span class="line">                List&lt;User&gt; tempList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    <span class="keyword">if</span> (u.getAge() &gt; <span class="number">18</span>) &#123;</span><br><span class="line">                        tempList.add(u);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> Optional.of(tempList);</span><br><span class="line">            &#125;)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    System.out.println(<span class="string">"1:"</span> + u.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 将 optional 中的 User 对象的英文名改成大写</span></span><br><span class="line">    Optional.ofNullable(userList)</span><br><span class="line">            .flatMap(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    u.setEnName(u.getEnName().toUpperCase());</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> Optional.of(t);</span><br><span class="line">            &#125;)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                t.forEach(u -&gt; &#123;</span><br><span class="line">                    System.out.println(<span class="string">"2:"</span> + u.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-基于-Optional-设计一个-CRUD-的接口"><a href="#5-基于-Optional-设计一个-CRUD-的接口" class="headerlink" title="5 基于 Optional 设计一个 CRUD 的接口"></a>5 基于 Optional 设计一个 CRUD 的接口</h2><ul>
+<li>在接口中定义返回 Optional 包裹的对象</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.toulezu.test.stream.api.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">BaseService</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Optional&lt;User&gt; <span class="title">getUser</span><span class="params">(Long id)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Optional&lt;List&lt;T&gt;&gt; findAll();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Optional&lt;List&lt;T&gt;&gt; search(String keyword);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在假设数据库中查询返回为 null 的情况</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.toulezu.test.stream.api.User;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Optional;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">implements</span> <span class="title">BaseService</span>&lt;<span class="title">User</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Optional&lt;User&gt; <span class="title">getUser</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">return</span> Optional.ofNullable(user);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Optional&lt;List&lt;User&gt;&gt; findAll() &#123;</span><br><span class="line">        List&lt;User&gt; userList = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">return</span> Optional.ofNullable(userList);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Optional&lt;List&lt;User&gt;&gt; search(String keyword) &#123;</span><br><span class="line">        List&lt;User&gt; userList = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">return</span> Optional.ofNullable(userList);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过 ifPresent 方法可以避免 null 判断，具体测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testUserService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    UserService userService = <span class="keyword">new</span> UserService();</span><br><span class="line">    userService.getUser(<span class="number">1l</span>)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                Assert.assertTrue(t != <span class="keyword">null</span>);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    userService.findAll()</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                Assert.assertTrue(userList != <span class="keyword">null</span>);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">    userService.search(<span class="string">"a"</span>)</span><br><span class="line">            .ifPresent(t -&gt; &#123;</span><br><span class="line">                Assert.assertTrue(userList != <span class="keyword">null</span>);</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java8/" rel="tag"># Java8</a>
+          
+            <a href="/tags/Optional/" rel="tag"># Optional</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/31/AngularJS-function-practice/" rel="next" title="AngularJS 判断类型函数使用总结">
+                <i class="fa fa-chevron-left"></i> AngularJS 判断类型函数使用总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-方法列表"><span class="nav-number">2.</span> <span class="nav-text">2 方法列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-构造函数"><span class="nav-number">3.</span> <span class="nav-text">3 构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-使用场景"><span class="nav-number">4.</span> <span class="nav-text">4 使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-ifPresent：调用其他方法返回一个集合，在不通过-if-判断是否为-null-就可以放心的遍历"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 ifPresent：调用其他方法返回一个集合，在不通过 if 判断是否为 null 就可以放心的遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-filter：在判断是否为-null-后，仅遍历集合中符合条件的对象"><span class="nav-number">4.0.2.</span> <span class="nav-text">4.2 filter：在判断是否为 null 后，仅遍历集合中符合条件的对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-orElse：在目标集合对象为-null-的时候可以设定默认值"><span class="nav-number">4.0.3.</span> <span class="nav-text">4.3 orElse：在目标集合对象为 null 的时候可以设定默认值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-orElseGet：在目标集合对象为-null-的时候，可以动态从其他地方加载集合"><span class="nav-number">4.0.4.</span> <span class="nav-text">4.4 orElseGet：在目标集合对象为 null 的时候，可以动态从其他地方加载集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5-orElseThrow：如果目标对象为-null，-抛出自定义的异常"><span class="nav-number">4.0.5.</span> <span class="nav-text">4.5 orElseThrow：如果目标对象为 null， 抛出自定义的异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6-map：将-optional-中的对象转成-其他对象，或者修改对象中的属性"><span class="nav-number">4.0.6.</span> <span class="nav-text">4.6 map：将 optional 中的对象转成 其他对象，或者修改对象中的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-7-flatMap：将-optional-中的对象转成-optional-对象，或者修改对象中的属性"><span class="nav-number">4.0.7.</span> <span class="nav-text">4.7 flatMap：将 optional 中的对象转成 optional 对象，或者修改对象中的属性</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#5-基于-Optional-设计一个-CRUD-的接口"><span class="nav-number">5.</span> <span class="nav-text">5 基于 Optional 设计一个 CRUD 的接口</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
