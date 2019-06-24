@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/06/24/Java-innerclass-value-propagation-practice/</loc>
+    
+    <lastmod>2019-06-24T13:22:56.895Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/about/index.html</loc>
     
     <lastmod>2019-06-22T10:51:20.498Z</lastmod>
