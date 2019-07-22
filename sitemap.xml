@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/07/22/npm-registry-proxy-install-usage/</loc>
+    
+    <lastmod>2019-07-22T14:15:14.256Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/07/22/AngularJS-href-unsafe-javascript-void/</loc>
+    
+    <lastmod>2019-07-22T14:05:28.144Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/06/27/AngularJS-ui-select-practice/</loc>
     
     <lastmod>2019-06-27T13:25:09.270Z</lastmod>
@@ -352,14 +366,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
