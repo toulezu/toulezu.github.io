@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="本文介绍了 WebJars 的相关功能以及和 SpringBoot 集成的一个例子。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-24T11:42:13.536Z">
+<meta property="og:updated_time" content="2019-07-23T13:25:11.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebJars 的介绍以及在 SpringBoot 中的使用">
 <meta name="twitter:description" content="本文介绍了 WebJars 的相关功能以及和 SpringBoot 集成的一个例子。">
@@ -346,8 +346,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
+                  <a href="/categories/SpringBoot/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringBoot</span>
                   </a>
                 </span>
 
@@ -430,6 +430,9 @@
 <h2 id="前端页面使用"><a href="#前端页面使用" class="headerlink" title="前端页面使用"></a>前端页面使用</h2><p>编写 index.html 如下，将其放到 <code>src\main\resources\public\index.html</code> 目录下，启动项目，访问 <code>http://localhost:8080/</code> 即可看到效果。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;webjars 测试&lt;/title&gt;</span><br><span class="line"></span><br><span class="line">    &lt;!--&lt;script src=&quot;/webjars/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css&quot; /&gt;--&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script src=&quot;/webjars/jquery/jquery.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script src=&quot;/webjars/bootstrap/js/bootstrap.min.js&quot;&gt;&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;/webjars/bootstrap/css/bootstrap.min.css&quot; /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class=&quot;container&quot;&gt;&lt;br/&gt;</span><br><span class="line">        &lt;div class=&quot;alert alert-success&quot;&gt;</span><br><span class="line">            &lt;a href=&quot;#&quot; class=&quot;close&quot; data-dismiss=&quot;alert&quot; aria-label=&quot;close&quot;&gt;×&lt;/a&gt;</span><br><span class="line">            &lt;strong&gt;Success!&lt;/strong&gt; It is working as we expected.</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 <p>由于 SpringBoot 自动将 classpath 下的 <code>/static</code>, <code>/public</code>, <code>/resources</code>, <code>/META-INF/resources</code> 这些目录自动映射到 <code>/**</code> 请求路径上，因此访问 <code>http://localhost:8080/</code> 就可以找到 <code>public\index.html</code>。</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><ul>
+<li><a href="https://gitee.com/toulezucom/spring-boot-learning/tree/master/spring-boot-webjars" target="_blank" rel="noopener">spring-boot-webjars</a></li>
+</ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文介绍了 WebJars 的相关功能以及和 SpringBoot 集成的一个例子。</p>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://www.baeldung.com/maven-webjars" target="_blank" rel="noopener">Introduction to WebJars</a></li>
@@ -587,7 +590,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">55</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -598,7 +601,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -649,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用-WebJars？"><span class="nav-number">2.</span> <span class="nav-text">为什么使用 WebJars？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-依赖"><span class="nav-number">3.</span> <span class="nav-text">Maven 依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动检测依赖的版本"><span class="nav-number">4.</span> <span class="nav-text">自动检测依赖的版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端页面使用"><span class="nav-number">5.</span> <span class="nav-text">前端页面使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概要"><span class="nav-number">1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用-WebJars？"><span class="nav-number">2.</span> <span class="nav-text">为什么使用 WebJars？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Maven-依赖"><span class="nav-number">3.</span> <span class="nav-text">Maven 依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动检测依赖的版本"><span class="nav-number">4.</span> <span class="nav-text">自动检测依赖的版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前端页面使用"><span class="nav-number">5.</span> <span class="nav-text">前端页面使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">6.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
