@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
+    
+    <lastmod>2019-08-23T13:26:31.276Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/23/Mysql-Delete-error-you-cant-specify-target-table-x-for-update-in-from/</loc>
+    
+    <lastmod>2019-08-23T13:13:48.975Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/23/understand-Java-8-default-FunctionalInterface/</loc>
+    
+    <lastmod>2019-08-23T12:50:37.639Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/08/07/SpringBoot-ConfigurationProperties-not-working/</loc>
     
     <lastmod>2019-08-22T13:30:12.477Z</lastmod>
@@ -376,13 +397,6 @@
     <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
     
     <lastmod>2017-06-20T14:11:13.923Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
-    
-    <lastmod>2017-06-20T14:11:13.891Z</lastmod>
     
   </url>
   
