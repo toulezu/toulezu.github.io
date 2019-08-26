@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/08/26/summary-Java-8-FunctionalInterface/</loc>
+    
+    <lastmod>2019-08-26T14:19:42.291Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/22/understand-Spring-ThreadPoolTaskExecutor-ListenableFuture/</loc>
+    
+    <lastmod>2019-08-26T14:13:00.871Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
     
     <lastmod>2019-08-23T13:26:31.276Z</lastmod>
@@ -26,13 +40,6 @@
     <loc>http://ckjava.com/2019/08/07/SpringBoot-ConfigurationProperties-not-working/</loc>
     
     <lastmod>2019-08-22T13:30:12.477Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2019/08/22/understand-Spring-ThreadPoolTaskExecutor-ListenableFuture/</loc>
-    
-    <lastmod>2019-08-22T13:27:39.014Z</lastmod>
     
   </url>
   
@@ -268,14 +275,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
