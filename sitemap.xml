@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/08/29/understand-Java-8-Stream-collect-Collector-Collectors-usage/</loc>
+    
+    <lastmod>2019-08-29T13:44:50.234Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/08/26/summary-Java-8-FunctionalInterface/</loc>
     
     <lastmod>2019-08-26T14:19:42.291Z</lastmod>
