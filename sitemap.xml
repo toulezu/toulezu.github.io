@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/10/11/understand-Spring-Lazy-annotation-practice/</loc>
+    
+    <lastmod>2019-10-11T14:13:39.256Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/11/understand-HTML-countdown-jump-setInterval-practice/</loc>
+    
+    <lastmod>2019-10-11T14:07:41.218Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/09/10/understand-Java-primary-type-change/</loc>
     
     <lastmod>2019-09-10T12:35:37.338Z</lastmod>
@@ -289,14 +303,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
