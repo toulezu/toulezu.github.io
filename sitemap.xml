@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/11/24/understand-Java-8-CompletableFuture-usage-practice/</loc>
+    
+    <lastmod>2019-11-24T12:53:06.752Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/10/29/understand-JavaScript-Java-Rhino-usage-practice/</loc>
     
-    <lastmod>2019-10-29T14:46:22.430Z</lastmod>
+    <lastmod>2019-10-30T12:25:29.152Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/10/29/WaitUtils-xutils-Java-usage-practice/</loc>
     
-    <lastmod>2019-10-29T14:45:33.454Z</lastmod>
+    <lastmod>2019-10-30T12:25:13.785Z</lastmod>
     
   </url>
   
