@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2019/12/01/freemarker-self-define-function-usage/</loc>
+    
+    <lastmod>2019-12-01T13:38:06.762Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/11/24/understand-Java-8-CompletableFuture-usage-practice/</loc>
     
     <lastmod>2019-11-24T12:53:06.752Z</lastmod>
