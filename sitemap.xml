@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2020/04/30/Java-split-list-practice/</loc>
+    
+    <lastmod>2020-04-30T01:04:41.573Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/12/01/freemarker-self-define-function-usage/</loc>
     
     <lastmod>2019-12-01T13:38:06.762Z</lastmod>
@@ -25,7 +32,7 @@
   <url>
     <loc>http://ckjava.com/2019/10/29/WaitUtils-xutils-Java-usage-practice/</loc>
     
-    <lastmod>2019-10-30T12:25:13.785Z</lastmod>
+    <lastmod>2019-10-30T12:25:13.786Z</lastmod>
     
   </url>
   
@@ -53,7 +60,7 @@
   <url>
     <loc>http://ckjava.com/2019/10/14/JSON-stringify-parse-usage-practice/</loc>
     
-    <lastmod>2019-10-14T15:04:52.048Z</lastmod>
+    <lastmod>2019-10-14T15:04:52.049Z</lastmod>
     
   </url>
   
@@ -81,7 +88,7 @@
   <url>
     <loc>http://ckjava.com/2019/08/26/summary-Java-8-FunctionalInterface/</loc>
     
-    <lastmod>2019-08-26T14:19:42.291Z</lastmod>
+    <lastmod>2019-08-26T14:19:42.292Z</lastmod>
     
   </url>
   
@@ -95,14 +102,14 @@
   <url>
     <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
     
-    <lastmod>2019-08-23T13:26:31.276Z</lastmod>
+    <lastmod>2019-08-23T13:26:31.277Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/08/23/Mysql-Delete-error-you-cant-specify-target-table-x-for-update-in-from/</loc>
     
-    <lastmod>2019-08-23T13:13:48.975Z</lastmod>
+    <lastmod>2019-08-23T13:13:48.976Z</lastmod>
     
   </url>
   
@@ -123,7 +130,7 @@
   <url>
     <loc>http://ckjava.com/2019/08/07/Spring-Boot-EnableAsync-Async-ExecutorService-usage-practice/</loc>
     
-    <lastmod>2019-08-07T13:59:29.147Z</lastmod>
+    <lastmod>2019-08-07T13:59:29.148Z</lastmod>
     
   </url>
   
@@ -144,28 +151,28 @@
   <url>
     <loc>http://ckjava.com/2019/05/27/SpringBoot-jpa-RESTful-practice/</loc>
     
-    <lastmod>2019-07-23T14:26:13.512Z</lastmod>
+    <lastmod>2019-07-23T14:26:13.513Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/05/27/SpringBoot-jpa-junit-test-practice/</loc>
     
-    <lastmod>2019-07-23T14:25:59.663Z</lastmod>
+    <lastmod>2019-07-23T14:25:59.664Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/07/23/Java-jvm-system-properties-read-write-practice/</loc>
     
-    <lastmod>2019-07-23T14:23:33.135Z</lastmod>
+    <lastmod>2019-07-23T14:23:33.136Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/03/05/SpringBoot-CORS-practice/</loc>
     
-    <lastmod>2019-07-23T13:25:17.297Z</lastmod>
+    <lastmod>2019-07-23T13:25:17.298Z</lastmod>
     
   </url>
   
@@ -193,35 +200,35 @@
   <url>
     <loc>http://ckjava.com/2019/06/27/AngularJS-ui-select-practice/</loc>
     
-    <lastmod>2019-06-27T13:25:09.270Z</lastmod>
+    <lastmod>2019-06-27T13:25:09.271Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/06/24/Java-innerclass-value-propagation-practice/</loc>
     
-    <lastmod>2019-06-24T13:22:56.895Z</lastmod>
+    <lastmod>2019-06-24T13:22:56.896Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/about/index.html</loc>
     
-    <lastmod>2019-06-22T10:51:20.498Z</lastmod>
+    <lastmod>2019-06-22T10:51:20.499Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/06/22/understand-Java-8-Optional/</loc>
     
-    <lastmod>2019-06-22T10:48:26.307Z</lastmod>
+    <lastmod>2019-06-22T10:48:26.308Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
     
-    <lastmod>2019-06-22T10:46:06.168Z</lastmod>
+    <lastmod>2019-06-22T10:46:06.169Z</lastmod>
     
   </url>
   
@@ -242,7 +249,7 @@
   <url>
     <loc>http://ckjava.com/2019/02/24/Java-SLF4J-Logback/</loc>
     
-    <lastmod>2019-06-22T10:45:08.092Z</lastmod>
+    <lastmod>2019-06-22T10:45:08.093Z</lastmod>
     
   </url>
   
@@ -263,7 +270,7 @@
   <url>
     <loc>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</loc>
     
-    <lastmod>2019-06-22T10:44:18.243Z</lastmod>
+    <lastmod>2019-06-22T10:44:18.244Z</lastmod>
     
   </url>
   
@@ -284,14 +291,14 @@
   <url>
     <loc>http://ckjava.com/2018/09/17/JUC-CyclicBarrier-understand-practice/</loc>
     
-    <lastmod>2019-06-22T10:43:45.652Z</lastmod>
+    <lastmod>2019-06-22T10:43:45.653Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/05/17/understand-Java-8-Lambda/</loc>
     
-    <lastmod>2019-06-22T10:12:39.379Z</lastmod>
+    <lastmod>2019-06-22T10:12:39.380Z</lastmod>
     
   </url>
   
@@ -312,7 +319,7 @@
   <url>
     <loc>http://ckjava.com/2019/05/31/understand-JavaScript-function-this/</loc>
     
-    <lastmod>2019-05-31T00:36:31.894Z</lastmod>
+    <lastmod>2019-05-31T00:36:31.895Z</lastmod>
     
   </url>
   
@@ -340,7 +347,7 @@
   <url>
     <loc>http://ckjava.com/2018/05/03/java-byte-0XFF/</loc>
     
-    <lastmod>2018-05-05T04:32:51.249Z</lastmod>
+    <lastmod>2018-05-05T04:32:51.250Z</lastmod>
     
   </url>
   
@@ -352,14 +359,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
     
     <lastmod>2018-03-17T10:36:21.903Z</lastmod>
     
@@ -368,77 +375,77 @@
   <url>
     <loc>http://ckjava.com/2017/09/11/understand-crc/</loc>
     
-    <lastmod>2018-01-01T12:55:41.586Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.587Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/08/01/Phabricator-subtask/</loc>
     
-    <lastmod>2018-01-01T12:55:41.575Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.576Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/08/11/Phabricator-task-subType/</loc>
     
-    <lastmod>2018-01-01T12:55:41.560Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.561Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/07/25/Phabricator-workborad-card-task/</loc>
     
-    <lastmod>2018-01-01T12:55:41.541Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.542Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/08/15/Phabricator-conduit-API-Java/</loc>
     
-    <lastmod>2018-01-01T12:55:41.358Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.359Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/</loc>
     
-    <lastmod>2018-01-01T12:55:41.283Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.284Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/09/15/AngularJS-basic/</loc>
     
-    <lastmod>2018-01-01T12:55:41.279Z</lastmod>
+    <lastmod>2018-01-01T12:55:41.280Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/07/25/Phabricator-list-item-task/</loc>
     
-    <lastmod>2017-07-25T00:59:37.189Z</lastmod>
+    <lastmod>2017-07-25T00:59:37.190Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/07/03/Phabricator-Windows-setup/</loc>
     
-    <lastmod>2017-07-25T00:56:31.532Z</lastmod>
+    <lastmod>2017-07-25T00:56:31.533Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/07/03/PHP-basic/</loc>
     
-    <lastmod>2017-07-22T15:16:34.039Z</lastmod>
+    <lastmod>2017-07-22T15:16:34.040Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2017/07/22/Phabricator-project-Herald/</loc>
     
-    <lastmod>2017-07-22T15:10:09.944Z</lastmod>
+    <lastmod>2017-07-22T15:10:09.945Z</lastmod>
     
   </url>
   
@@ -480,7 +487,7 @@
   <url>
     <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
     
-    <lastmod>2017-06-20T14:11:13.923Z</lastmod>
+    <lastmod>2017-06-20T14:11:13.924Z</lastmod>
     
   </url>
   
