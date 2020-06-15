@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Jackson,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
+<meta name="keywords" content="Java,Jackson">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
+<meta property="og:url" content="http://ckjava.com/2020/05/08/Jackson-ObjectMapper-readValue-practice/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-15T12:51:21.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
+<meta name="twitter:description" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2020/05/08/Jackson-ObjectMapper-readValue-practice/">
+
+
+
+
+
+  <title>详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2020/05/08/Jackson-ObjectMapper-readValue-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-08T00:00:00+08:00">
+                2020-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jackson/" itemprop="url" rel="index">
+                    <span itemprop="name">Jackson</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/08/Jackson-ObjectMapper-readValue-practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/05/08/Jackson-ObjectMapper-readValue-practice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><h2 id="1-概述-1"><a href="#1-概述-1" class="headerlink" title="1 概述"></a>1 概述</h2><p>本文介绍 Jackson 中的 ObjectMapper 类中的 readValue 方法将 json 字符串转成 Java 对象过程中对泛型的处理，具体内容如下</p>
+<ol>
+<li>通过 <code>new TypeReference&lt;Json&lt;User&gt;&gt;(){}</code> 来解决泛型问题</li>
+<li>通过 TypeFactory 类中的 constructParametricType 方法来解决泛型问题</li>
+<li>TypeFactory 一些方法解析</li>
+</ol>
+<h2 id="2-Jackson-ObjectMapper-readValue-泛型问题"><a href="#2-Jackson-ObjectMapper-readValue-泛型问题" class="headerlink" title="2 Jackson ObjectMapper readValue 泛型问题"></a>2 Jackson ObjectMapper readValue 泛型问题</h2><ul>
+<li>问题：通过 <code>readValue(String, T)</code> 只能默认将字符串转成 <code>HttpResponse&lt;List&lt;Map&lt;String, Object&gt;&gt;</code> 类型</li>
+<li>解决：通过 TypeReference 对象解决，具体如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpResult httpResult = HttpClientUtils.post(url, HeaderMap.jsonHeader, <span class="keyword">null</span>, JsonUtils.getMapper().writeValueAsString(jsonBody));</span><br><span class="line">HttpResponse&lt;List&lt;HeartbeatVo&gt;&gt; httpResponse = JsonUtils.getMapper().readValue(httpResult.getBodyString(), <span class="keyword">new</span> TypeReference&lt;HttpResponse&lt;List&lt;HeartbeatVo&gt;&gt;&gt;()&#123;&#125;);</span><br></pre></td></tr></table></figure>
+<p>或者通过 TypeFactory 类中的 constructParametricType 方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Data&lt;T&gt; <span class="title">read</span><span class="params">(InputStream json, Class&lt;T&gt; contentClass)</span> </span>&#123;</span><br><span class="line">   JavaType type = mapper.getTypeFactory().constructParametricType(Data.class, contentClass);</span><br><span class="line">   <span class="keyword">return</span> mapper.readValue(json, type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-完整测试"><a href="#3-完整测试" class="headerlink" title="3 完整测试"></a>3 完整测试</h2><h4 id="3-1-pojo-对象"><a href="#3-1-pojo-对象" class="headerlink" title="3.1 pojo 对象"></a>3.1 pojo 对象</h4><ul>
+<li>忽略 get set 以及构造函数</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    private int age;//年龄</span><br><span class="line">    private String name;//姓名</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Hit&lt;T&gt; &#123;</span><br><span class="line">    public String id;</span><br><span class="line">    public T data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Hits&lt;T&gt; &#123;</span><br><span class="line">    public int found;</span><br><span class="line">    public int start;</span><br><span class="line">    public ArrayList&lt;Hit&lt;T&gt;&gt; hit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Json&lt;T&gt; &#123;</span><br><span class="line">    public Hits&lt;T&gt; hits;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-测试代码"><a href="#3-2-测试代码" class="headerlink" title="3.2 测试代码"></a>3.2 测试代码</h4><ol>
+<li>通过 <code>new TypeReference&lt;Json&lt;User&gt;&gt;(){}</code> 来解决泛型问题</li>
+<li>通过 TypeFactory 类中的 constructParametricType 方法来解决泛型问题</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Json&lt;User&gt; userJson = <span class="keyword">new</span> Json&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    Hit&lt;User&gt; hit = <span class="keyword">new</span> Hit&lt;&gt;();</span><br><span class="line">    hit.setId(<span class="string">"1"</span>);</span><br><span class="line">    hit.setData(<span class="keyword">new</span> User(<span class="number">20</span>, <span class="string">"jack"</span>));</span><br><span class="line"></span><br><span class="line">    Hits&lt;User&gt; userHits = <span class="keyword">new</span> Hits&lt;&gt;();</span><br><span class="line">    userHits.setFound(<span class="number">1</span>);</span><br><span class="line">    userHits.setStart(<span class="number">2</span>);</span><br><span class="line">    ArrayList&lt;Hit&lt;User&gt;&gt; hitArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    hitArrayList.add(hit);</span><br><span class="line">    userHits.setHit(hitArrayList);</span><br><span class="line"></span><br><span class="line">    userJson.setHits(userHits);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String userJsonString = JsonUtils.getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userJson);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        Json&lt;User&gt; readValue = JsonUtils.getMapper().readValue(userJsonString, <span class="keyword">new</span> TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(readValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String jsonString = <span class="string">"&#123;\"hits\":&#123;\"found\":1,\"start\":2,\"hit\":[&#123;\"id\":\"1\",\"data\":&#123;\"age\":20,\"name\":\"jack\",\"enName\":null,\"password\":null,\"gender\":\"\\u0000\",\"hasMarried\":false&#125;&#125;]&#125;&#125;"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span></span><br><span class="line">        Json&lt;User&gt; readValue = JsonUtils.getMapper().readValue(jsonString, <span class="keyword">new</span> TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 TypeFactory 来解决泛型问题</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json.class, User.class);</span><br><span class="line">        readValue = JsonUtils.getMapper().readValue(jsonString, jsonType);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String jsonString = <span class="string">"&#123;\"data\":&#123;\"hits\":&#123;\"found\":1,\"start\":2,\"hit\":[&#123;\"id\":\"1\",\"data\":&#123;\"age\":20,\"name\":\"jack\",\"enName\":null,\"password\":null,\"gender\":\"\\u0000\",\"hasMarried\":false&#125;&#125;]&#125;&#125;,\"sign\":\"success\",\"code\":200,\"message\":null,\"dataSize\":1&#125;"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span></span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; httpResponse = JsonUtils.getMapper().readValue(jsonString, <span class="keyword">new</span> TypeReference&lt;HttpResponse&lt;Json&lt;User&gt;&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(httpResponse.getData().getHits().getFound());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 TypeFactory 来解决泛型问题</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json.class, User.class);</span><br><span class="line">        JavaType httpResponseJavaType = JsonUtils.getMapper().getTypeFactory().constructParametricType(HttpResponse.class, jsonType);</span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; parseHttpResponse = JsonUtils.getMapper().readValue(jsonString, httpResponseJavaType);</span><br><span class="line">        System.out.println(parseHttpResponse.getData().getHits().getFound());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-TypeFactory-一些方法解析"><a href="#4-TypeFactory-一些方法解析" class="headerlink" title="4 TypeFactory 一些方法解析"></a>4 TypeFactory 一些方法解析</h2><ul>
+<li>com.fasterxml.jackson.databind.type.TypeFactory</li>
+<li>com.fasterxml.jackson.databind.JavaType</li>
+</ul>
+<ol>
+<li>TypeFactory 用于构造 JavaType 对象。</li>
+<li>JavaType 在 Jackson 将 json 字符串反序列化为 Java 对象的时候会用到。</li>
+<li>TypeFactory 内置了很多生成 JavaType 的方法，用于生成各类 JavaType 对象，包含复杂的嵌套泛型，比如下面的两个</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">JavaType stringType = mapper.constructType(String.class);</span><br><span class="line">JavaType stringCollection = mapper.getTypeFactory().constructCollectionType(List.class, String.class);</span><br></pre></td></tr></table></figure>
+<h4 id="4-1-constructCollectionType-方法处理-List-的-json-类型"><a href="#4-1-constructCollectionType-方法处理-List-的-json-类型" class="headerlink" title="4.1 constructCollectionType 方法处理 List 的 json 类型"></a>4.1 constructCollectionType 方法处理 List<t> 的 json 类型</t></h4><ul>
+<li>constructCollectionType 方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_list_string</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String listString = <span class="string">"[ \"1\",\"2\",\"3\" ]"</span>;</span><br><span class="line">        JavaType stringCollection = JsonUtils.getMapper().getTypeFactory().constructCollectionType(List.class, String.class);</span><br><span class="line">        List&lt;String&gt; dataList = JsonUtils.getMapper().readValue(listString, stringCollection);</span><br><span class="line"></span><br><span class="line">        dataList.forEach(data -&gt; System.out.println(String.format(<span class="string">"data:%s"</span>, data)));</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-2-constructMapLikeType-方法处理-Map-lt-k-List-gt-的-json-类型"><a href="#4-2-constructMapLikeType-方法处理-Map-lt-k-List-gt-的-json-类型" class="headerlink" title="4.2 constructMapLikeType 方法处理 Map&lt;k, List&gt; 的 json 类型"></a>4.2 constructMapLikeType 方法处理 Map&lt;k, List<t>&gt; 的 json 类型</t></h4><ul>
+<li>constructMapLikeType 方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_map_list_string</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String jsonString = <span class="string">"&#123; \"list\" : [ \"1\",\"2\",\"3\" ] &#125;"</span>;</span><br><span class="line"></span><br><span class="line">        JavaType stringType = JsonUtils.getMapper().getTypeFactory().constructType(String.class);</span><br><span class="line">        JavaType listType = JsonUtils.getMapper().getTypeFactory().constructCollectionType(List.class, String.class);</span><br><span class="line"></span><br><span class="line">        JavaType mapLikeType = JsonUtils.getMapper().getTypeFactory().constructMapLikeType(Map.class, stringType, listType);</span><br><span class="line">        Map&lt;String, List&lt;String&gt;&gt; dataMap = JsonUtils.getMapper().readValue(jsonString, mapLikeType);</span><br><span class="line"></span><br><span class="line">        dataMap.forEach((key,value) -&gt; &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"key:%s"</span>, key));</span><br><span class="line">            System.out.println(<span class="string">"value:"</span>);</span><br><span class="line">            value.forEach(data -&gt; System.out.print(String.format(<span class="string">"data:%s,"</span>, data)));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-3-constructParametricType-方法处理-HttpResponse-lt-Json-gt-的-json-类型"><a href="#4-3-constructParametricType-方法处理-HttpResponse-lt-Json-gt-的-json-类型" class="headerlink" title="4.3 constructParametricType 方法处理 HttpResponse&lt;Json&gt; 的 json 类型"></a>4.3 constructParametricType 方法处理 HttpResponse&lt;Json<t>&gt; 的 json 类型</t></h4><ul>
+<li>constructParametricType 方法</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test3() &#123;</span><br><span class="line">    String jsonString = &quot;&#123;\&quot;data\&quot;:&#123;\&quot;hits\&quot;:&#123;\&quot;found\&quot;:1,\&quot;start\&quot;:2,\&quot;hit\&quot;:[&#123;\&quot;id\&quot;:\&quot;1\&quot;,\&quot;data\&quot;:&#123;\&quot;age\&quot;:20,\&quot;name\&quot;:\&quot;jack\&quot;,\&quot;enName\&quot;:null,\&quot;password\&quot;:null,\&quot;gender\&quot;:\&quot;\\u0000\&quot;,\&quot;hasMarried\&quot;:false&#125;&#125;]&#125;&#125;,\&quot;sign\&quot;:\&quot;success\&quot;,\&quot;code\&quot;:200,\&quot;message\&quot;:null,\&quot;dataSize\&quot;:1&#125;&quot;;</span><br><span class="line">    try &#123;</span><br><span class="line">        // 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; httpResponse = JsonUtils.getMapper().readValue(jsonString, new TypeReference&lt;HttpResponse&lt;Json&lt;User&gt;&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(httpResponse.getData().getHits().getFound());</span><br><span class="line"></span><br><span class="line">        // 通过 TypeFactory 来解决泛型问题</span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json.class, User.class);</span><br><span class="line">        JavaType httpResponseJavaType = JsonUtils.getMapper().getTypeFactory().constructParametricType(HttpResponse.class, jsonType);</span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; parseHttpResponse = JsonUtils.getMapper().readValue(jsonString, httpResponseJavaType);</span><br><span class="line">        System.out.println(parseHttpResponse.getData().getHits().getFound());</span><br><span class="line">    &#125; catch (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-4-constructParametricType-方法处理-JsonType-lt-K-T-gt-的-json-类型"><a href="#4-4-constructParametricType-方法处理-JsonType-lt-K-T-gt-的-json-类型" class="headerlink" title="4.4 constructParametricType 方法处理 JsonType&lt;K,T&gt; 的 json 类型"></a>4.4 constructParametricType 方法处理 JsonType&lt;K,T&gt; 的 json 类型</h4><p>如果将类的泛型有多个呢？新增泛型对象如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JsonType</span>&lt;<span class="title">K</span>,<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> K key;</span><br><span class="line">    <span class="keyword">public</span> Hits&lt;T&gt; hits;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJsonType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JsonType&lt;String, User&gt; userJson = <span class="keyword">new</span> JsonType&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    Hit&lt;User&gt; hit = <span class="keyword">new</span> Hit&lt;&gt;();</span><br><span class="line">    hit.setId(<span class="string">"1"</span>);</span><br><span class="line">    hit.setData(<span class="keyword">new</span> User(<span class="number">20</span>, <span class="string">"jack"</span>));</span><br><span class="line"></span><br><span class="line">    Hits&lt;User&gt; userHits = <span class="keyword">new</span> Hits&lt;&gt;();</span><br><span class="line">    userHits.setFound(<span class="number">1</span>);</span><br><span class="line">    userHits.setStart(<span class="number">2</span>);</span><br><span class="line">    ArrayList&lt;Hit&lt;User&gt;&gt; hitArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    hitArrayList.add(hit);</span><br><span class="line">    userHits.setHit(hitArrayList);</span><br><span class="line"></span><br><span class="line">    userJson.setKey(<span class="string">"chen"</span>);</span><br><span class="line">    userJson.setHits(userHits);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String userJsonString = JsonUtils.getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userJson);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. new TypeReference&lt;JsonType&lt;String, User&gt;&gt;()&#123;&#125; 方式</span></span><br><span class="line">        JsonType&lt;String, User&gt; readValue = JsonUtils.getMapper().readValue(userJsonString, <span class="keyword">new</span> TypeReference&lt;JsonType&lt;String, User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(readValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. JavaType 方式</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(JsonType.class, String.class, User.class);</span><br><span class="line">        JsonType&lt;String, User&gt; JsonTypeValue = JsonUtils.getMapper().readValue(userJsonString, jsonType);</span><br><span class="line">        System.out.println(JsonTypeValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(JsonTypeValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-参考"><a href="#5-参考" class="headerlink" title="5 参考"></a>5 参考</h2><ul>
+<li><a href="https://stackoverflow.com/questions/11664894/jackson-deserialize-using-generic-class" target="_blank" rel="noopener">jackson-deserialize-using-generic-class</a></li>
+<li><a href="https://stackoverflow.com/questions/11659844/jackson-deserialize-generic-class-variable" target="_blank" rel="noopener">Jackson - Deserialize Generic class variable</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Jackson/" rel="tag"># Jackson</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/04/30/Java-split-list-practice/" rel="next" title="在 Java 中如何将一个集合分隔成若干个子集合">
+                <i class="fa fa-chevron-left"></i> 在 Java 中如何将一个集合分隔成若干个子集合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/08/Java-AtomicReference-understand-practice/" rel="prev" title="对 AtomicReference 的理解和使用">
+                对 AtomicReference 的理解和使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述-1"><span class="nav-number">2.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Jackson-ObjectMapper-readValue-泛型问题"><span class="nav-number">3.</span> <span class="nav-text">2 Jackson ObjectMapper readValue 泛型问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-完整测试"><span class="nav-number">4.</span> <span class="nav-text">3 完整测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-pojo-对象"><span class="nav-number">4.0.1.</span> <span class="nav-text">3.1 pojo 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-测试代码"><span class="nav-number">4.0.2.</span> <span class="nav-text">3.2 测试代码</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#4-TypeFactory-一些方法解析"><span class="nav-number">5.</span> <span class="nav-text">4 TypeFactory 一些方法解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-constructCollectionType-方法处理-List-的-json-类型"><span class="nav-number">5.0.1.</span> <span class="nav-text">4.1 constructCollectionType 方法处理 List 的 json 类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-constructMapLikeType-方法处理-Map-lt-k-List-gt-的-json-类型"><span class="nav-number">5.0.2.</span> <span class="nav-text">4.2 constructMapLikeType 方法处理 Map&lt;k, List&gt; 的 json 类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-constructParametricType-方法处理-HttpResponse-lt-Json-gt-的-json-类型"><span class="nav-number">5.0.3.</span> <span class="nav-text">4.3 constructParametricType 方法处理 HttpResponse&lt;Json&gt; 的 json 类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-constructParametricType-方法处理-JsonType-lt-K-T-gt-的-json-类型"><span class="nav-number">5.0.4.</span> <span class="nav-text">4.4 constructParametricType 方法处理 JsonType&lt;K,T&gt; 的 json 类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-参考"><span class="nav-number">6.</span> <span class="nav-text">5 参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

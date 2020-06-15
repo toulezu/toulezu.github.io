@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2020/06/15/Jackson-JsonNode-at-practice/</loc>
+    
+    <lastmod>2020-06-15T13:03:32.614Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/06/15/Jackson-ObjectMapper-readValue-practice/</loc>
+    
+    <lastmod>2020-06-15T13:02:15.080Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2020/05/08/Java-AtomicReference-understand-practice/</loc>
     
     <lastmod>2020-05-08T00:59:48.392Z</lastmod>
