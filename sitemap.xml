@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2018/09/17/JUC-CyclicBarrier-understand-practice/</loc>
+    
+    <lastmod>2020-07-27T09:23:17.668Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/13/JUC-CyclicBarrier-understand-practice/</loc>
+    
+    <lastmod>2020-07-27T09:23:13.577Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/13/JUC-CountDownLatch-understand-practice/</loc>
+    
+    <lastmod>2020-07-27T09:23:07.505Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/07/27/Java-JUC-DelayQueue-understand-practice/</loc>
+    
+    <lastmod>2020-07-27T09:15:25.200Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2020/06/15/Jackson-JsonNode-at-practice/</loc>
     
     <lastmod>2020-06-15T13:03:32.614Z</lastmod>
@@ -292,27 +320,6 @@
     <loc>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</loc>
     
     <lastmod>2019-06-22T10:44:18.244Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2018/09/13/JUC-CountDownLatch-understand-practice/</loc>
-    
-    <lastmod>2019-06-22T10:44:03.245Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2018/09/13/JUC-CyclicBarrier-understand-practice/</loc>
-    
-    <lastmod>2019-06-22T10:43:56.681Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2018/09/17/JUC-CyclicBarrier-understand-practice/</loc>
-    
-    <lastmod>2019-06-22T10:43:45.653Z</lastmod>
     
   </url>
   
