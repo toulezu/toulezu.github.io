@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="详解 JUC 之 DelayQueue">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-07-27T09:15:25.200Z">
+<meta property="og:updated_time" content="2020-07-27T09:26:25.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解 JUC 之 DelayQueue">
 <meta name="twitter:description" content="详解 JUC 之 DelayQueue">
@@ -478,7 +478,7 @@
 <li>输出如下</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">16:26:20.584 [pool-1-thread-1] INFO  com.ckjava.delayQueue.Task - task_0 init work, timeLeft:10000 ms</span><br><span class="line">java.lang.InterruptedException</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.reportInterruptAfterWait(AbstractQueuedSynchronizer.java:2014)</span><br><span class="line">	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2088)</span><br><span class="line">	at java.util.concurrent.DelayQueue.take(DelayQueue.java:223)</span><br><span class="line">	at java.util.concurrent.DelayQueue.take(DelayQueue.java:70)</span><br><span class="line">	at com.ckjava.delayQueue.DelayQueueConsumer.lambda$run$0(DelayQueueConsumer.java:26)</span><br><span class="line">	at java.util.stream.Streams$RangeIntSpliterator.forEachRemaining(Streams.java:110)</span><br><span class="line">	at java.util.stream.IntPipeline$Head.forEach(IntPipeline.java:559)</span><br><span class="line">	at com.ckjava.delayQueue.DelayQueueConsumer.run(DelayQueueConsumer.java:22)</span><br><span class="line">	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)</span><br><span class="line">	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)</span><br><span class="line">	at java.util.concurrent.FutureTask.run(FutureTask.java)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:748)</span><br></pre></td></tr></table></figure>
-<h4 id="4-1-设置的延迟消费时间为-0"><a href="#4-1-设置的延迟消费时间为-0" class="headerlink" title="4.1 设置的延迟消费时间为 0"></a>4.1 设置的延迟消费时间为 0</h4><ol>
+<h4 id="4-2-设置的延迟消费时间为-0"><a href="#4-2-设置的延迟消费时间为-0" class="headerlink" title="4.2 设置的延迟消费时间为 0"></a>4.2 设置的延迟消费时间为 0</h4><ol>
 <li>生产者线程向 DelayQueue 队列中存入一个 0s 后执行的任务</li>
 <li>消费者线程能够立即获取到任务并执行</li>
 </ol>
@@ -487,7 +487,7 @@
 <li>输出如下</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">17:09:54.959 [pool-1-thread-1] INFO  com.ckjava.delayQueue.Task - task_0 init work, timeLeft:0 ms</span><br><span class="line">17:09:54.962 [pool-1-thread-2] INFO  com.ckjava.delayQueue.Task - task_0 start work</span><br><span class="line">17:10:03.376 [pool-1-thread-2] INFO  com.ckjava.delayQueue.Task - task_0 finish work, workTime:8411 ms</span><br></pre></td></tr></table></figure>
-<h2 id="4-参考"><a href="#4-参考" class="headerlink" title="4 参考"></a>4 参考</h2><ul>
+<h2 id="5-参考"><a href="#5-参考" class="headerlink" title="5 参考"></a>5 参考</h2><ul>
 <li><a href="https://www.baeldung.com/java-delay-queue" target="_blank" rel="noopener">Guide to DelayQueue</a></li>
 </ul>
 
@@ -548,8 +548,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/06/15/Jackson-JsonNode-at-practice/" rel="next" title="详解 Jackson 中的 JsonNode 类中的 at 方法">
-                <i class="fa fa-chevron-left"></i> 详解 Jackson 中的 JsonNode 类中的 at 方法
+              <a href="/2020/06/15/Jackson-ObjectMapper-readValue-practice/" rel="next" title="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
+                <i class="fa fa-chevron-left"></i> 详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理
               </a>
             
           </div>
@@ -557,6 +557,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/07/29/Java-JUC-Exchanger-understand-practice/" rel="prev" title="详解 JUC 之 Exchanger">
+                详解 JUC 之 Exchanger <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -640,7 +644,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -702,7 +706,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-DelayQueue-关键点"><span class="nav-number">2.</span> <span class="nav-text">2 DelayQueue 关键点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-消费者和使用者使用场景"><span class="nav-number">3.</span> <span class="nav-text">3 消费者和使用者使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-消费者线程实现"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 消费者线程实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-生产者线程实现"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 生产者线程实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-队列中的任务对象"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.3 队列中的任务对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-测试执行"><span class="nav-number">3.0.4.</span> <span class="nav-text">3.4 测试执行</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#4-其他场景"><span class="nav-number">4.</span> <span class="nav-text">4 其他场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-设置的延迟消费时间过长"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 设置的延迟消费时间过长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-设置的延迟消费时间为-0"><span class="nav-number">4.0.2.</span> <span class="nav-text">4.1 设置的延迟消费时间为 0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-参考"><span class="nav-number">5.</span> <span class="nav-text">4 参考</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-DelayQueue-关键点"><span class="nav-number">2.</span> <span class="nav-text">2 DelayQueue 关键点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-消费者和使用者使用场景"><span class="nav-number">3.</span> <span class="nav-text">3 消费者和使用者使用场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-消费者线程实现"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 消费者线程实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-生产者线程实现"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 生产者线程实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-队列中的任务对象"><span class="nav-number">3.0.3.</span> <span class="nav-text">3.3 队列中的任务对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-测试执行"><span class="nav-number">3.0.4.</span> <span class="nav-text">3.4 测试执行</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#4-其他场景"><span class="nav-number">4.</span> <span class="nav-text">4 其他场景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-设置的延迟消费时间过长"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 设置的延迟消费时间过长</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-设置的延迟消费时间为-0"><span class="nav-number">4.0.2.</span> <span class="nav-text">4.2 设置的延迟消费时间为 0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-参考"><span class="nav-number">5.</span> <span class="nav-text">5 参考</span></a></li></div>
             
 
           </div>
