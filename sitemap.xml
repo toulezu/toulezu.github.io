@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://ckjava.com/2020/07/29/Java-JUC-Exchanger-understand-practice/</loc>
+    <loc>http://ckjava.com/2020/08/04/SpringBoot-Mybatis-AbstractRoutingDataSource-aop-annotation-understand-practice/</loc>
     
-    <lastmod>2020-07-29T13:18:03.903Z</lastmod>
+    <lastmod>2020-08-04T09:16:08.630Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
+    
+    <lastmod>2020-08-04T09:10:21.375Z</lastmod>
     
   </url>
   
@@ -278,13 +285,6 @@
     <loc>http://ckjava.com/2019/06/22/understand-Java-8-Optional/</loc>
     
     <lastmod>2019-06-22T10:48:26.308Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
-    
-    <lastmod>2019-06-22T10:46:06.169Z</lastmod>
     
   </url>
   
