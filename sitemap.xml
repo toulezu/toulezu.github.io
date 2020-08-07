@@ -2,16 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2020/08/07/understand-INNER-JOIN-LEFT-JOIN-RIGHT-JOIN/</loc>
+    
+    <lastmod>2020-08-07T13:07:31.334Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2020/08/04/SpringBoot-Mybatis-AbstractRoutingDataSource-aop-annotation-understand-practice/</loc>
     
-    <lastmod>2020-08-04T09:16:08.630Z</lastmod>
+    <lastmod>2020-08-07T13:01:56.423Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
     
-    <lastmod>2020-08-04T09:10:21.375Z</lastmod>
+    <lastmod>2020-08-05T14:04:36.838Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/05/understand-Executors-ThreadPoolExecutor/</loc>
+    
+    <lastmod>2020-08-05T14:04:21.596Z</lastmod>
     
   </url>
   
