@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2020/08/28/JUC-TransferQueue-LinkedTransferQueue-understand-practice/</loc>
+    
+    <lastmod>2020-08-28T09:53:11.187Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2020/08/10/JUC-BlockingQueue-understand-practice/</loc>
     
     <lastmod>2020-08-10T09:00:08.985Z</lastmod>
