@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://ckjava.com/2020/08/28/JUC-TransferQueue-LinkedTransferQueue-understand-practice/</loc>
+    <loc>http://ckjava.com/2020/08/10/JUC-BlockingQueue-understand-practice/</loc>
     
-    <lastmod>2020-08-28T09:53:11.187Z</lastmod>
+    <lastmod>2020-08-28T09:55:52.612Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2020/08/10/JUC-BlockingQueue-understand-practice/</loc>
+    <loc>http://ckjava.com/2020/08/28/JUC-TransferQueue-LinkedTransferQueue-understand-practice/</loc>
     
-    <lastmod>2020-08-10T09:00:08.985Z</lastmod>
+    <lastmod>2020-08-28T09:55:25.827Z</lastmod>
     
   </url>
   
@@ -583,14 +583,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
     
     <lastmod>2016-08-23T13:43:30.706Z</lastmod>
     
