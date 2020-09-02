@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2020/09/02/Java-RandomAccessFile-understand-practice/</loc>
+    
+    <lastmod>2020-09-02T09:52:23.554Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2020/08/10/JUC-BlockingQueue-understand-practice/</loc>
     
     <lastmod>2020-08-28T09:55:52.612Z</lastmod>
