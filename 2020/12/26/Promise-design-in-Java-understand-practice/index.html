@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,Promise,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="仔细看了下 ES6 中的 Promise 的设计理念，感觉不错，本文就将其中的设计理念在 Java 中实现下">
+<meta name="keywords" content="Java,Promise">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise 的设计理念在 Java 编程中的应用">
+<meta property="og:url" content="http://ckjava.com/2020/12/26/Promise-design-in-Java-understand-practice/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="仔细看了下 ES6 中的 Promise 的设计理念，感觉不错，本文就将其中的设计理念在 Java 中实现下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-12-26T14:35:56.868Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Promise 的设计理念在 Java 编程中的应用">
+<meta name="twitter:description" content="仔细看了下 ES6 中的 Promise 的设计理念，感觉不错，本文就将其中的设计理念在 Java 中实现下">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2020/12/26/Promise-design-in-Java-understand-practice/">
+
+
+
+
+
+  <title>Promise 的设计理念在 Java 编程中的应用 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cron-表达式生成器">
+          <a href="http://cron.toulezu.com/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            cron 表达式生成器
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2020/12/26/Promise-design-in-Java-understand-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Promise 的设计理念在 Java 编程中的应用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-12-26T00:00:00+08:00">
+                2020-12-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/12/26/Promise-design-in-Java-understand-practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2020/12/26/Promise-design-in-Java-understand-practice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  仔细看了下 ES6 中的 Promise 的设计理念，感觉不错，本文就将其中的设计理念在 Java 中实现下
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>仔细看了下 ES6 中的 Promise 的设计理念，感觉不错，本文就将其中的设计理念在 Java 中实现下。</p>
+<p>Promise 用于将程序中的 正常处理结果，异常，finally 代码库中的执行封装到 Promise 中并返回，可以避免通过在方法上传入回调函数的方式处理，能够带来如下好处：</p>
+<ol>
+<li>以优雅的方式对 方法 的返回结果进行处理</li>
+<li>减少 try…catch…finally 重复代码</li>
+<li>避免大量的回调函数</li>
+<li>完美的处理全局异常</li>
+<li>方便的将方法的 处理结果，异常信息 进行传递以及处理</li>
+</ol>
+<h2 id="2-古典的做法"><a href="#2-古典的做法" class="headerlink" title="2 古典的做法"></a>2 古典的做法</h2><ul>
+<li>古典的做法是一个方法有或者没有返回值，有或者没有参数，抛出异常或者本身进行 try…catch…finally 处理，</li>
+<li><p>其他的方法再对当前的方法进行 try…catch…finally 处理，如果有返回值，再对返回值进行处理</p>
+</li>
+<li><p>一个普通的方法</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    public <span class="built_in">String</span> workOldStyle(final <span class="built_in">String</span> param) throws Exception &#123;</span><br><span class="line">        <span class="comment">// 模拟处理</span></span><br><span class="line">        WaitUtils.sleep(<span class="number">1000</span>);</span><br><span class="line">        <span class="keyword">if</span> (param.equals(<span class="string">"a"</span>)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> MyException(Person.class, <span class="string">"work"</span>, <span class="keyword">new</span> RuntimeException());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"work:"</span> + param;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>古典的处理</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_workOldStyle() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        final <span class="built_in">String</span> result = person.workOldStyle(<span class="string">"test"</span>);</span><br><span class="line">        System.out.printf(<span class="string">"处理方法的返回:%s%n"</span>, result);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (final Exception e) &#123;</span><br><span class="line">        GlobalExceptionHandler.handleException(e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"最后执行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-Promise-的做法"><a href="#3-Promise-的做法" class="headerlink" title="3 Promise 的做法"></a>3 Promise 的做法</h2><p>Promise 会对 方法的 返回值，方法的异常进行封装，然后：</p>
+<ol>
+<li>通过 Promise 的 then 方法对 原来的方法返回结果 进行处理</li>
+<li>通过 Promise 的 thenCatch 方法对 原来的方法的异常 进行处理</li>
+<li>通过 Promise 的 thenFinally 方法在 原来的方法 执行完毕后（无论有无异常） 进行处理</li>
+</ol>
+<h2 id="4-Promise-的-Java-实现"><a href="#4-Promise-的-Java-实现" class="headerlink" title="4 Promise 的 Java 实现"></a>4 Promise 的 Java 实现</h2><ol>
+<li>Promise 类</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.concurrent.Callable;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Function: promise</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @author ckjava</span></span><br><span class="line"><span class="comment"> * @date 2020/12/25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Promise</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 封装方法返回的数据</span></span><br><span class="line">    private T data;</span><br><span class="line">    <span class="comment">// 封装方法的异常</span></span><br><span class="line">    private Throwable mThrowable;</span><br><span class="line"></span><br><span class="line">    public <span class="built_in">Promise</span>() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过构造函数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param callable 参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public <span class="built_in">Promise</span>(final Callable&lt;T&gt; callable) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">this</span>.data = callable.call();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (final Exception e) &#123;</span><br><span class="line">            <span class="keyword">this</span>.mThrowable = e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 通过 of 静态方法返回 Promise 对象</span></span><br><span class="line"><span class="comment">     * @param callable 参数</span></span><br><span class="line"><span class="comment">     * @param &lt;T&gt; 泛型</span></span><br><span class="line"><span class="comment">     * @return 对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public <span class="keyword">static</span> &lt;T&gt; <span class="built_in">Promise</span>&lt;T&gt; <span class="keyword">of</span>(final Callable&lt;T&gt; callable) &#123;</span><br><span class="line">        <span class="built_in">Promise</span>&lt;T&gt; promise = <span class="keyword">new</span> <span class="built_in">Promise</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            promise.data = callable.call();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (final Exception e) &#123;</span><br><span class="line">            promise.mThrowable = e;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> promise;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 方法执行完毕后，对方法返回结果的处理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param resolve 具体的处理</span></span><br><span class="line"><span class="comment">     * @return Promise 对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public <span class="built_in">Promise</span>&lt;T&gt; then(final Resolve&lt;T&gt; resolve) &#123;</span><br><span class="line">        <span class="keyword">if</span> (data != <span class="literal">null</span>) &#123;</span><br><span class="line">            resolve.resolve(data);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 方法出现异常的处理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param reject 具体的处理</span></span><br><span class="line"><span class="comment">     * @return Promise 对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public <span class="built_in">Promise</span>&lt;T&gt; thenCatch(final Reject reject) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mThrowable != <span class="literal">null</span>) &#123;</span><br><span class="line">            reject.reject(mThrowable);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 方法最终的 finally 代码块</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param runnable 具体的处理</span></span><br><span class="line"><span class="comment">     * @return Promise 对象</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public <span class="built_in">Promise</span>&lt;T&gt; thenFinally(final Runnable runnable) &#123;</span><br><span class="line">        runnable.run();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setData(final T data) &#123;</span><br><span class="line">        <span class="keyword">this</span>.data = data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">void</span> setException(final Throwable exception) &#123;</span><br><span class="line">        mThrowable = exception;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> &lt;T&gt; Builder&lt;T&gt; newBuilder() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Builder&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Promise 对象构造器</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param &lt;T&gt; 方法的返回类型</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">        private final <span class="built_in">Promise</span>&lt;T&gt; mTPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        public Builder&lt;T&gt; <span class="keyword">of</span>(final Callable&lt;T&gt; callable) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                mTPromise.data = callable.call();</span><br><span class="line">            &#125; <span class="keyword">catch</span> (final Exception e) &#123;</span><br><span class="line">                mTPromise.mThrowable = e;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public <span class="built_in">Promise</span>&lt;T&gt; build() &#123;</span><br><span class="line">            <span class="keyword">return</span> mTPromise;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Resolve 接口方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Function: resolve</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @author ckjava</span></span><br><span class="line"><span class="comment"> * @date 2020/12/25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Resolve&lt;T&gt; &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 正常返回的处理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param data 方法的返回值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> resolve(T data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Reject 接口方法</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Function: resolve</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @author ckjava</span></span><br><span class="line"><span class="comment"> * @date 2020/12/25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@FunctionalInterface</span><br><span class="line">public interface Reject &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 异常的处理</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * @param throwable 方法的异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">void</span> reject(Throwable throwable);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-获取-Promise-的4种方法"><a href="#5-获取-Promise-的4种方法" class="headerlink" title="5 获取 Promise 的4种方法"></a>5 获取 Promise 的4种方法</h2><ol>
+<li>和原来的方法融合，方法直接返回 Promise 对象</li>
+<li>通过 Promise 的构造方法 <code>public Promise(final Callable&lt;T&gt; callable)</code></li>
+<li>通过 Promise 内置的构造器</li>
+<li>通过 Promise 的静态方法 Of</li>
+</ol>
+<h4 id="5-1-方法1：目标方法直接返回-Promise-对象"><a href="#5-1-方法1：目标方法直接返回-Promise-对象" class="headerlink" title="5.1 方法1：目标方法直接返回 Promise 对象"></a>5.1 方法1：目标方法直接返回 Promise 对象</h4><p>目标方法直接返回 Promise 对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 目标方法直接返回 Promise 对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test1() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    final <span class="built_in">Promise</span>&lt;<span class="built_in">String</span>&gt; promise = person.work(<span class="string">"test"</span>);</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"处理方法的返回:%s%n"</span>, data);</span><br><span class="line">    &#125;)</span><br><span class="line">            .thenCatch(GlobalExceptionHandler::handleException)</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕"</span>));</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"对结果的处理方式2"</span>, data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">处理方法的返回:worktest</span><br><span class="line">执行完毕</span><br><span class="line">对结果的处理方式2</span><br></pre></td></tr></table></figure>
+<h4 id="5-2-方法2：通过-Promise-的构造方法返回一个-Promise-对象"><a href="#5-2-方法2：通过-Promise-的构造方法返回一个-Promise-对象" class="headerlink" title="5.2 方法2：通过 Promise 的构造方法返回一个 Promise 对象"></a>5.2 方法2：通过 Promise 的构造方法返回一个 Promise 对象</h4><p>通过 Promise 的构造方法返回一个 Promise 对象，构造方法的参数是一个 Callable 对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过 Promise 的构造方法返回一个 Promise 对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test2() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    final <span class="built_in">Promise</span>&lt;<span class="built_in">String</span>&gt; promise = <span class="keyword">new</span> <span class="built_in">Promise</span>&lt;&gt;(() -&gt; person.workOldStyle(<span class="string">"a"</span>));</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.println(data);</span><br><span class="line">    &#125;)</span><br><span class="line">            .thenCatch(GlobalExceptionHandler::handleException)</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"对结果的处理方式2"</span>, data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">work:ab</span><br><span class="line">执行完毕</span><br><span class="line">对结果的处理方式2</span><br></pre></td></tr></table></figure>
+<h4 id="5-3-方法3：通过-Promise-内置的构造器构造"><a href="#5-3-方法3：通过-Promise-内置的构造器构造" class="headerlink" title="5.3 方法3：通过 Promise 内置的构造器构造"></a>5.3 方法3：通过 Promise 内置的构造器构造</h4><p>通过 Promise 内置的构造器构造，原理上和方法2 类似。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过构造器构造</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test3() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    final <span class="built_in">Promise</span>&lt;<span class="built_in">String</span>&gt; promise =</span><br><span class="line">            <span class="built_in">Promise</span>.&lt;<span class="built_in">String</span>&gt;newBuilder()</span><br><span class="line">                    .of(() -&gt; person.workOldStyle(<span class="string">"test"</span>))</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式1:%s"</span>, data));</span><br><span class="line">    &#125;).then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式2:%s"</span>, data));</span><br><span class="line">    &#125;).thenCatch(GlobalExceptionHandler::handleException)</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕后处理1"</span>))</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕后处理2"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式3:%s"</span>, data));</span><br><span class="line">    &#125;).then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式4:%s"</span>, data));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">对结果的处理方式1:work:test</span><br><span class="line">对结果的处理方式2:work:test</span><br><span class="line">执行完毕后处理1</span><br><span class="line">执行完毕后处理2</span><br><span class="line">对结果的处理方式3:work:test</span><br><span class="line">对结果的处理方式4:work:test</span><br></pre></td></tr></table></figure>
+<h4 id="5-4-方法4：通过-Promise-的静态方法-Of"><a href="#5-4-方法4：通过-Promise-的静态方法-Of" class="headerlink" title="5.4 方法4：通过 Promise 的静态方法 Of"></a>5.4 方法4：通过 Promise 的静态方法 Of</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test1_of() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    final <span class="built_in">Promise</span>&lt;<span class="built_in">String</span>&gt; promise = <span class="built_in">Promise</span>.of(() -&gt; &#123;</span><br><span class="line">        person.workVoid(<span class="string">"test"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"处理方法的返回:%s%n"</span>, data);</span><br><span class="line">    &#125;)</span><br><span class="line">            .thenCatch(GlobalExceptionHandler::handleException)</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕"</span>));</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"对结果的处理方式2"</span>, data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">执行完毕</span><br></pre></td></tr></table></figure>
+<p><strong>注意：如果目标方法的返回值为 null，那么 then 方法其实并没有执行 Resolve 对象的 resolve 方法</strong></p>
+<h2 id="6-通过-Promise-完美的处理全局异常"><a href="#6-通过-Promise-完美的处理全局异常" class="headerlink" title="6 通过 Promise 完美的处理全局异常"></a>6 通过 Promise 完美的处理全局异常</h2><p>由于 Promise 对象中的 thenCatch 方法可以处理异常，如果系统中需要全局异常处理的方法返回的是 Promise 对象，那么就可以轻松的实现 全局异常 处理。</p>
+<ol>
+<li>MyException 自定义全局异常类如下</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Function: 自定义异常</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @author ckjava</span></span><br><span class="line"><span class="comment"> * @date 2020/12/25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    public MyException(final Class&lt;?&gt; clazz, final <span class="built_in">String</span> message, final Exception e) &#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="built_in">String</span>.format(<span class="string">"%s 出现异常，message:%s"</span>, clazz.getName(), message), e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>GlobalExceptionHandler 全局异常处理</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Function: 全局异常处理</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @author ckjava</span></span><br><span class="line"><span class="comment"> * @date 2020/12/25</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">GlobalExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    private <span class="keyword">static</span> final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);</span><br><span class="line"></span><br><span class="line">    public <span class="keyword">static</span> <span class="keyword">void</span> handleException(final Throwable throwable) &#123;</span><br><span class="line">        logger.error(<span class="string">"出现异常"</span>, throwable);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>测试如下</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过 Promise 的构造方法返回一个 Promise 对象</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test2() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    final <span class="built_in">Promise</span>&lt;<span class="built_in">String</span>&gt; promise = <span class="keyword">new</span> <span class="built_in">Promise</span>&lt;&gt;(() -&gt; person.workOldStyle(<span class="string">"a"</span>));</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.println(data);</span><br><span class="line">    &#125;)</span><br><span class="line">            .thenCatch(GlobalExceptionHandler::handleException)</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"对结果的处理方式2"</span>, data);</span><br><span class="line">    &#125;).thenCatch(GlobalExceptionHandler::handleException);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">18:57:01.329 [main] ERROR c.c.async.GlobalExceptionHandler - 出现异常</span><br><span class="line">com.ckjava.async.MyException: com.ckjava.async.Person 出现异常，message:work</span><br><span class="line">	at com.ckjava.async.Person.workOldStyle(Person.java:26)</span><br><span class="line">	at com.ckjava.async.TestPromise.lambda$test2$3(TestPromise.java:51)</span><br><span class="line">	at com.ckjava.async.Promise.&lt;init&gt;(Promise.java:28)</span><br><span class="line">	at com.ckjava.async.TestPromise.test2(TestPromise.java:51)</span><br><span class="line">	</span><br><span class="line">Caused by: java.lang.RuntimeException: null</span><br><span class="line">	... 69 common frames omitted</span><br><span class="line">执行完毕</span><br><span class="line">18:57:01.332 [main] ERROR c.c.async.GlobalExceptionHandler - 出现异常</span><br><span class="line">com.ckjava.async.MyException: com.ckjava.async.Person 出现异常，message:work</span><br><span class="line">	at com.ckjava.async.Person.workOldStyle(Person.java:26)</span><br><span class="line">	at com.ckjava.async.TestPromise.lambda$test2$3(TestPromise.java:51)</span><br><span class="line">	at com.ckjava.async.Promise.&lt;init&gt;(Promise.java:28)</span><br><span class="line">	at com.ckjava.async.TestPromise.test2(TestPromise.java:51)</span><br><span class="line">Caused by: java.lang.RuntimeException: null</span><br><span class="line">	... 69 common frames omitted</span><br></pre></td></tr></table></figure>
+<h2 id="7-避免大量的回调函数"><a href="#7-避免大量的回调函数" class="headerlink" title="7 避免大量的回调函数"></a>7 避免大量的回调函数</h2><p>如何避免？可以看看现有的做法是怎么样的，以及 Promise 是怎么做的，对比之后一目了既然。</p>
+<h4 id="7-1-通过回调函数的方式来处理-方法-的返回值和异常"><a href="#7-1-通过回调函数的方式来处理-方法-的返回值和异常" class="headerlink" title="7.1 通过回调函数的方式来处理 方法 的返回值和异常"></a>7.1 通过回调函数的方式来处理 方法 的返回值和异常</h4><p>通过在参数中增加 successConsumer 成功处理的回调，throwableConsumer 异常处理的回调，runnable finally 处理的回调，具体如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过会回调函数的方式</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param param 方法参数</span></span><br><span class="line"><span class="comment"> * @param successConsumer 成功处理的回调</span></span><br><span class="line"><span class="comment"> * @param throwableConsumer 异常处理的回调</span></span><br><span class="line"><span class="comment"> * @param runnable finally 处理的回调</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="keyword">void</span> work(final <span class="built_in">String</span> param, final Consumer&lt;<span class="built_in">String</span>&gt; successConsumer,</span><br><span class="line">        final Consumer&lt;Throwable&gt; throwableConsumer, final Runnable runnable) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        WaitUtils.sleep(<span class="number">1000</span>);</span><br><span class="line">        final <span class="built_in">String</span> result = <span class="string">"work"</span>;</span><br><span class="line">        successConsumer.accept(result);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (final Exception e) &#123;</span><br><span class="line">        throwableConsumer.accept(e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        runnable.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> testCallback_1() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    person.work(<span class="string">"bc"</span>, data -&gt; &#123;</span><br><span class="line">        System.out.printf(<span class="string">"work result:%s%n"</span>,data);</span><br><span class="line">    &#125;, <span class="attr">GlobalExceptionHandler</span>::handleException, () -&gt;&#123;</span><br><span class="line">        System.out.println(<span class="string">"处理完毕"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>输出</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">work result:work</span><br><span class="line">处理完毕</span><br></pre></td></tr></table></figure>
+<h4 id="7-2-回调函数方式的坏处"><a href="#7-2-回调函数方式的坏处" class="headerlink" title="7.2 回调函数方式的坏处"></a>7.2 回调函数方式的坏处</h4><ol>
+<li>需要修改原来方法的参数</li>
+<li>如果要增加对方法返回值的处理逻辑，就需要改成 <code>final List&lt;Consumer&lt;String&gt;&gt; successConsumerList</code>，具体如下</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 通过 回调函数的方式处理返回结果，回调函数有多个</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param param 方法参数</span></span><br><span class="line"><span class="comment"> * @param successConsumerList 成功处理的回调，有多个回调函数</span></span><br><span class="line"><span class="comment"> * @param throwableConsumer 异常处理的回调</span></span><br><span class="line"><span class="comment"> * @param runnable finally 处理的回调</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">public <span class="keyword">void</span> work(final <span class="built_in">String</span> param, final List&lt;Consumer&lt;<span class="built_in">String</span>&gt;&gt; successConsumerList,</span><br><span class="line">        final Consumer&lt;Throwable&gt; throwableConsumer, final Runnable runnable) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        WaitUtils.sleep(<span class="number">1000</span>);</span><br><span class="line">        final <span class="built_in">String</span> result = <span class="string">"work"</span>+param;</span><br><span class="line">        successConsumerList.forEach(consumer -&gt; consumer.accept(result));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (final Exception e) &#123;</span><br><span class="line">        throwableConsumer.accept(e);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        runnable.run();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="7-3-如何通过-Promise-来避免大量的回调函数"><a href="#7-3-如何通过-Promise-来避免大量的回调函数" class="headerlink" title="7.3 如何通过 Promise 来避免大量的回调函数"></a>7.3 如何通过 Promise 来避免大量的回调函数</h4><ul>
+<li>通过 Promise 封装后的方法，再调用 then，thenCatch，thenFinally 方法后返回的仍然是 Promise 对象</li>
+<li>这就意味着可以重复调用 then，thenCatch，thenFinally 方法，具体如下</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test3() &#123;</span><br><span class="line">    final Person person = <span class="keyword">new</span> Person();</span><br><span class="line">    final <span class="built_in">Promise</span>&lt;<span class="built_in">String</span>&gt; promise =</span><br><span class="line">            <span class="built_in">Promise</span>.&lt;<span class="built_in">String</span>&gt;newBuilder()</span><br><span class="line">                    .of(() -&gt; person.workOldStyle(<span class="string">"test"</span>))</span><br><span class="line">                    .build();</span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式1:%s"</span>, data));</span><br><span class="line">    &#125;).then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式2:%s"</span>, data));</span><br><span class="line">    &#125;).thenCatch(GlobalExceptionHandler::handleException)</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕后处理1"</span>))</span><br><span class="line">            .thenFinally(() -&gt; System.out.println(<span class="string">"执行完毕后处理2"</span>));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    promise.then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式3:%s"</span>, data));</span><br><span class="line">    &#125;).then(data -&gt; &#123;</span><br><span class="line">        System.out.println(<span class="built_in">String</span>.format(<span class="string">"对结果的处理方式4:%s"</span>, data));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">对结果的处理方式1:work:test</span><br><span class="line">对结果的处理方式2:work:test</span><br><span class="line">执行完毕后处理1</span><br><span class="line">执行完毕后处理2</span><br><span class="line">对结果的处理方式3:work:test</span><br><span class="line">对结果的处理方式4:work:test</span><br></pre></td></tr></table></figure>
+<h2 id="8-使用"><a href="#8-使用" class="headerlink" title="8 使用"></a>8 使用</h2><p>引入 xutils 工具包 1.0.9 版本，在 com.ckjava.xutils.promise 包下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.ckjava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>xutils<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.9<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="9-参考"><a href="#9-参考" class="headerlink" title="9 参考"></a>9 参考</h2><ul>
+<li><a href="https://promisesaplus.com/" target="_blank" rel="noopener">Promises/A+</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/Promise/" rel="tag"># Promise</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/09/03/JUC-SynchronousQueue-understand-practice/" rel="next" title="详解 JUC 之 SynchronousQueue">
+                <i class="fa fa-chevron-left"></i> 详解 JUC 之 SynchronousQueue
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">88</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-古典的做法"><span class="nav-number">2.</span> <span class="nav-text">2 古典的做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Promise-的做法"><span class="nav-number">3.</span> <span class="nav-text">3 Promise 的做法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Promise-的-Java-实现"><span class="nav-number">4.</span> <span class="nav-text">4 Promise 的 Java 实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-获取-Promise-的4种方法"><span class="nav-number">5.</span> <span class="nav-text">5 获取 Promise 的4种方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-方法1：目标方法直接返回-Promise-对象"><span class="nav-number">5.0.1.</span> <span class="nav-text">5.1 方法1：目标方法直接返回 Promise 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-方法2：通过-Promise-的构造方法返回一个-Promise-对象"><span class="nav-number">5.0.2.</span> <span class="nav-text">5.2 方法2：通过 Promise 的构造方法返回一个 Promise 对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-方法3：通过-Promise-内置的构造器构造"><span class="nav-number">5.0.3.</span> <span class="nav-text">5.3 方法3：通过 Promise 内置的构造器构造</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-4-方法4：通过-Promise-的静态方法-Of"><span class="nav-number">5.0.4.</span> <span class="nav-text">5.4 方法4：通过 Promise 的静态方法 Of</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#6-通过-Promise-完美的处理全局异常"><span class="nav-number">6.</span> <span class="nav-text">6 通过 Promise 完美的处理全局异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-避免大量的回调函数"><span class="nav-number">7.</span> <span class="nav-text">7 避免大量的回调函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-通过回调函数的方式来处理-方法-的返回值和异常"><span class="nav-number">7.0.1.</span> <span class="nav-text">7.1 通过回调函数的方式来处理 方法 的返回值和异常</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-回调函数方式的坏处"><span class="nav-number">7.0.2.</span> <span class="nav-text">7.2 回调函数方式的坏处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-3-如何通过-Promise-来避免大量的回调函数"><span class="nav-number">7.0.3.</span> <span class="nav-text">7.3 如何通过 Promise 来避免大量的回调函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-使用"><span class="nav-number">8.</span> <span class="nav-text">8 使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-参考"><span class="nav-number">9.</span> <span class="nav-text">9 参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
