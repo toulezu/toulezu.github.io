@@ -2,18 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-<<<<<<< HEAD
-    <loc>http://ckjava.com/2020/12/26/Promise-design-in-Java-understand-practice/</loc>
-    
-    <lastmod>2020-12-26T14:35:56.868Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2020/09/03/JUC-SynchronousQueue-understand-practice/</loc>
-=======
     <loc>http://ckjava.com/2022/03/28/java-if-else-function/</loc>
->>>>>>> master
     
     <lastmod>2022-03-28T14:35:40.039Z</lastmod>
     
@@ -160,14 +149,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/tags/index.html</loc>
+    <loc>http://ckjava.com/categories/index.html</loc>
     
     <lastmod>2020-02-06T02:10:40.182Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/categories/index.html</loc>
+    <loc>http://ckjava.com/tags/index.html</loc>
     
     <lastmod>2020-02-06T02:10:40.182Z</lastmod>
     
@@ -188,14 +177,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2019/08/22/understand-Spring-ThreadPoolTaskExecutor-ListenableFuture/</loc>
+    <loc>http://ckjava.com/2019/10/11/understand-Spring-Lazy-annotation-practice/</loc>
     
     <lastmod>2020-02-06T02:10:40.180Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2019/10/11/understand-Spring-Lazy-annotation-practice/</loc>
+    <loc>http://ckjava.com/2019/08/22/understand-Spring-ThreadPoolTaskExecutor-ListenableFuture/</loc>
     
     <lastmod>2020-02-06T02:10:40.180Z</lastmod>
     
@@ -314,13 +303,6 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</loc>
-    
-    <lastmod>2020-02-06T02:10:40.171Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ckjava.com/2019/12/01/freemarker-self-define-function-usage/</loc>
     
     <lastmod>2020-02-06T02:10:40.171Z</lastmod>
@@ -328,14 +310,21 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2017/08/01/Phabricator-subtask/</loc>
+    <loc>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.171Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/07/25/Phabricator-list-item-task/</loc>
     
     <lastmod>2020-02-06T02:10:40.170Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2017/07/25/Phabricator-list-item-task/</loc>
+    <loc>http://ckjava.com/2017/08/01/Phabricator-subtask/</loc>
     
     <lastmod>2020-02-06T02:10:40.170Z</lastmod>
     
@@ -356,6 +345,13 @@
   </url>
   
   <url>
+    <loc>http://ckjava.com/2017/07/25/Phabricator-workborad-card-task/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.169Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2017/05/15/Linux-monitor-Tomcat/</loc>
     
     <lastmod>2020-02-06T02:10:40.169Z</lastmod>
@@ -364,13 +360,6 @@
   
   <url>
     <loc>http://ckjava.com/2017/08/11/Phabricator-task-subType/</loc>
-    
-    <lastmod>2020-02-06T02:10:40.169Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2017/07/25/Phabricator-workborad-card-task/</loc>
     
     <lastmod>2020-02-06T02:10:40.169Z</lastmod>
     
@@ -412,7 +401,7 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/11/17/load-jar-file-class/</loc>
+    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
     
     <lastmod>2020-02-06T02:10:40.166Z</lastmod>
     
@@ -426,7 +415,7 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
+    <loc>http://ckjava.com/2016/11/17/load-jar-file-class/</loc>
     
     <lastmod>2020-02-06T02:10:40.166Z</lastmod>
     
@@ -468,14 +457,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2019/03/05/SpringBoot-CORS-practice/</loc>
+    <loc>http://ckjava.com/2019/08/07/SpringBoot-ConfigurationProperties-not-working/</loc>
     
     <lastmod>2020-02-06T02:10:40.163Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/2019/08/07/SpringBoot-ConfigurationProperties-not-working/</loc>
+    <loc>http://ckjava.com/2019/03/05/SpringBoot-CORS-practice/</loc>
     
     <lastmod>2020-02-06T02:10:40.163Z</lastmod>
     
@@ -580,13 +569,6 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/2019/04/25/Java-list-retainAll-addAll-removeAll/</loc>
-    
-    <lastmod>2020-02-06T02:10:40.157Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/</loc>
     
     <lastmod>2020-02-06T02:10:40.157Z</lastmod>
@@ -594,7 +576,21 @@
   </url>
   
   <url>
+    <loc>http://ckjava.com/2019/04/25/Java-list-retainAll-addAll-removeAll/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.157Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2019/10/14/JSON-stringify-parse-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.156Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/17/understand-Java-8-Lambda/</loc>
     
     <lastmod>2020-02-06T02:10:40.156Z</lastmod>
     
@@ -609,13 +605,6 @@
   
   <url>
     <loc>http://ckjava.com/2019/05/14/understand-Java-8-method-reference/</loc>
-    
-    <lastmod>2020-02-06T02:10:40.156Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ckjava.com/2019/05/17/understand-Java-8-Lambda/</loc>
     
     <lastmod>2020-02-06T02:10:40.156Z</lastmod>
     
