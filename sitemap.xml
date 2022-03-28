@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://ckjava.com/2022/03/28/java-if-else-function/</loc>
+    
+    <lastmod>2022-03-28T14:35:40.039Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2022/03/27/java-classpath-read-file/</loc>
+    
+    <lastmod>2022-03-27T13:55:16.892Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/05/understand-Executors-ThreadPoolExecutor/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.275Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/09/Spring-Bean-life-circle-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.270Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/09/02/Java-RandomAccessFile-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.267Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/06/15/Jackson-ObjectMapper-readValue-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.266Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/06/15/Jackson-JsonNode-at-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.264Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/28/JUC-TransferQueue-LinkedTransferQueue-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.263Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/09/03/JUC-SynchronousQueue-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.262Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/07/27/Java-JUC-DelayQueue-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.261Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/10/JUC-BlockingQueue-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.260Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/03/02/understand-java-classpath/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.258Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/17/JUC-CyclicBarrier-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.256Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/13/JUC-CyclicBarrier-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.255Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/13/JUC-CountDownLatch-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.253Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/05/08/Java-AtomicReference-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.252Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/04/SpringBoot-Mybatis-AbstractRoutingDataSource-aop-annotation-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.251Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/04/30/Java-split-list-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.249Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/08/07/understand-INNER-JOIN-LEFT-JOIN-RIGHT-JOIN/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.248Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2020/12/26/Promise-design-in-Java-understand-practice/</loc>
+    
+    <lastmod>2022-03-20T13:50:12.241Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/about/index.html</loc>
+    
+    <lastmod>2020-02-06T02:10:40.182Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/tags/index.html</loc>
+    
+    <lastmod>2020-02-06T02:10:40.182Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/categories/index.html</loc>
+    
+    <lastmod>2020-02-06T02:10:40.182Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/23/Mysql-Delete-error-you-cant-specify-target-table-x-for-update-in-from/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.181Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/23/understand-Java-8-default-FunctionalInterface/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.181Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/22/understand-Spring-ThreadPoolTaskExecutor-ListenableFuture/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.180Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/11/understand-Spring-Lazy-annotation-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.180Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/29/WaitUtils-xutils-Java-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.180Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/09/10/understand-Java-primary-type-change/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.179Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/07/22/AngularJS-href-unsafe-javascript-void/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.177Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/14/understand-Java-ScheduledThreadPoolExecutor-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.177Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/29/understand-Java-8-Stream-collect-Collector-Collectors-usage/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.176Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/26/summary-Java-8-FunctionalInterface/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.175Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/04/10/git-remote-branch-command/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.175Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/07/13/Spring-bean-scope-usage/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.175Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/09/11/understand-crc/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.174Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/06/09/lock-synchronized-volatile/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.174Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/02/24/Java-SLF4J-Logback/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.174Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/31/understand-JavaScript-function-this/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.173Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/05/23/Spring-Annotation/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.173Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/05/03/java-byte-0XFF/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.173Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/06/24/Java-innerclass-value-propagation-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.172Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/07/25/SpringBoot-yml-properties-config-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.171Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/09/30/Spring-Junit-PropertySource-Value/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.171Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/12/01/freemarker-self-define-function-usage/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.171Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/08/01/Phabricator-subtask/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.170Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/07/25/Phabricator-list-item-task/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.170Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/19/Spring-SpringMVC-integration-velocity-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.170Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/29/understand-JavaScript-Java-Rhino-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.169Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/05/15/Linux-monitor-Tomcat/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.169Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/08/11/Phabricator-task-subType/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.169Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/07/25/Phabricator-workborad-card-task/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.169Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/09/08/about-career-flow-some-thinking/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.168Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/06/01/blog-github-some-thinking/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.168Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/20/understand-Java-JavaScript-Nashorn-Rhino-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.168Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/07/22/npm-registry-proxy-install-usage/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.167Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/08/30/Java-Thread-Runnable-Executor-Practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.167Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/11/17/load-jar-file-class/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/01/11/git-commit-recovery/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/12/20/Windows-auto-deploy-war-to-Linux/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/07/11/Maven-profiles-testResource-Junit/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.166Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/27/SpringBoot-jpa-RESTful-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.164Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/06/14/Swagger2-SpringMVC/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.164Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/02/22/SpringBoot-webjars-usage/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.164Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/07/Spring-Boot-EnableAsync-Async-ExecutorService-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.163Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/03/05/SpringBoot-CORS-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.163Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/08/07/SpringBoot-ConfigurationProperties-not-working/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.163Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/08/15/Phabricator-conduit-API-Java/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.162Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/27/SpringBoot-jpa-junit-test-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.162Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/07/25/SpringBoot-cron-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.162Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/07/03/Phabricator-Windows-setup/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.161Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/07/22/Phabricator-project-Herald/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.161Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/07/05/log4j-logstash-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/05/15/Linux-MariaDB-setup-MySql/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/07/03/PHP-basic/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.160Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2018/01/15/java-dynamic-apply/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.159Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/11/29/understand-JavaScript-closure-anonymous-function/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.159Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/06/07/Java-synchronizd-usage/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.159Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/07/23/Java-jvm-system-properties-read-write-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.158Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/10/31/java-read-file-piece/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.158Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/06/22/understand-Java-8-Optional/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.157Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/04/25/Java-list-retainAll-addAll-removeAll/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.157Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/04/25/Java-Servlet-sendRedirect-forward/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.157Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/14/JSON-stringify-parse-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.156Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/11/24/understand-Java-8-CompletableFuture-usage-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.156Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/14/understand-Java-8-method-reference/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.156Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/17/understand-Java-8-Lambda/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.156Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2017/09/15/AngularJS-basic/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.155Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/10/11/understand-HTML-countdown-jump-setInterval-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.155Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2016/06/10/ELK-introduce-setup/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.155Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/06/27/AngularJS-ui-select-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.154Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/03/26/AngularJS-filter-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.154Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2019/05/31/AngularJS-function-practice/</loc>
+    
+    <lastmod>2020-02-06T02:10:40.154Z</lastmod>
+    
+  </url>
+  
+</urlset>

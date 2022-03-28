@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="AngularJS,函数,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="AngularJS 中判断类型的函数共有 10 个，类似 9 个`angular.isXXX` 这种以及 `angular.equals`，这里将一一介绍这些函数的使用。">
+<meta name="keywords" content="AngularJS,函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS 判断类型函数使用总结">
+<meta property="og:url" content="http://ckjava.com/2019/05/31/AngularJS-function-practice/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="AngularJS 中判断类型的函数共有 10 个，类似 9 个`angular.isXXX` 这种以及 `angular.equals`，这里将一一介绍这些函数的使用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.154Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS 判断类型函数使用总结">
+<meta name="twitter:description" content="AngularJS 中判断类型的函数共有 10 个，类似 9 个`angular.isXXX` 这种以及 `angular.equals`，这里将一一介绍这些函数的使用。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2019/05/31/AngularJS-function-practice/">
+
+
+
+
+
+  <title>AngularJS 判断类型函数使用总结 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cron-表达式生成器">
+          <a href="http://cron.toulezu.com/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            cron 表达式生成器
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2019/05/31/AngularJS-function-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AngularJS 判断类型函数使用总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-31T00:00:00+08:00">
+                2019-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index">
+                    <span itemprop="name">AngularJS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/31/AngularJS-function-practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2019/05/31/AngularJS-function-practice/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  AngularJS 中判断类型的函数共有 10 个，类似 9 个`angular.isXXX` 这种以及 `angular.equals`，这里将一一介绍这些函数的使用。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h2><p>AngularJS 中判断类型的函数共有 10 个，类似 9 个<code>angular.isXXX</code> 这种以及 <code>angular.equals</code>，这里将一一介绍这些函数的使用。</p>
+<h2 id="2-angular-isUndefined"><a href="#2-angular-isUndefined" class="headerlink" title="2 angular.isUndefined"></a>2 angular.isUndefined</h2><ul>
+<li><code>angular.isUndefined(value);</code></li>
+</ul>
+<h4 id="2-1-概述"><a href="#2-1-概述" class="headerlink" title="2.1 概述"></a>2.1 概述</h4><p>判断 value 是否是 undefined</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="2-2-具体使用"><a href="#2-2-具体使用" class="headerlink" title="2.2 具体使用"></a>2.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// true</span></span><br><span class="line">a = <span class="string">"vala"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// false</span></span><br><span class="line">a = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// false</span></span><br><span class="line">a = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// false</span></span><br><span class="line">a = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// false</span></span><br><span class="line">a = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a.name)); <span class="comment">// true</span></span><br><span class="line">a = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// false</span></span><br><span class="line">a = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"a:%s isUndefined:%s"</span>, a, angular.isUndefined(a)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-angular-isDefined"><a href="#3-angular-isDefined" class="headerlink" title="3 angular.isDefined"></a>3 angular.isDefined</h2><ul>
+<li><code>angular.isDefined(value);</code></li>
+</ul>
+<h4 id="3-1-概述"><a href="#3-1-概述" class="headerlink" title="3.1 概述"></a>3.1 概述</h4><p>判断参数 value 是否定义</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="3-2-具体使用"><a href="#3-2-具体使用" class="headerlink" title="3.2 具体使用"></a>3.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// false</span></span><br><span class="line">b = <span class="string">"vala"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// true</span></span><br><span class="line">b = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// true</span></span><br><span class="line">b = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// true</span></span><br><span class="line">b = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// true</span></span><br><span class="line">b = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b.name)); <span class="comment">// false</span></span><br><span class="line">b = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// true</span></span><br><span class="line">b = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"b:%s isDefined:%s"</span>, b, angular.isDefined(b)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="4-angular-isObject"><a href="#4-angular-isObject" class="headerlink" title="4 angular.isObject"></a>4 angular.isObject</h2><ul>
+<li><code>angular.isObject(value);</code></li>
+</ul>
+<h4 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1 概述"></a>4.1 概述</h4><p>判断 value 是否是 Object，注意数组也认为是 Object</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="4-2-具体使用"><a href="#4-2-具体使用" class="headerlink" title="4.2 具体使用"></a>4.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// false</span></span><br><span class="line">c = <span class="string">"vala"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// false</span></span><br><span class="line">c = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// false</span></span><br><span class="line">c = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// false</span></span><br><span class="line">c = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// false</span></span><br><span class="line">c = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// true</span></span><br><span class="line">c = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// true</span></span><br><span class="line">c = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"c:%s isObject:%s"</span>, c, angular.isObject(c)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="5-angular-isString"><a href="#5-angular-isString" class="headerlink" title="5 angular.isString"></a>5 angular.isString</h2><ul>
+<li><code>angular.isString(value);</code></li>
+</ul>
+<h4 id="5-1-概述"><a href="#5-1-概述" class="headerlink" title="5.1 概述"></a>5.1 概述</h4><p>判断 value 是否是 String</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型，字符串，<code>&#39;&#39;</code> 以及 <code>&quot;&quot;</code> 都会返回 true</li>
+</ul>
+<h4 id="5-2-具体使用"><a href="#5-2-具体使用" class="headerlink" title="5.2 具体使用"></a>5.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> h;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// false</span></span><br><span class="line">h = <span class="string">"2014-12-14"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// false</span></span><br><span class="line">h = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// true</span></span><br><span class="line">h = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// false</span></span><br><span class="line">h = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// false</span></span><br><span class="line">h = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s isString:%s"</span>, h, angular.isString(h)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="6-angular-isNumber"><a href="#6-angular-isNumber" class="headerlink" title="6 angular.isNumber"></a>6 angular.isNumber</h2><ul>
+<li><code>angular.isNumber(value);</code></li>
+</ul>
+<h4 id="6-1-概述"><a href="#6-1-概述" class="headerlink" title="6.1 概述"></a>6.1 概述</h4><p>判断 value 是否是 Number 对象，注意 <code>NaN</code>, <code>+Infinity</code> and <code>-Infinity</code> 这些特殊的 Number，判断它们也会返回 true, 通过 isFinite 方法判断才返回 false</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="6-2-具体使用"><a href="#6-2-具体使用" class="headerlink" title="6.2 具体使用"></a>6.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> j;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = <span class="string">"2014-12-14"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// false</span></span><br><span class="line">j = <span class="number">12</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// true</span></span><br><span class="line">j = <span class="literal">NaN</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// true</span></span><br><span class="line">j = +<span class="literal">Infinity</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// true</span></span><br><span class="line">j = -<span class="literal">Infinity</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"j:%s isNumber:%s"</span>, j, angular.isNumber(j)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"NaN isNaN:%s"</span>, <span class="built_in">isNaN</span>(<span class="literal">NaN</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"NaN isFinite:%s"</span>, <span class="built_in">isFinite</span>(<span class="literal">NaN</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"+Infinity isFinite:%s"</span>, <span class="built_in">isFinite</span>(+<span class="literal">Infinity</span>)); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"-Infinity isFinite:%s"</span>, <span class="built_in">isFinite</span>(-<span class="literal">Infinity</span>)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="7-angular-isArray"><a href="#7-angular-isArray" class="headerlink" title="7 angular.isArray"></a>7 angular.isArray</h2><ul>
+<li><code>angular.isArray(value);</code></li>
+</ul>
+<h4 id="7-1-概述"><a href="#7-1-概述" class="headerlink" title="7.1 概述"></a>7.1 概述</h4><p>判断 value 是否是 Array 对象</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="7-2-具体使用"><a href="#7-2-具体使用" class="headerlink" title="7.2 具体使用"></a>7.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> d;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br><span class="line">d = <span class="string">"vala"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br><span class="line">d = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br><span class="line">d = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br><span class="line">d = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br><span class="line">d = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br><span class="line">d = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// true</span></span><br><span class="line">d = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"d:%s isArray:%s"</span>, d, angular.isArray(d)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="8-angular-isDate"><a href="#8-angular-isDate" class="headerlink" title="8 angular.isDate"></a>8 angular.isDate</h2><ul>
+<li><code>angular.isDate(value);</code></li>
+</ul>
+<h4 id="8-1-概述"><a href="#8-1-概述" class="headerlink" title="8.1 概述"></a>8.1 概述</h4><p>判断 value 是否是 Date 对象</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="8-2-具体使用"><a href="#8-2-具体使用" class="headerlink" title="8.2 具体使用"></a>8.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> e;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = <span class="string">"2014-12-14"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// true</span></span><br><span class="line">e = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br><span class="line">e = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"e:%s isDate:%s"</span>, e, angular.isDate(e)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="9-angular-isFunction"><a href="#9-angular-isFunction" class="headerlink" title="9 angular.isFunction"></a>9 angular.isFunction</h2><ul>
+<li><code>angular.isFunction(value);</code></li>
+</ul>
+<h4 id="9-1-概述"><a href="#9-1-概述" class="headerlink" title="9.1 概述"></a>9.1 概述</h4><p>判断 value 是否是 Function 对象</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="9-2-具体使用"><a href="#9-2-具体使用" class="headerlink" title="9.2 具体使用"></a>9.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = <span class="string">"2014-12-14"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// true</span></span><br><span class="line">f = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br><span class="line">f = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"f:%s isFunction:%s"</span>, f, angular.isFunction(f)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="10-angular-isElement"><a href="#10-angular-isElement" class="headerlink" title="10 angular.isElement"></a>10 angular.isElement</h2><ul>
+<li><code>angular.isElement(value);</code></li>
+</ul>
+<h4 id="10-1-概述"><a href="#10-1-概述" class="headerlink" title="10.1 概述"></a>10.1 概述</h4><p>判断 value 是否是 DOM element 对象或者 jQuery 对象</p>
+<ul>
+<li>参数 value 可以是任意类型</li>
+<li>返回值 boolean 类型</li>
+</ul>
+<h4 id="10-2-具体使用"><a href="#10-2-具体使用" class="headerlink" title="10.2 具体使用"></a>10.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> g;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = <span class="string">"2014-12-14"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = <span class="built_in">document</span>.getElementById(<span class="string">'eleTest'</span>); <span class="comment">// 原生js</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// true</span></span><br><span class="line">g = angular.element(<span class="built_in">document</span>).find(<span class="string">'#eleTest'</span>); <span class="comment">// angularJS 内置jQuery</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// true</span></span><br><span class="line">g = $(<span class="string">'#eleTest'</span>); <span class="comment">// jQuery 的方式</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// true</span></span><br><span class="line">g = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br><span class="line">g = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"g:%s isElement:%s"</span>, g, angular.isElement(g)); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<h2 id="11-angular-equals"><a href="#11-angular-equals" class="headerlink" title="11 angular.equals"></a>11 angular.equals</h2><ul>
+<li><code>angular.equals(o1, o2);</code></li>
+</ul>
+<h4 id="11-1-概述"><a href="#11-1-概述" class="headerlink" title="11.1 概述"></a>11.1 概述</h4><ul>
+<li>参数 o1 和 o2 可以是任意类型</li>
+<li><p>返回值 boolean 类型</p>
+</li>
+<li><p>判断两个对象或者两个值是否相等，判断的对象或者类型包括：值对象，正则表达式，数组，对象</p>
+</li>
+<li>如果两个对象相等，那么必须至少满足下面任意一个条件<ol>
+<li>都是对象或者值，并且 <code>o1===o2</code></li>
+<li>如果是对象，那么对象中的所有属性一致，如果是值，那么值的类型必须一致并且相等（===）</li>
+<li>都是 NaN</li>
+<li>都是正则表达式，angular.equals(/abc/, /abc/) 返回值为 true</li>
+</ol>
+</li>
+<li>在比较中，对象中的方法属性或者属性以<code>$</code>开头将被忽略</li>
+</ul>
+<h4 id="11-2-具体使用"><a href="#11-2-具体使用" class="headerlink" title="11.2 具体使用"></a>11.2 具体使用</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// angular.equals</span></span><br><span class="line"><span class="keyword">var</span> h;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="string">"2014-12-14"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> h2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">var</span> abc = <span class="string">'abcd'</span>; &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h2, angular.equals(h, h2)); <span class="comment">// false</span></span><br><span class="line">h = <span class="literal">null</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="string">''</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="string">""</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, &#123;<span class="string">'name'</span>:<span class="string">'joe'</span>&#125;)); <span class="comment">// false</span></span><br><span class="line">h = [];</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br><span class="line">h = <span class="literal">undefined</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"h:%s equals:%s"</span>, h, angular.equals(h, h)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<h2 id="12-参考"><a href="#12-参考" class="headerlink" title="12 参考"></a>12 参考</h2><ul>
+<li><a href="https://docs.angularjs.org/api/ng/function" target="_blank" rel="noopener">AngularJS 函数官方文档</a></li>
+<li><a href="https://embed.plnkr.co/UoISeN/" target="_blank" rel="noopener">plnkr 代码</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AngularJS/" rel="tag"># AngularJS</a>
+          
+            <a href="/tags/函数/" rel="tag"># 函数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/31/understand-JavaScript-function-this/" rel="next" title="对 JavaScript function 对象中 this 的理解">
+                <i class="fa fa-chevron-left"></i> 对 JavaScript function 对象中 this 的理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/22/understand-Java-8-Optional/" rel="prev" title="Java 8 中的 Optional 使用详解">
+                Java 8 中的 Optional 使用详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1 概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-angular-isUndefined"><span class="nav-number">2.</span> <span class="nav-text">2 angular.isUndefined</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-概述"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-具体使用"><span class="nav-number">2.0.2.</span> <span class="nav-text">2.2 具体使用</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#3-angular-isDefined"><span class="nav-number">3.</span> <span class="nav-text">3 angular.isDefined</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-概述"><span class="nav-number">3.0.1.</span> <span class="nav-text">3.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-具体使用"><span class="nav-number">3.0.2.</span> <span class="nav-text">3.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-angular-isObject"><span class="nav-number">4.</span> <span class="nav-text">4 angular.isObject</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-概述"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-具体使用"><span class="nav-number">4.0.2.</span> <span class="nav-text">4.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-angular-isString"><span class="nav-number">5.</span> <span class="nav-text">5 angular.isString</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-概述"><span class="nav-number">5.0.1.</span> <span class="nav-text">5.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-具体使用"><span class="nav-number">5.0.2.</span> <span class="nav-text">5.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-angular-isNumber"><span class="nav-number">6.</span> <span class="nav-text">6 angular.isNumber</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1-概述"><span class="nav-number">6.0.1.</span> <span class="nav-text">6.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2-具体使用"><span class="nav-number">6.0.2.</span> <span class="nav-text">6.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-angular-isArray"><span class="nav-number">7.</span> <span class="nav-text">7 angular.isArray</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1-概述"><span class="nav-number">7.0.1.</span> <span class="nav-text">7.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-具体使用"><span class="nav-number">7.0.2.</span> <span class="nav-text">7.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-angular-isDate"><span class="nav-number">8.</span> <span class="nav-text">8 angular.isDate</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1-概述"><span class="nav-number">8.0.1.</span> <span class="nav-text">8.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-2-具体使用"><span class="nav-number">8.0.2.</span> <span class="nav-text">8.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-angular-isFunction"><span class="nav-number">9.</span> <span class="nav-text">9 angular.isFunction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1-概述"><span class="nav-number">9.0.1.</span> <span class="nav-text">9.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2-具体使用"><span class="nav-number">9.0.2.</span> <span class="nav-text">9.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-angular-isElement"><span class="nav-number">10.</span> <span class="nav-text">10 angular.isElement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#10-1-概述"><span class="nav-number">10.0.1.</span> <span class="nav-text">10.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-2-具体使用"><span class="nav-number">10.0.2.</span> <span class="nav-text">10.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-angular-equals"><span class="nav-number">11.</span> <span class="nav-text">11 angular.equals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#11-1-概述"><span class="nav-number">11.0.1.</span> <span class="nav-text">11.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-2-具体使用"><span class="nav-number">11.0.2.</span> <span class="nav-text">11.2 具体使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-参考"><span class="nav-number">12.</span> <span class="nav-text">12 参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="AngularJS,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="AngularJS 知识点积累">
+<meta name="keywords" content="AngularJS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS 知识点积累">
+<meta property="og:url" content="http://ckjava.com/2017/09/15/AngularJS-basic/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="AngularJS 知识点积累">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.155Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS 知识点积累">
+<meta name="twitter:description" content="AngularJS 知识点积累">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2017/09/15/AngularJS-basic/">
+
+
+
+
+
+  <title>AngularJS 知识点积累 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cron-表达式生成器">
+          <a href="http://cron.toulezu.com/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            cron 表达式生成器
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2017/09/15/AngularJS-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">AngularJS 知识点积累</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-15T00:00:00+08:00">
+                2017-09-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AngularJS/" itemprop="url" rel="index">
+                    <span itemprop="name">AngularJS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/15/AngularJS-basic/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2017/09/15/AngularJS-basic/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  AngularJS 知识点积累
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="如何动态插入删除dom节点"><a href="#如何动态插入删除dom节点" class="headerlink" title="如何动态插入删除dom节点"></a><a href="http://yijiebuyi.com/blog/7702aba213aec9de43b129b3d2f3b30c.html" target="_blank" rel="noopener">如何动态插入删除dom节点</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(&apos;div[name=father]&apos;).html(</span><br><span class="line">  $compile(&apos;&lt;input type=&quot;text&quot; ng-model=&quot;person.name&quot; /&gt; &lt;input type=&quot;input&quot; ng-model=&quot;person.age&quot; value=&quot;&#123;&#123;person.age&#125;&#125;&quot; /&gt;&lt;a ng-show=&quot;$index!=0&quot; style=&quot;color:red;&quot; ng-click=&quot;del($index)&quot;&gt;移除&lt;/a&gt;&apos;</span><br><span class="line">  )($scope)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://docs.angularjs.org/guide/compiler" target="_blank" rel="noopener">HTML Compiler</a></li>
+</ul>
+<h2 id="ng-click-如何获取触发事件对象或者this"><a href="#ng-click-如何获取触发事件对象或者this" class="headerlink" title="ng-click 如何获取触发事件对象或者this"></a><a href="http://blog.csdn.net/a576736858/article/details/62039286" target="_blank" rel="noopener">ng-click 如何获取触发事件对象或者this</a></h2><p><code>ng-click=&quot;addPackage($event,111)&quot;</code> 传递一个$event对象<br>通过事件对象 <code>$event.target</code>  获取事件源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//动态添加数据  </span><br><span class="line">$scope.addPackage = function(myevent,deviceType)&#123;  </span><br><span class="line">    //获取item对象  </span><br><span class="line">    var htmlObj = $(myevent.target).closest(&quot;.float_left&quot;);  </span><br><span class="line">    var deviceName = htmlObj.find(&quot;div.font_16&quot;).html();  </span><br><span class="line">    var jsonObj = &#123;  </span><br><span class="line">        &quot;deviceType&quot;:deviceType,//设备类型，唯一标识，用于判断是否已经添加  </span><br><span class="line">        &quot;deviceName&quot;:deviceName //设备的名称  </span><br><span class="line">    &#125;;  </span><br><span class="line">    //判断数据是否已经选中了  </span><br><span class="line">    if(!this.hasDevice(deviceType))&#123;  </span><br><span class="line">        //给$scope.lists添加数据  </span><br><span class="line">        this.lists.push(jsonObj);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="如何在页面加载的时候执行一个方法"><a href="#如何在页面加载的时候执行一个方法" class="headerlink" title="如何在页面加载的时候执行一个方法"></a><a href="https://stackoverflow.com/questions/15458609/how-to-execute-angular-controller-function-on-page-load" target="_blank" rel="noopener">如何在页面加载的时候执行一个方法</a></h2><p>使用 <a href="https://docs.angularjs.org/api/ng/directive/ngInit" target="_blank" rel="noopener"><code>ng-init</code></a> 指令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// register controller in html</span><br><span class="line">&lt;div data-ng-controller=&quot;myCtrl&quot; data-ng-init=&quot;init()&quot;&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">// in controller</span><br><span class="line">$scope.init = function () &#123;</span><br><span class="line">    // check if there is query in url</span><br><span class="line">    // and fire search in case its value is not empty</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="使用-ng-repeat-来实现增加一行-删除一行的效果"><a href="#使用-ng-repeat-来实现增加一行-删除一行的效果" class="headerlink" title="使用 ng-repeat 来实现增加一行/删除一行的效果"></a><a href="http://lib.csdn.net/article/angularjs/33158" target="_blank" rel="noopener">使用 <code>ng-repeat</code> 来实现增加一行/删除一行的效果</a></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$scope.printInfo = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; $scope.showVBs.length; i++) &#123;</span><br><span class="line">            <span class="built_in">console</span>.log($scope.showVBs[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">$scope.showVBs = [&#123;</span><br><span class="line">    <span class="string">"Tag"</span>: <span class="string">"Tag1"</span>,</span><br><span class="line">    <span class="string">"NO"</span>: <span class="string">"No1"</span>,</span><br><span class="line">    <span class="string">"remarks"</span>: <span class="string">"remarks1"</span></span><br><span class="line">&#125;, &#123;</span><br><span class="line">    <span class="string">"Tag"</span>: <span class="string">"Tag2"</span>,</span><br><span class="line">    <span class="string">"NO"</span>: <span class="string">"No2"</span>,</span><br><span class="line">    <span class="string">"remarks"</span>: <span class="string">"remarks2"</span></span><br><span class="line">&#125;];</span><br><span class="line">$scope.BDetailsAdd = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    $scope.showVBs.push(&#123;&#125;);</span><br><span class="line">&#125;;</span><br><span class="line">$scope.BDetailsDel = <span class="function"><span class="keyword">function</span> (<span class="params">Count</span>) </span>&#123;</span><br><span class="line">    $scope.showVBs.splice(Count, <span class="number">1</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">role</span>=<span class="string">"form"</span> <span class="attr">name</span>=<span class="string">"editForm"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-12"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row  panel panel-default panel-body"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"col-md-offset-1 panel panel-default"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">label</span>&gt;</span>&#123;&#123;'Details'&#125;&#125;<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-info"</span> <span class="attr">value</span>=<span class="string">"增加"</span> <span class="attr">ng-click</span>=<span class="string">"BDetailsAdd()"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-danger"</span> <span class="attr">value</span>=<span class="string">"打印信息"</span> <span class="attr">ng-click</span>=<span class="string">"printInfo()"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"vBaggages"</span> <span class="attr">ng-repeat</span>=<span class="string">"vba in showVBs"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group col-md-2 col-md-offset-1"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">class</span>=<span class="string">"btn btn-info"</span> <span class="attr">value</span>=<span class="string">"删"</span> <span class="attr">ng-click</span>=<span class="string">"BDetailsDel($index)"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control pull-right"</span> <span class="attr">ng-model</span>=<span class="string">"vba.Tag"</span></span></span><br><span class="line"><span class="tag">                               <span class="attr">placeholder</span>=<span class="string">"Tag"</span> <span class="attr">style</span>=<span class="string">"width:70%"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group col-md-2 col-md-offset-1"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control pull-right"</span> <span class="attr">ng-model</span>=<span class="string">"vba.NO"</span></span></span><br><span class="line"><span class="tag">                               <span class="attr">placeholder</span>=<span class="string">"No."</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"form-group col-md-5 col-md-offset-1"</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"form-control pull-right"</span> <span class="attr">ng-model</span>=<span class="string">"vba.remarks"</span></span></span><br><span class="line"><span class="tag">                               <span class="attr">placeholder</span>=<span class="string">"Remarks"</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何构建一个-SpringBoot-angularJS-web-应用"><a href="#如何构建一个-SpringBoot-angularJS-web-应用" class="headerlink" title="如何构建一个 SpringBoot + angularJS web 应用"></a><a href="http://websystique.com/spring-boot/spring-boot-angularjs-spring-data-jpa-crud-app-example/" target="_blank" rel="noopener">如何构建一个 SpringBoot + angularJS web 应用</a></h2><h2 id="如何安装-AngularJS-的-ngStorage-模块"><a href="#如何安装-AngularJS-的-ngStorage-模块" class="headerlink" title="如何安装 AngularJS 的 ngStorage 模块"></a><a href="http://blog.legacyteam.info/2014/12/ngstorage-localstorage-module-for-angularjs/" target="_blank" rel="noopener">如何安装 AngularJS 的 ngStorage 模块</a></h2><p>错误提示如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Error: [$injector:modulerr] Failed to instantiate module ngStorage due to:</span><br><span class="line">Error: [$injector:nomod] Module &apos;ngStorage&apos; is not available! You either misspelled the module name or forgot to load it. If registering a module ensure that you specify the dependencies as the second argument.</span><br></pre></td></tr></table></figure>
+<p>解决方法如下</p>
+<p>在项目根目录下执行安装(uninstall 是卸载)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bower install ngstorage</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">bower ngstorage#*               cached https://github.com/gsklee/ngStorage.git#0.3.11</span><br><span class="line">bower ngstorage#*             validate 0.3.11 against https://github.com/gsklee/ngStorage.git#*</span><br><span class="line">bower ngstorage#^0.3.11        install ngstorage#0.3.11</span><br><span class="line"></span><br><span class="line">ngstorage#0.3.11 bower_components\ngstorage</span><br><span class="line">└── angular#1.5.11</span><br></pre></td></tr></table></figure>
+<p>然后在项目中的 bower.json 文件中添加相关依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;ng-js-tree&quot;: &quot;~0.0.7&quot;,</span><br><span class="line">    &quot;angular-ui-select&quot;: &quot;^0.19.6&quot;,</span><br><span class="line">    &quot;ngstorage&quot;: &quot;0.3.11&quot;</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<h2 id="AngularJS-如何跨域访问-SpringBoot-API"><a href="#AngularJS-如何跨域访问-SpringBoot-API" class="headerlink" title="AngularJS 如何跨域访问 SpringBoot API"></a><a href="https://stackoverflow.com/questions/19825946/how-to-add-a-filter-class-in-spring-boot" target="_blank" rel="noopener">AngularJS 如何跨域访问 SpringBoot API</a></h2><p>错误描述如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest cannot load http://localhost:8011/api/task_main. No &apos;Access-Control-Allow-Origin&apos; header is present on the requested resource. Origin &apos;http://localhost:3000&apos; is therefore not allowed access.</span><br></pre></td></tr></table></figure>
+<p>解决方法</p>
+<p>添加一个 Filter 配置</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> javax.servlet.Filter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.web.servlet.FilterRegistrationBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.EnableWebMvc;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ctrip.payment.filter.RemoteAccessFilter;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebMvc</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebAppConfig</span> <span class="keyword">extends</span> <span class="title">WebMvcConfigurerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> FilterRegistrationBean <span class="title">someFilterRegistration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	    FilterRegistrationBean registration = <span class="keyword">new</span> FilterRegistrationBean();</span><br><span class="line">	    registration.setFilter(remoteAccessFilter());</span><br><span class="line">	    registration.addUrlPatterns(<span class="string">"/api/*"</span>);</span><br><span class="line">	    <span class="comment">//registration.addInitParameter("paramName", "paramValue");</span></span><br><span class="line">	    registration.setName(<span class="string">"remoteAccessFilter"</span>);</span><br><span class="line">	    registration.setOrder(<span class="number">1</span>);</span><br><span class="line">	    <span class="keyword">return</span> registration;</span><br><span class="line">	&#125; </span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Filter <span class="title">remoteAccessFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="keyword">new</span> RemoteAccessFilter();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体 Filter 如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.Filter;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.FilterChain;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.FilterConfig;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletResponse;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RemoteAccessFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// ref:http://www.cnblogs.com/1000px/p/4666247.html</span></span><br><span class="line">		HttpServletResponse resp = (HttpServletResponse) response;</span><br><span class="line">		resp.setHeader(<span class="string">"Access-Control-Allow-Origin"</span>, <span class="string">"*"</span>);</span><br><span class="line">		resp.setHeader(<span class="string">"Access-Control-Allow-Methods"</span>, <span class="string">"GET,POST,PUT"</span>);</span><br><span class="line">		resp.setHeader(<span class="string">"Access-Control-Allow-Headers"</span>, <span class="string">"Accept,x-requested-with,content-type"</span>);</span><br><span class="line">		</span><br><span class="line">		chain.doFilter(request, response);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://www.cnblogs.com/1000px/p/4666247.html" target="_blank" rel="noopener">AngularJS跨域请求</a></li>
+</ul>
+<h2 id="AngularJS-如何判断字符串或者对象是否为空"><a href="#AngularJS-如何判断字符串或者对象是否为空" class="headerlink" title="AngularJS 如何判断字符串或者对象是否为空"></a>AngularJS 如何判断字符串或者对象是否为空</h2><p>在 AngularJs 中判断对象是否为空，可以使用 angular.equals，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (obj == null || angular.equals(&#123;&#125;, obj)) &#123;</span><br><span class="line"> // 为空</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果是一个字段</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (obj == null || angular.equals(&apos;&apos;, obj.trim())) &#123;</span><br><span class="line"> // 为空</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关于-datePicker-和-timePicker-的组合使用"><a href="#关于-datePicker-和-timePicker-的组合使用" class="headerlink" title="关于 datePicker 和 timePicker 的组合使用"></a><a href="https://angular-ui.github.io/bootstrap/" target="_blank" rel="noopener">关于 datePicker 和 timePicker 的组合使用</a></h2><ul>
+<li>html</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;row datepicker&quot;&gt;</span><br><span class="line">	&lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">	   &lt;label&gt;开始时间&lt;/label&gt;</span><br><span class="line">	   &lt;p class=&quot;input-group&quot;&gt;</span><br><span class="line">		  &lt;input type=&quot;text&quot; readonly class=&quot;form-control&quot; uib-datepicker-popup=&quot;yyyy-MM-dd&quot; datepicker-options=&quot;datePickerOptions&quot; ng-model=&quot;clogDateTime.clogFromDate&quot; is-open=&quot;fromDateStatus.isOpen&quot; close-text=&quot;Close&quot; /&gt;</span><br><span class="line">		  &lt;span class=&quot;input-group-btn&quot;&gt;</span><br><span class="line">			 &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;fromDateOpen()&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;</span><br><span class="line">		  &lt;/span&gt;</span><br><span class="line">	   &lt;/p&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">	   &lt;uib-timepicker show-seconds=&quot;true&quot; ng-change=&quot;clogFromTimeChanged()&quot; ng-model=&quot;clogDateTime.clogFromTime&quot; show-meridian=&quot;false&quot;&gt;&lt;/uib-timepicker&gt; &#123;&#123; (clogDateTime.clogFromDate != null &amp;&amp; clogDateTime.clogFromTime != null) ? (taskSubInfo.fromDate = (clogDateTime.clogFromDate | date:&apos;yyyy-MM-dd&apos;)  + &apos; &apos; + (clogDateTime.clogFromTime | date:&apos;HH:mm:ss&apos;)) : null &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">	   &lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-danger&quot; ng-click=&quot;resetFromDateTime()&quot;&gt;重置开始时间&lt;/button&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">	   &lt;label&gt;结束时间&lt;/label&gt;</span><br><span class="line">	   &lt;p class=&quot;input-group&quot;&gt;</span><br><span class="line">		  &lt;input type=&quot;text&quot; readonly class=&quot;form-control&quot; uib-datepicker-popup=&quot;yyyy-MM-dd&quot; datepicker-options=&quot;datePickerOptions&quot; ng-model=&quot;clogDateTime.clogToDate&quot; is-open=&quot;toDateStatus.isOpen&quot; close-text=&quot;Close&quot; /&gt;</span><br><span class="line">		  &lt;span class=&quot;input-group-btn&quot;&gt;</span><br><span class="line">			 &lt;button type=&quot;button&quot; class=&quot;btn btn-default&quot; ng-click=&quot;toDateOpen()&quot;&gt;&lt;i class=&quot;glyphicon glyphicon-calendar&quot;&gt;&lt;/i&gt;&lt;/button&gt;</span><br><span class="line">		  &lt;/span&gt;</span><br><span class="line">	   &lt;/p&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">	   &lt;uib-timepicker show-seconds=&quot;true&quot; ng-change=&quot;clogToTimeChanged()&quot; ng-model=&quot;clogDateTime.clogToTime&quot; show-meridian=&quot;false&quot;&gt;&lt;/uib-timepicker&gt; &#123;&#123; (clogDateTime.clogToDate != null &amp;&amp; clogDateTime.clogToTime != null) ? (taskSubInfo.toDate = (clogDateTime.clogToDate | date:&apos;yyyy-MM-dd&apos;)  + &apos; &apos; + (clogDateTime.clogToTime | date:&apos;HH:mm:ss&apos;)) : null &#125;&#125;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">	&lt;div class=&quot;col-md-2&quot;&gt;</span><br><span class="line">	   &lt;button type=&quot;button&quot; class=&quot;btn btn-sm btn-danger&quot; ng-click=&quot;resetToDateTime()&quot;&gt;重置结束时间&lt;/button&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">// 将日期和时间作为对象进行考虑</span><br><span class="line">$scope.clogDateTime = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">$scope.resetFromDateTime = function () &#123;</span><br><span class="line">  $scope.clogDateTime.clogFromDate = null;</span><br><span class="line">  $scope.clogDateTime.clogFromTime = null;</span><br><span class="line">  $scope.taskSubInfo.fromDate = null;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">$scope.resetToDateTime = function () &#123;</span><br><span class="line">  $scope.clogDateTime.clogToDate = null;</span><br><span class="line">  $scope.clogDateTime.clogToTime = null;</span><br><span class="line">  $scope.taskSubInfo.toDate = null;</span><br><span class="line">&#125;;</span><br><span class="line">	  </span><br><span class="line">// 提交的时候</span><br><span class="line">if ($scope.taskSubInfo.fromDate == null || angular.equals($scope.taskSubInfo.fromDate.trim(), &apos;&apos;)) &#123;</span><br><span class="line">  $scope.taskSubInfo.fromDate = null;</span><br><span class="line">&#125;</span><br><span class="line">if ($scope.taskSubInfo.toDate == null || angular.equals($scope.taskSubInfo.toDate.trim(), &apos;&apos;)) &#123;</span><br><span class="line">  $scope.taskSubInfo.toDate = null;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 加载的时候	  </span><br><span class="line">var dateTimeReg = /^(?:19|20)[0-9][0-9]-(?:(?:0[1-9])|(?:1[0-2]))-(?:(?:[0-2][1-9])|(?:[1-3][0-1])) (?:(?:[0-2][0-3])|(?:[0-1][0-9])):[0-5][0-9]:[0-5][0-9]$/;</span><br><span class="line"></span><br><span class="line">if ($scope.taskSubInfo.fromDate != null</span><br><span class="line">  &amp;&amp; !angular.equals($scope.taskSubInfo.fromDate.trim(), &apos;&apos;)</span><br><span class="line">  &amp;&amp; dateTimeReg.test($scope.taskSubInfo.fromDate)) &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">	  $scope.clogDateTime.clogFromDate = new Date($scope.taskSubInfo.fromDate);</span><br><span class="line">	  $scope.clogDateTime.clogFromTime = new Date($scope.taskSubInfo.fromDate);</span><br><span class="line">  &#125; catch (e) &#123;</span><br><span class="line">	  console.log(&apos;invalid fromDate:&apos;+$scope.taskSubInfo.fromDate);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">if ($scope.taskSubInfo.toDate != null</span><br><span class="line">  &amp;&amp; !angular.equals($scope.taskSubInfo.toDate.trim(), &apos;&apos;)</span><br><span class="line">  &amp;&amp; dateTimeReg.test($scope.taskSubInfo.toDate)) &#123;</span><br><span class="line">  try &#123;</span><br><span class="line">	  $scope.clogDateTime.clogToDate = new Date($scope.taskSubInfo.toDate);</span><br><span class="line">	  $scope.clogDateTime.clogToTime = new Date($scope.taskSubInfo.toDate);</span><br><span class="line">  &#125; catch (e) &#123;</span><br><span class="line">	  console.log(&apos;invalid fromDate:&apos;+$scope.taskSubInfo.fromDate);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*$scope.clogFromDate = new Date($filter(&apos;date&apos;)(new Date($scope.taskSubInfo.fromDate),&apos;yyyy-MM-dd&apos;));</span><br><span class="line">$scope.clogToDate = new Date($filter(&apos;date&apos;)(new Date($scope.taskSubInfo.toDate),&apos;yyyy-MM-dd&apos;));</span><br><span class="line">$scope.clogFromTime = new Date($filter(&apos;date&apos;)(new Date($scope.taskSubInfo.fromDate),&apos;HH:mm:ss&apos;));</span><br><span class="line">$scope.clogToTime = new Date($filter(&apos;date&apos;)(new Date($scope.taskSubInfo.toDate),&apos;HH:mm:ss&apos;));*/</span><br></pre></td></tr></table></figure>
+<h2 id="如何在-ngRepeat-中设置-name-属性的-index"><a href="#如何在-ngRepeat-中设置-name-属性的-index" class="headerlink" title="如何在 ngRepeat 中设置 name 属性的 $index"></a>如何在 ngRepeat 中设置 name 属性的 $index</h2><p>具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;form-group&quot;</span><br><span class="line">     ng-class=&quot;&#123;&apos;has-error&apos;: taskSubForm[&apos;variableName_&apos;+$index].$invalid &amp;&amp; (taskSubForm[&apos;variableName_&apos;+$index].$dirty || taskSubForm.$submitted)&#125;&quot;&gt;</span><br><span class="line">    &lt;label&gt;变量名称&lt;/label&gt;</span><br><span class="line">    &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;variableName_&#123;&#123;$index&#125;&#125;&quot; placeholder=&quot;变量名称 必填&quot; ng-model=&quot;taskSubvariable.variableName&quot; required&gt;</span><br><span class="line">    &lt;span class=&quot;help-block error-block basic-block&quot;&gt;此字段必填&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://stackoverflow.com/questions/21631456/angular-ngrepeat-index-in-name-attribute" target="_blank" rel="noopener">angular ngRepeat $index in name attribute</a></li>
+</ul>
+<h2 id="如何知道-http-请求成功了"><a href="#如何知道-http-请求成功了" class="headerlink" title="如何知道 $http 请求成功了"></a><a href="http://www.cnblogs.com/xing901022/p/4928147.html" target="_blank" rel="noopener">如何知道 $http 请求成功了</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">     var myAppModule = angular.module(&quot;myApp&quot;,[]);</span><br><span class="line">     myAppModule.controller(&quot;myctrl&quot;,[&quot;$scope&quot;,&quot;$q&quot;,function($scope, $ q )&#123;</span><br><span class="line">        $scope.test = 1;//这个只是用来测试angularjs是否正常的，没其他的作用</span><br><span class="line"></span><br><span class="line">        var defer1 = $q.defer();</span><br><span class="line">        var promise1 = defer1.promise;</span><br><span class="line"></span><br><span class="line">        promise1</span><br><span class="line">        .then(function(value)&#123;</span><br><span class="line">            console.log(&quot;in promise1 ---- success&quot;);</span><br><span class="line">            console.log(value);</span><br><span class="line">        &#125;,function(value)&#123;</span><br><span class="line">            console.log(&quot;in promise1 ---- error&quot;);</span><br><span class="line">            console.log(value);</span><br><span class="line">        &#125;,function(value)&#123;</span><br><span class="line">            console.log(&quot;in promise1 ---- notify&quot;);</span><br><span class="line">            console.log(value);</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(function(e)&#123;</span><br><span class="line">            console.log(&quot;in promise1 ---- catch&quot;);</span><br><span class="line">            console.log(e);</span><br><span class="line">        &#125;)</span><br><span class="line">        .finally(function(value)&#123;</span><br><span class="line">            console.log(&apos;in promise1 ---- finally&apos;);</span><br><span class="line">            console.log(value);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        defer1.resolve(&quot;hello&quot;);</span><br><span class="line">        // defer1.reject(&quot;sorry,reject&quot;);</span><br><span class="line">     &#125;]);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以简写成如下方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">promise1</span><br><span class="line">.then(function(value)&#123;</span><br><span class="line">    console.log(&quot;in promise1 ---- success&quot;);</span><br><span class="line">    console.log(value);</span><br><span class="line">&#125;,function(value)&#123;</span><br><span class="line">    console.log(&quot;in promise1 ---- error&quot;);</span><br><span class="line">    console.log(value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">promise1</span><br><span class="line">.then(function(value)&#123;</span><br><span class="line">    console.log(&quot;in promise1 ---- success&quot;);</span><br><span class="line">    console.log(value);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://www.cnblogs.com/xing901022/p/4928147.html" target="_blank" rel="noopener">AngularJS 中的Promise — $q服务详解</a></li>
+</ul>
+<h2 id="Modal-弹出框如何传值"><a href="#Modal-弹出框如何传值" class="headerlink" title="Modal 弹出框如何传值"></a><a href="http://www.cnblogs.com/acmilan/p/3672184.html" target="_blank" rel="noopener">Modal 弹出框如何传值</a></h2><ul>
+<li>通过 resolve</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">angular.module(&apos;modaltest&apos;)</span><br><span class="line">.controller(&apos;testModalTestController&apos;,function($scope,$modal)&#123;</span><br><span class="line">        $scope.addModal = function () &#123;</span><br><span class="line">            var newWarn = $modal.open(&#123;</span><br><span class="line">                templateUrl: &apos;views/part/add.html&apos;,</span><br><span class="line">                controller: &apos;C_add_Warn&apos;,</span><br><span class="line">                resolve:&#123;</span><br><span class="line">                    header : function() &#123; return angular.copy(&quot;新增&quot;); &#125;,</span><br><span class="line">                    msg : function() &#123; return angular.copy(&quot;这是消息&quot;); &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;  </span><br><span class="line">&#125;) </span><br><span class="line">.controller(&apos;C_add_Warn&apos;,function($scope,header,msg)&#123;</span><br><span class="line">       $scope.header = header;</span><br><span class="line">       $scope.msg = msg;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过 scope 传递</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">angular.module(&apos;modaltest&apos;)</span><br><span class="line"> .controller(&apos;testModalTestController&apos;,function($rootScope,$scope,$modal)&#123;</span><br><span class="line">          var scope = $rootScope.$new();</span><br><span class="line">           scope.data = &#123;</span><br><span class="line">                msg:&quot;test&quot;,</span><br><span class="line">                header:&quot;header&quot;</span><br><span class="line">           &#125;</span><br><span class="line">          $scope.addModal = function () &#123;</span><br><span class="line">              var newWarn = $modal.open(&#123;</span><br><span class="line">                  templateUrl: &apos;views/part/add.html&apos;,</span><br><span class="line">                  controller: &apos;C_add_Warn&apos;,</span><br><span class="line">                  scope:scope</span><br><span class="line">             &#125;);</span><br><span class="line">         &#125;  </span><br><span class="line"> &#125;) </span><br><span class="line"> .controller(&apos;C_add_Warn&apos;,function($scope)&#123;</span><br><span class="line">        var data = $scope.data;</span><br><span class="line"></span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Controller-之间如何跳转"><a href="#Controller-之间如何跳转" class="headerlink" title="Controller 之间如何跳转"></a><a href="https://yehuang.me/angularjs/2015/11/01/how-to-pass-parameters-in-angularjs/" target="_blank" rel="noopener">Controller 之间如何跳转</a></h2><ul>
+<li>在AngularJS的app.js中用ui-router定义路由，比如现在有两个页面，一个页面producers.html放置了多个producers，点击其中一个目标，页面跳转到对应的producer.html页，同时将producerId这个参数传过去。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//定义producers状态</span><br><span class="line">.state(&apos;producers&apos;, &#123;</span><br><span class="line">    url: &apos;/producers&apos;,</span><br><span class="line">    templateUrl: &apos;views/producers.html&apos;,</span><br><span class="line">    controller: &apos;ProducersCtrl&apos;</span><br><span class="line">&#125;)</span><br><span class="line">//定义producer状态</span><br><span class="line">.state(&apos;producer&apos;, &#123;</span><br><span class="line">    url: &apos;/producer/:producerId&apos;,</span><br><span class="line">    templateUrl: &apos;views/producer.html&apos;,</span><br><span class="line">    controller: &apos;ProducerCtrl&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在producers.html中，定义点击事件，比如ng-click=”toProducer(producerId)”，在ProducersCtrl中，定义页面跳转函数 (使用ui-router的$state.go接口)：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.controller(&apos;ProducersCtrl&apos;, function ($scope, $state) &#123;</span><br><span class="line">    $scope.toProducer = function (producerId) &#123;</span><br><span class="line">        $state.go(&apos;producer&apos;, &#123;producerId: producerId&#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在 ProducerCtrl 中，通过 ui-router 的 $stateParams 获取参数 producerId，譬如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> .controller(&apos;ProducerCtrl&apos;, function ($scope, $state, $stateParams) &#123;</span><br><span class="line">   var producerId = $stateParams.producerId;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://yehuang.me/angularjs/2015/11/01/how-to-pass-parameters-in-angularjs/" target="_blank" rel="noopener">AngularJS - 页面跳转传参</a></li>
+</ul>
+<h2 id="如何截取字符串-filter的使用介绍"><a href="#如何截取字符串-filter的使用介绍" class="headerlink" title="如何截取字符串(filter的使用介绍)"></a><a href="https://stackoverflow.com/questions/18095727/limit-the-length-of-a-string-with-angularjs" target="_blank" rel="noopener">如何截取字符串(filter的使用介绍)</a></h2><p>在模块中定义 cut filter</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">angular.module(&apos;ng&apos;).filter(&apos;cut&apos;, function () &#123;</span><br><span class="line">        return function (value, wordwise, max, tail) &#123;</span><br><span class="line">            if (!value) return &apos;&apos;;</span><br><span class="line"></span><br><span class="line">            max = parseInt(max, 10);</span><br><span class="line">            if (!max) return value;</span><br><span class="line">            if (value.length &lt;= max) return value;</span><br><span class="line"></span><br><span class="line">            value = value.substr(0, max);</span><br><span class="line">            if (wordwise) &#123;</span><br><span class="line">                var lastspace = value.lastIndexOf(&apos; &apos;);</span><br><span class="line">                if (lastspace !== -1) &#123;</span><br><span class="line">                  //Also remove . and , so its gives a cleaner result.</span><br><span class="line">                  if (value.charAt(lastspace-1) === &apos;.&apos; || value.charAt(lastspace-1) === &apos;,&apos;) &#123;</span><br><span class="line">                    lastspace = lastspace - 1;</span><br><span class="line">                  &#125;</span><br><span class="line">                  value = value.substr(0, lastspace);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            return value + (tail || &apos; …&apos;);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<p>使用如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;some_text | cut:true:100:&apos; ...&apos;&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>参数说明</p>
+<ul>
+<li>wordwise (boolean) - if true, cut only by words bounds,</li>
+<li>max (integer) - max length of the text, cut to this number of chars,</li>
+<li>tail (string, default: ‘ …’) - add this string to the input string if the string was cut.</li>
+</ul>
+<h2 id="checkbox-中的-ng-model-不起作用了"><a href="#checkbox-中的-ng-model-不起作用了" class="headerlink" title="checkbox 中的 ng-model 不起作用了"></a><a href="https://stackoverflow.com/questions/18642371/checkbox-not-binding-to-scope-in-angularjs" target="_blank" rel="noopener">checkbox 中的 ng-model 不起作用了</a></h2><p>先看看下面错误的做法</p>
+<ul>
+<li>html</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;label class=&quot;checkbox-inline custom-checkbox nowrap&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;checkbox&quot; ng-model=&quot;checkJobAll&quot; ng-click=&quot;checkAllJob(checkJobAll)&quot;&gt;</span><br><span class="line">    &lt;span&gt;&lt;/span&gt;</span><br><span class="line">&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$scope.checkJobAll = false;</span><br><span class="line"></span><br><span class="line">$scope.checkJobAll = true;</span><br></pre></td></tr></table></figure>
+<p>当 ng-model 绑定的是一个普通变量的时候, Controller 中的变量无法和页面上的变量值同步,只有改成对象的形式才可以,正确的做法如下</p>
+<ul>
+<li>html</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;label class=&quot;checkbox-inline custom-checkbox nowrap&quot;&gt;</span><br><span class="line">    &lt;input type=&quot;checkbox&quot; ng-model=&quot;checkJobAll.flag&quot; ng-click=&quot;checkAllJob(checkJobAll.flag)&quot;&gt;</span><br><span class="line">    &lt;span&gt;&lt;/span&gt;</span><br><span class="line">&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>js</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$scope.checkJobAll = &#123; &apos;flag&apos;:false &#125;;</span><br><span class="line"></span><br><span class="line">$scope.checkJobAll.flag = true;</span><br></pre></td></tr></table></figure>
+<h2 id="Modal-弹出框如何使用"><a href="#Modal-弹出框如何使用" class="headerlink" title="Modal 弹出框如何使用"></a><a href="https://angular-ui.github.io/bootstrap/#!#modal" target="_blank" rel="noopener">Modal 弹出框如何使用</a></h2><p>点击页面上的按钮弹出一个 Modal 对话框</p>
+<ul>
+<li>html </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=&quot;button&quot; ng-disabled=&quot;(item.status == &apos;EXECUTING&apos; ? false : true) || showLoading&quot; ng-click=&quot;openStopModal(&apos;app/pages/job/modal/stopJobModal.html&apos;, &apos;md&apos;, item.id)&quot; class=&quot;btn btn-danger btn-sm&quot; value=&quot;停止&quot;&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 打开停止job的对话框</span></span><br><span class="line">$scope.openStopModal = <span class="function"><span class="keyword">function</span> (<span class="params">page, size, id</span>) </span>&#123;</span><br><span class="line">    $scope.showLoading = <span class="literal">true</span>;</span><br><span class="line">    $scope.stopJobExecuteId = id;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 弹出是否关闭job的对话框 ///////////////////////////////////////////////////////////////////////</span></span><br><span class="line">    <span class="keyword">var</span> modalInstance = $uibModal.open(&#123;</span><br><span class="line">        animation: <span class="literal">true</span>,</span><br><span class="line">        templateUrl: page,</span><br><span class="line">        scope: $scope,</span><br><span class="line">        <span class="comment">//controller: 'StopJobModalInstanceCtrl',</span></span><br><span class="line">        size: size</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    modalInstance.result.then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// close</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'modal close'</span>);</span><br><span class="line">        $scope.showLoading = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 后台调用 stopJob 服务</span></span><br><span class="line">        JobExecuteService.stopJob($scope.stopJobExecuteId).then( <span class="comment">// 点击确定关闭job 按钮的回调</span></span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">" stopJobExecute response = "</span>  + <span class="built_in">JSON</span>.stringify(response));</span><br><span class="line"></span><br><span class="line">                $scope.stopJobDetail = response.data.stopDetail;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 关闭job成功后的modal //////////////////////////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">                <span class="keyword">var</span> successModalInstance = $uibModal.open(&#123;</span><br><span class="line">                    animation: <span class="literal">true</span>,</span><br><span class="line">                    templateUrl: <span class="string">'app/pages/job/modal/stopJobSuccessModal.html'</span>,</span><br><span class="line">                    scope: $scope, <span class="comment">// 控制弹出的 Modal 框使用同样的 $scope</span></span><br><span class="line">                    size: <span class="string">'md'</span></span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                successModalInstance.result.then(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// close</span></span><br><span class="line">                &#125;,<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// dismiss或者Modal框消失</span></span><br><span class="line">                    <span class="comment">// 刷新列表数据</span></span><br><span class="line">                    $scope.callServer($scope.jobExecuteTableState);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="comment">/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="keyword">function</span> (<span class="params">errResponse</span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.error(<span class="string">'Error while getJobExecute '</span> + id + <span class="string">', Error :'</span> + errResponse.data);</span><br><span class="line">                toastr.error(<span class="string">'Error while getJobExecute '</span> + id + <span class="string">', Error :'</span> + errResponse.data, <span class="string">'提示'</span>, $scope.notificationConfig);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">    &#125;, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; <span class="comment">// dismiss</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'modal dismiss'</span>);</span><br><span class="line">        $scope.showLoading = <span class="literal">false</span>;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="comment">///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="关于-form-的使用-涉及-submitted-和-setPristine-应用"><a href="#关于-form-的使用-涉及-submitted-和-setPristine-应用" class="headerlink" title="关于 form 的使用, 涉及 $submitted 和 $setPristine() 应用 "></a><a href="https://code.angularjs.org/1.5.8/docs/api/ng/directive/form" target="_blank" rel="noopener">关于 form 的使用, 涉及 $submitted 和 $setPristine() 应用 </a></h2><ul>
+<li>html</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ba-panel</span><br><span class="line">     ba-panel-class=&quot;with-scroll&quot;&gt;</span><br><span class="line"></span><br><span class="line">    &lt;form name=&quot;taskMainForm&quot; ng-submit=&quot;submit()&quot; ng-init=&quot;initForm()&quot; novalidate&gt;</span><br><span class="line">        &lt;div class=&quot;form-group has-feedback&quot;</span><br><span class="line">             ng-class=&quot;&#123;&apos;has-error&apos;: taskMainForm.taskName.$invalid &amp;&amp; (taskMainForm.taskName.$dirty || taskMainForm.$submitted)&#125;&quot;&gt;</span><br><span class="line">            &lt;label&gt;任务名称&lt;/label&gt;</span><br><span class="line">            &lt;input type=&quot;text&quot; class=&quot;form-control&quot; name=&quot;taskName&quot; placeholder=&quot;任务名称 必填&quot; ng-model=&quot;taskMainInfo.taskName&quot; required&gt;</span><br><span class="line">            &lt;span class=&quot;help-block error-block basic-block&quot;&gt;必填&lt;/span&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;label&gt;备注&lt;/label&gt;</span><br><span class="line">            &lt;textarea placeholder=&quot;填写备注&quot; class=&quot;form-control&quot; ng-model=&quot;taskMainInfo.remarks&quot;&gt;&lt;/textarea&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">        &lt;div class=&quot;form-group&quot;&gt;</span><br><span class="line">            &lt;input type=&quot;submit&quot; ng-disabled=&quot;taskMainForm.$submitted &amp;&amp; submitFlag&quot; value=&quot;&#123;&#123;!taskMainInfo.id ? &apos;添加&apos; : &apos;修改&apos;&#125;&#125;&quot; class=&quot;btn btn-primary btn-sm&quot;&gt;</span><br><span class="line">            &lt;button type=&quot;button&quot; ng-click=&quot;initForm(taskMainForm)&quot; class=&quot;btn btn-warning btn-sm&quot;&gt;重置&lt;/button&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;/form&gt;</span><br><span class="line"></span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重置form</span></span><br><span class="line">$scope.initForm = <span class="function"><span class="keyword">function</span> (<span class="params">form</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (form != <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> form !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">      form.$setPristine();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  $scope.taskMainInfo = &#123;&#125;;</span><br><span class="line">  $scope.taskSubs = [];</span><br><span class="line">  $scope.deleteTaskSubs = [];</span><br><span class="line">  $scope.taskMainInfo.executeType = <span class="string">'0'</span>;</span><br><span class="line">  $scope.taskMainInfo.taskStatus = <span class="string">'0'</span>;</span><br><span class="line"></span><br><span class="line">  $scope.taskSubAdd();</span><br><span class="line">  <span class="comment">// 2 所有, 用于创建主任务模块</span></span><br><span class="line">  $scope.loadAllTaskSubDict($scope.loadTaskSubFlag);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'init form success'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">$scope.taskMainForm = &#123;&#125;</span><br><span class="line"></span><br><span class="line">$scope.submitFlag = true;</span><br><span class="line">$scope.submit = function() &#123;</span><br><span class="line">      $scope.submitFlag = true;</span><br><span class="line">      if (this.taskMainForm.$invalid) &#123; // this.taskMainForm 表示当前操作的form</span><br><span class="line">          $scope.submitFlag = false;</span><br><span class="line">          return;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      $scope.taskMainForm = this.taskMainForm; // 把当前 form 作为全局的 form 来看</span><br><span class="line"></span><br><span class="line">      // 保存成功</span><br><span class="line">      if (createSuccess) &#123;</span><br><span class="line">        $scope.initForm($scope.taskMainForm);    </span><br><span class="line">      &#125;</span><br><span class="line">      // 修改成功</span><br><span class="line">      if (updateSuccess) &#123;</span><br><span class="line">        $scope.initForm($scope.taskMainForm);    </span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">  &#125;;</span><br></pre></td></tr></table></figure>
+<p>在 form submit 后 $submitted 会变成 true 并禁用 submit 按钮, 然后再调用上面的 initForm 方法来将 $submitted 状态重置为 false.</p>
+<p>关键在于点击提交按钮后通过 ng-submit 中定义的 submit 函数中的 <code>this.taskMainForm</code> 来获取到当前的 form 对象, 在保存或者修改成功后再调用 <code>form.$setPristine()</code> 将 $submitted 状态重置为 false.</p>
+<ul>
+<li>参考 <a href="https://stackoverflow.com/questions/32029889/angular-setpristine-not-working" target="_blank" rel="noopener">Angular $setPristine() not working</a></li>
+</ul>
+<h2 id="如何给一组-CheckBox-绑定值"><a href="#如何给一组-CheckBox-绑定值" class="headerlink" title="如何给一组 CheckBox 绑定值"></a><a href="https://stackoverflow.com/questions/14514461/how-do-i-bind-to-list-of-checkbox-values-with-angularjs" target="_blank" rel="noopener">如何给一组 CheckBox 绑定值</a></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;div ng-controller=&quot;MainCtrl&quot;&gt;</span><br><span class="line">  &lt;label ng-repeat=&quot;(color,enabled) in colors&quot;&gt;</span><br><span class="line">      &lt;input type=&quot;checkbox&quot; ng-model=&quot;colors[color]&quot; /&gt; &#123;&#123;color&#125;&#125; </span><br><span class="line">  &lt;/label&gt;</span><br><span class="line">  &lt;p&gt;colors: &#123;&#123;colors&#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var app = angular.module(&apos;plunker&apos;, []);</span><br><span class="line"></span><br><span class="line">  app.controller(&apos;MainCtrl&apos;, function($scope) &#123;</span><br><span class="line">      $scope.colors = &#123;Blue: true, Orange: true&#125;;</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AngularJS/" rel="tag"># AngularJS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/11/understand-crc/" rel="next" title="对循环冗余校验码CRC的理解">
+                <i class="fa fa-chevron-left"></i> 对循环冗余校验码CRC的理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/29/understand-JavaScript-closure-anonymous-function/" rel="prev" title="JavaScript 中对闭包和匿名函数的理解">
+                JavaScript 中对闭包和匿名函数的理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何动态插入删除dom节点"><span class="nav-number">1.</span> <span class="nav-text">如何动态插入删除dom节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ng-click-如何获取触发事件对象或者this"><span class="nav-number">2.</span> <span class="nav-text">ng-click 如何获取触发事件对象或者this</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何在页面加载的时候执行一个方法"><span class="nav-number">3.</span> <span class="nav-text">如何在页面加载的时候执行一个方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-ng-repeat-来实现增加一行-删除一行的效果"><span class="nav-number">4.</span> <span class="nav-text">使用 ng-repeat 来实现增加一行/删除一行的效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何构建一个-SpringBoot-angularJS-web-应用"><span class="nav-number">5.</span> <span class="nav-text">如何构建一个 SpringBoot + angularJS web 应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何安装-AngularJS-的-ngStorage-模块"><span class="nav-number">6.</span> <span class="nav-text">如何安装 AngularJS 的 ngStorage 模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AngularJS-如何跨域访问-SpringBoot-API"><span class="nav-number">7.</span> <span class="nav-text">AngularJS 如何跨域访问 SpringBoot API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AngularJS-如何判断字符串或者对象是否为空"><span class="nav-number">8.</span> <span class="nav-text">AngularJS 如何判断字符串或者对象是否为空</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-datePicker-和-timePicker-的组合使用"><span class="nav-number">9.</span> <span class="nav-text">关于 datePicker 和 timePicker 的组合使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何在-ngRepeat-中设置-name-属性的-index"><span class="nav-number">10.</span> <span class="nav-text">如何在 ngRepeat 中设置 name 属性的 $index</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何知道-http-请求成功了"><span class="nav-number">11.</span> <span class="nav-text">如何知道 $http 请求成功了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modal-弹出框如何传值"><span class="nav-number">12.</span> <span class="nav-text">Modal 弹出框如何传值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Controller-之间如何跳转"><span class="nav-number">13.</span> <span class="nav-text">Controller 之间如何跳转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何截取字符串-filter的使用介绍"><span class="nav-number">14.</span> <span class="nav-text">如何截取字符串(filter的使用介绍)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkbox-中的-ng-model-不起作用了"><span class="nav-number">15.</span> <span class="nav-text">checkbox 中的 ng-model 不起作用了</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Modal-弹出框如何使用"><span class="nav-number">16.</span> <span class="nav-text">Modal 弹出框如何使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-form-的使用-涉及-submitted-和-setPristine-应用"><span class="nav-number">17.</span> <span class="nav-text">关于 form 的使用, 涉及 $submitted 和 $setPristine() 应用 </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何给一组-CheckBox-绑定值"><span class="nav-number">18.</span> <span class="nav-text">如何给一组 CheckBox 绑定值</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

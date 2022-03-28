@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,byte,OXFF,原码,反码,补码,移位运算,位运算,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.">
+<meta name="keywords" content="Java,byte,OXFF,原码,反码,补码,移位运算,位运算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对 byte &amp; 0xFF 的理解">
+<meta property="og:url" content="http://ckjava.com/2018/05/03/java-byte-0XFF/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.173Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对 byte &amp; 0xFF 的理解">
+<meta name="twitter:description" content="这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2018/05/03/java-byte-0XFF/">
+
+
+
+
+
+  <title>对 byte & 0xFF 的理解 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cron-表达式生成器">
+          <a href="http://cron.toulezu.com/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            cron 表达式生成器
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2018/05/03/java-byte-0XFF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">对 byte & 0xFF 的理解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-03T00:00:00+08:00">
+                2018-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/03/java-byte-0XFF/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2018/05/03/java-byte-0XFF/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇博客涉及到对 Java 基本类型的转换, 对原码, 反码, 补码的理解, 对 移位运算, 位运算 的应用.</p>
+<h2 id="由一段代码引入的思考"><a href="#由一段代码引入的思考" class="headerlink" title="由一段代码引入的思考"></a>由一段代码引入的思考</h2><p>先看看下面一段代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/** 字节数组转成16进制字符串 **/</span><br><span class="line">public static String byte2hex(byte[] b) &#123; // 一个字节的数，</span><br><span class="line">    StringBuffer sb = new StringBuffer(b.length * 2);</span><br><span class="line">    String tmp = &quot;&quot;;</span><br><span class="line">    for (int n = 0; n &lt; b.length; n++) &#123;</span><br><span class="line">        // 整数转成十六进制表示</span><br><span class="line">        tmp = Integer.toHexString(b[n] &amp; 0XFF);</span><br><span class="line">        if (tmp.length() == 1) &#123;</span><br><span class="line">            sb.append(&quot;0&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(tmp);</span><br><span class="line">    &#125;</span><br><span class="line">    return sb.toString().toUpperCase(); // 转成大写</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中关键是 <code>b[n] &amp; 0XFF</code>, 为什么要一个 byte 要和<code>0XFF</code>进行与(&amp;)运算后再传给 <code>toHexString</code> 方法?</p>
+<p>目前知道的一点是 <code>0XFF</code> 也就是 int 类型的 255, 在 Java 中可以使用八进制、十六进制的数据直接给long, int, short, byte类型的数据赋值.</p>
+<h2 id="关于原码-反码-补码"><a href="#关于原码-反码-补码" class="headerlink" title="关于原码, 反码, 补码"></a>关于原码, 反码, 补码</h2><p>计算机要使用一定的编码方式进行存储. 原码, 反码, 补码是机器存储一个具体数字的编码方式.</p>
+<h4 id="1-原码"><a href="#1-原码" class="headerlink" title="1. 原码"></a>1. 原码</h4><p>原码就是符号位加上真值的绝对值, 即用第一位表示符号, 其余位表示值. 比如如果是8位二进制:</p>
+<p><code>[+1]原 = 0000 0001</code></p>
+<p><code>[-1]原 = 1000 0001</code></p>
+<p>第一位是符号位. 因为第一位是符号位, 所以8位二进制数的取值范围就是:</p>
+<p><code>[1111 1111 , 0111 1111]</code></p>
+<p>即</p>
+<p><code>[-127 , 127]</code></p>
+<h4 id="2-反码"><a href="#2-反码" class="headerlink" title="2. 反码"></a>2. 反码</h4><p>反码的表示方法是:</p>
+<p>正数的反码是其本身</p>
+<p>负数的反码是在其原码的基础上, 符号位不变，其余各个位取反.</p>
+<p><code>[+1] = [00000001]原 = [00000001]反</code></p>
+<p><code>[-1] = [10000001]原 = [11111110]反</code></p>
+<p>可见如果一个反码表示的是负数, 人脑无法直观的看出来它的数值. 通常要将其转换成原码再计算.</p>
+<h4 id="3-补码"><a href="#3-补码" class="headerlink" title="3. 补码"></a>3. 补码</h4><p>补码的表示方法是:</p>
+<p>正数的补码就是其本身</p>
+<p>负数的补码是在其原码的基础上, 符号位不变, 其余各位取反, 最后+1. (即在反码的基础上+1)</p>
+<p><code>[+1] = [00000001]原 = [00000001]反 = [00000001]补</code></p>
+<p><code>[-1] = [10000001]原 = [11111110]反 = [11111111]补</code></p>
+<p>对于负数, 补码表示方式也是人脑无法直观看出其数值的. 通常也需要转换成原码在计算其数值.</p>
+<p>从上面可以看到, 对于正数: 原码, 反码, 补码都是一样的, 对于负数:原码, 反码, 补码都不一样.</p>
+<h2 id="关于-amp-与运算"><a href="#关于-amp-与运算" class="headerlink" title="关于&amp;与运算"></a>关于<code>&amp;</code>与运算</h2><p><code>&amp;</code>运算是二进制数据的计算方式, 两个操作位都为1，结果才为1，否则结果为0. 在上面的 <code>b[n] &amp; 0XFF</code> 计算过程中, byte 有 8bit, <code>OXFF</code> 是16进制的255, 表示的是 int 类型, int 有 32bit.</p>
+<p>如果b[n]为 <code>-118</code>, 那么其原码表示为</p>
+<blockquote>
+<p>00000000 00000000 00000000 10001010</p>
+</blockquote>
+<p>反码为</p>
+<blockquote>
+<p>11111111 11111111 11111111 11110101 </p>
+</blockquote>
+<p>补码为</p>
+<blockquote>
+<p>11111111 11111111 11111111 11110110</p>
+</blockquote>
+<p><code>0XFF</code> 表示16进制的数据255, 原码, 反码, 补码都是一样的, 其二进制数据为</p>
+<blockquote>
+<p>00000000 00000000 00000000 11111111</p>
+</blockquote>
+<p><code>0XFF</code> 和 <code>-118</code> 进行<code>&amp;</code>运算后结果为</p>
+<blockquote>
+<p>00000000 00000000 00000000 11110110</p>
+</blockquote>
+<p>还原为原码后为</p>
+<blockquote>
+<p>00000000 00000000 00000000 10001010</p>
+</blockquote>
+<p>其表示的 int 值为 138, 可见将 byte 类型的 -118 与 <code>0XFF</code> 进行与运算后值由 -118 变成了 int 类型的 138, 其中低8位和byte的-118完全一致.</p>
+<p>如果b[n]为0或者正数, 其原码, 反码, 补码都是一样的, 和 <code>0XFF</code> 进行与运算后的结果不变.</p>
+<p>byte 的取值范围为 [-128, 127], 根据上面的转换过程我们可以发现, 只有当 byte 的值为负数的时候才有必要和<code>0XFF</code> 进行与运算, 为0或者为正数的时候byte的值和对应int的值完全一致.</p>
+<h2 id="关于无符号-gt-gt-gt-右移运算"><a href="#关于无符号-gt-gt-gt-右移运算" class="headerlink" title="关于无符号&gt;&gt;&gt;右移运算"></a>关于无符号<code>&gt;&gt;&gt;</code>右移运算</h2><p>通过上面的对 原码, 反码, 补码 和 <code>&amp;</code>与运算的理解已经可以解答:<strong>为什么一个字节要和<code>0XFF</code>进行与(&amp;)运算后再传给 <code>toHexString</code> 方法?</strong>这个问题. 这里再深入了解一下 int 和 byte 互转的问题.</p>
+<h4 id="int-转-byte数组"><a href="#int-转-byte数组" class="headerlink" title="int 转 byte数组"></a>int 转 byte数组</h4><p>int 有 32bit, byte 有 8bit, 那么一个 int 转成 byte 后有 4 个byte. 过程如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] intToBytes(<span class="keyword">int</span> a) &#123;</span><br><span class="line">	<span class="keyword">byte</span>[] intbyte = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">4</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">byte</span> b = (<span class="keyword">byte</span>) (a &gt;&gt;&gt; <span class="number">24</span>);</span><br><span class="line">	<span class="keyword">byte</span> c = (<span class="keyword">byte</span>) (a &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">	<span class="keyword">byte</span> d = (<span class="keyword">byte</span>) (a &gt;&gt;&gt; <span class="number">8</span>);</span><br><span class="line">	<span class="keyword">byte</span> e = (<span class="keyword">byte</span>) (a);</span><br><span class="line">	</span><br><span class="line">	intbyte[<span class="number">0</span>] = b;</span><br><span class="line">	intbyte[<span class="number">1</span>] = c;</span><br><span class="line">	intbyte[<span class="number">2</span>] = d;</span><br><span class="line">	intbyte[<span class="number">3</span>] = e;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> intbyte;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中用到了无符号<code>&gt;&gt;&gt;</code>右移运算, 为什么不用有符号<code>&gt;&gt;</code>右移运算呢? 两者的区别在于前者向右移动后无论当前数据是正数还是负数都用 <code>0</code> 来填充.</p>
+<p>这里拿值为 -10 的 byte 举个例子.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int a = -120;</span><br><span class="line">System.out.println(&quot;toBinaryString(a)=&quot;+Integer.toBinaryString(a));</span><br><span class="line"></span><br><span class="line">int b = a &gt;&gt;&gt; 2;</span><br><span class="line">int c = a &gt;&gt; 2;</span><br><span class="line">System.out.println(&quot;int b=&quot;+b);</span><br><span class="line">System.out.println(&quot;toBinaryString(b)=&quot;+Integer.toBinaryString(b));</span><br><span class="line">System.out.println(&quot;int c=&quot;+c);</span><br><span class="line">System.out.println(&quot;toBinaryString(c)=&quot;+Integer.toBinaryString(c));</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">toBinaryString(a)=11111111111111111111111110001000</span><br><span class="line">b=1073741794</span><br><span class="line">toBinaryString(b)=111111111111111111111111100010</span><br><span class="line">c=-30</span><br><span class="line">toBinaryString(c)=11111111111111111111111111100010</span><br></pre></td></tr></table></figure>
+<p>可见对b进行无符号<code>&gt;&gt;&gt;</code>右移运算2位后, 高2位变成了<code>00</code>. </p>
+<p>还有一点需要注意的是:无符号右移运算符 <code>&gt;&gt;&gt;</code> 只对32位和64位的值有意义.</p>
+<p>回到上面 int 转 byte 的例子. 如果传入的 int 值为 55588, 其二进制表示为</p>
+<blockquote>
+<p>00000000 00000000 11011001 00100100</p>
+</blockquote>
+<ul>
+<li><code>&gt;&gt;&gt; 24</code> 无符号向右移动 24 位后为(把<code>00000000 11011001 00100100</code>挤掉了,高位用<code>0</code>填充)</li>
+</ul>
+<blockquote>
+<p>00000000 00000000 00000000 <strong>00000000</strong></p>
+</blockquote>
+<p>转成 byte 后为 <code>00000000</code> (其实就是低8位), intbyte数组下标0的值为 <code>00000000</code></p>
+<ul>
+<li><code>&gt;&gt;&gt; 16</code> 无符号向右移动 16 位后为(把<code>11011001 00100100</code>挤掉了,高位用<code>0</code>填充)</li>
+</ul>
+<blockquote>
+<p>00000000 00000000 <strong>00000000 00000000</strong></p>
+</blockquote>
+<p>转成 byte 后为 <code>00000000</code>, intbyte数组下标1的值为 <code>00000000</code></p>
+<ul>
+<li><code>&gt;&gt;&gt; 8</code> 无符号向右移动 8 位后为(把<code>00100100</code>挤掉了,高位用<code>0</code>填充)</li>
+</ul>
+<blockquote>
+<p>00000000 00000000 00000000 <strong>11011001</strong></p>
+</blockquote>
+<p>转成 byte 后为 <code>11011001</code>, intbyte数组下标2的值为 <code>11011001</code></p>
+<ul>
+<li>最后intbyte数组下标3的值为 <code>00100100</code>.</li>
+</ul>
+<p>经过上面的计算, 就将一个 int 转成了长度为4的 byte 数组.</p>
+<h4 id="byte数组-转-int"><a href="#byte数组-转-int" class="headerlink" title="byte数组 转 int"></a>byte数组 转 int</h4><p>对于上面的 byte 数组如何转回 int 呢? 方法如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = (intbyte[<span class="number">0</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">24</span>;</span><br><span class="line"><span class="keyword">int</span> b = (intbyte[<span class="number">1</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">16</span>; </span><br><span class="line"><span class="keyword">int</span> c = (intbyte[<span class="number">2</span>] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">8</span>; </span><br><span class="line"><span class="keyword">int</span> d = (intbyte[<span class="number">3</span>] &amp; <span class="number">0xFF</span>);</span><br><span class="line">System.out.println(<span class="string">"a|b|c|d = "</span> + (a|b|c|d));</span><br></pre></td></tr></table></figure>
+<p>其中想当然会用到<code>&lt;&lt;</code>左移动, 因为前面用到了右移嘛.</p>
+<p>第一个 byte 先跟 <code>0XFF</code> 进行与运算转成 int, 然后向左移动 24 位变成 a</p>
+<blockquote>
+<p><strong>00000000</strong> 00000000 00000000 00000000</p>
+</blockquote>
+<p>第二个 byte 先跟 <code>0XFF</code> 进行与运算转成 int, 然后向左移动 16 位变成 b</p>
+<blockquote>
+<p>00000000 <strong>00000000</strong> 00000000 00000000</p>
+</blockquote>
+<p>第三个 byte 先跟 <code>0XFF</code> 进行与运算转成 int, 然后向左移动 8 位变成 c</p>
+<blockquote>
+<p>00000000 00000000 <strong>11011001</strong> 00000000</p>
+</blockquote>
+<p>第四个 byte 跟 <code>0XFF</code> 进行与运算转成 int d</p>
+<blockquote>
+<p>00000000 00000000 00000000 <strong>00100100</strong></p>
+</blockquote>
+<p>最后还要用到<code>|</code>或运算, 或运算规律：两个位只要有一个为1，那么结果就是1，否则就为0. </p>
+<p>a 和 b 的或运算结果为</p>
+<blockquote>
+<p><strong>00000000</strong> <strong>00000000</strong> 00000000 00000000</p>
+</blockquote>
+<p>上面的结果再和 c 的或运算结果为</p>
+<blockquote>
+<p><strong>00000000</strong> <strong>00000000</strong> <strong>11011001</strong> 00000000</p>
+</blockquote>
+<p>上面的结果再和 d 的或运算结果为</p>
+<blockquote>
+<p><strong>00000000</strong> <strong>00000000</strong> <strong>11011001</strong> <strong>00100100</strong></p>
+</blockquote>
+<p>最终将 byte 数组又转成了 int.</p>
+<h4 id="单个-byte-转成-int"><a href="#单个-byte-转成-int" class="headerlink" title="单个 byte 转成 int"></a>单个 byte 转成 int</h4><p>根据上面的分析, 单个 byte 转成 int 其实就是将 byte 和 int 类型的 255 进行(&amp;)与运算即可. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">byte b = 25;</span><br><span class="line">int a = b &amp; 0XFF; // 或者 b &amp; 255;</span><br></pre></td></tr></table></figure>
+<p>现在已经知道了在 Java 中通过补码来表示负数, 对于0和正数来说:原码,反码,补码都是一样的. 那么可以得出的结论是:<strong>对于 byte[-128,127], 其[0,127]范围的数据和 int 中的 [0,127] 完全一致,不需要 <code>&amp; 0XFF</code>, 只有对于 [-128,-1] 的 byte 数据才需要 <code>&amp; 0XFF</code></strong>.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Integer.toHexString((<span class="keyword">byte</span>)<span class="number">138</span> &amp; <span class="number">0XFF</span>).toUpperCase());</span><br><span class="line">System.out.println(Integer.toHexString(<span class="number">138</span>).toUpperCase());</span><br><span class="line"></span><br><span class="line">System.out.println(Integer.toHexString((<span class="keyword">byte</span>)-<span class="number">138</span> &amp; <span class="number">0XFF</span>).toUpperCase());</span><br><span class="line"><span class="keyword">int</span> a = (<span class="keyword">byte</span>)-<span class="number">138</span> &amp; <span class="number">0XFF</span>;</span><br><span class="line">System.out.println(<span class="string">"a="</span>+a);</span><br><span class="line">System.out.println(Integer.toHexString(a).toUpperCase());</span><br></pre></td></tr></table></figure>
+<p>运行结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">8A</span><br><span class="line">8A</span><br><span class="line">76</span><br><span class="line">a=118</span><br><span class="line">76</span><br></pre></td></tr></table></figure>
+<h2 id="最后一个问题"><a href="#最后一个问题" class="headerlink" title="最后一个问题"></a>最后一个问题</h2><p><code>Integer.toHexString(b[n] &amp; 0XFF);</code> 返回16进制的字符串，最长2个字符，最少1个字符，为什么？这个就相对简单了，无需研究 <code>toHexString</code> 方法的具体实现，实验的方法如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span> a = -<span class="number">128</span>;</span><br><span class="line"><span class="keyword">byte</span> c = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">byte</span> b = <span class="number">127</span>;</span><br><span class="line">System.out.println(Integer.toHexString(a &amp; <span class="number">0XFF</span>));</span><br><span class="line">System.out.println(Integer.toHexString(c &amp; <span class="number">0XFF</span>));</span><br><span class="line">System.out.println(Integer.toHexString(b &amp; <span class="number">0XFF</span>));</span><br></pre></td></tr></table></figure>
+<p>返回的结果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">80</span><br><span class="line">0</span><br><span class="line">7f</span><br></pre></td></tr></table></figure>
+<p>对于 byte[-128,127] 转成16进制后都小于 <code>OXFF</code>（255）, 因此是不会超过3个字符串的。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://zim.logdown.com/posts/397666-0xff-is" target="_blank" rel="noopener">0xFF 是什么?</a></li>
+<li><a href="https://www.cnblogs.com/zhangziqiu/archive/2011/03/30/ComputerCode.htm" target="_blank" rel="noopener">原码, 反码, 补码 详解</a></li>
+<li><a href="https://blog.csdn.net/LVGAOYANH/article/details/53486933" target="_blank" rel="noopener">浅谈 &amp;0xFF操作</a></li>
+<li><a href="https://blog.csdn.net/xiaochunyong/article/details/7748713" target="_blank" rel="noopener">Java 位运算(移位、位与、或、异或、非）</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/byte/" rel="tag"># byte</a>
+          
+            <a href="/tags/OXFF/" rel="tag"># OXFF</a>
+          
+            <a href="/tags/原码/" rel="tag"># 原码</a>
+          
+            <a href="/tags/反码/" rel="tag"># 反码</a>
+          
+            <a href="/tags/补码/" rel="tag"># 补码</a>
+          
+            <a href="/tags/移位运算/" rel="tag"># 移位运算</a>
+          
+            <a href="/tags/位运算/" rel="tag"># 位运算</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/10/git-remote-branch-command/" rel="next" title="总结 git 中有关远端仓库和本地仓库的命令">
+                <i class="fa fa-chevron-left"></i> 总结 git 中有关远端仓库和本地仓库的命令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/09/08/about-career-flow-some-thinking/" rel="prev" title="关于职业生涯和流量的思考">
+                关于职业生涯和流量的思考 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#由一段代码引入的思考"><span class="nav-number">1.</span> <span class="nav-text">由一段代码引入的思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于原码-反码-补码"><span class="nav-number">2.</span> <span class="nav-text">关于原码, 反码, 补码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-原码"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 原码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-反码"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 反码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-补码"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 补码</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-amp-与运算"><span class="nav-number">3.</span> <span class="nav-text">关于&amp;与运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于无符号-gt-gt-gt-右移运算"><span class="nav-number">4.</span> <span class="nav-text">关于无符号&gt;&gt;&gt;右移运算</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#int-转-byte数组"><span class="nav-number">4.0.1.</span> <span class="nav-text">int 转 byte数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#byte数组-转-int"><span class="nav-number">4.0.2.</span> <span class="nav-text">byte数组 转 int</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单个-byte-转成-int"><span class="nav-number">4.0.3.</span> <span class="nav-text">单个 byte 转成 int</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后一个问题"><span class="nav-number">5.</span> <span class="nav-text">最后一个问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
