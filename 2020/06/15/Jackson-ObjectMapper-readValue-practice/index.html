@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,8 +88,8 @@
 <meta property="og:url" content="http://ckjava.com/2020/06/15/Jackson-ObjectMapper-readValue-practice/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-06-15T13:02:15.080Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-03-20T13:50:12.266Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
 <meta name="twitter:description" content="详解 Jackson 中的 ObjectMapper 类中的 readValue 方法对泛型的处理">
@@ -108,7 +108,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: 'undefined',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -144,22 +144,12 @@
 </script>
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
 
 
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -207,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -217,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -227,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -237,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -247,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
-            站点地图
+            Sitemap
           </a>
         </li>
       
@@ -257,7 +247,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -331,9 +321,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-15T00:00:00+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-15T00:00:00+08:00">
                 2020-06-15
               </time>
             
@@ -352,7 +342,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -419,7 +409,7 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">HttpResult httpResult = HttpClientUtils.post(url, HeaderMap.jsonHeader, <span class="keyword">null</span>, JsonUtils.getMapper().writeValueAsString(jsonBody));</span><br><span class="line">HttpResponse&lt;List&lt;HeartbeatVo&gt;&gt; httpResponse = JsonUtils.getMapper().readValue(httpResult.getBodyString(), <span class="keyword">new</span> TypeReference&lt;HttpResponse&lt;List&lt;HeartbeatVo&gt;&gt;&gt;()&#123;&#125;);</span><br></pre></td></tr></table></figure>
 <p>或者通过 TypeFactory 类中的 constructParametricType 方法</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Data&lt;T&gt; <span class="title">read</span><span class="params">(InputStream json, Class&lt;T&gt; contentClass)</span> </span>&#123;</span><br><span class="line">   JavaType type = mapper.getTypeFactory().constructParametricType(Data.class, contentClass);</span><br><span class="line">   <span class="keyword">return</span> mapper.readValue(json, type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Data&lt;T&gt; <span class="title">read</span><span class="params">(InputStream json, Class&lt;T&gt; contentClass)</span> </span>&#123;</span><br><span class="line">   JavaType type = mapper.getTypeFactory().constructParametricType(Data<span class="class">.<span class="keyword">class</span>, <span class="title">contentClass</span>)</span>;</span><br><span class="line">   <span class="keyword">return</span> mapper.readValue(json, type);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="3-完整测试"><a href="#3-完整测试" class="headerlink" title="3 完整测试"></a>3 完整测试</h2><h4 id="3-1-pojo-对象"><a href="#3-1-pojo-对象" class="headerlink" title="3.1 pojo 对象"></a>3.1 pojo 对象</h4><ul>
 <li>忽略 get set 以及构造函数</li>
 </ul>
@@ -428,7 +418,7 @@
 <li>通过 <code>new TypeReference&lt;Json&lt;User&gt;&gt;(){}</code> 来解决泛型问题</li>
 <li>通过 TypeFactory 类中的 constructParametricType 方法来解决泛型问题</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Json&lt;User&gt; userJson = <span class="keyword">new</span> Json&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    Hit&lt;User&gt; hit = <span class="keyword">new</span> Hit&lt;&gt;();</span><br><span class="line">    hit.setId(<span class="string">"1"</span>);</span><br><span class="line">    hit.setData(<span class="keyword">new</span> User(<span class="number">20</span>, <span class="string">"jack"</span>));</span><br><span class="line"></span><br><span class="line">    Hits&lt;User&gt; userHits = <span class="keyword">new</span> Hits&lt;&gt;();</span><br><span class="line">    userHits.setFound(<span class="number">1</span>);</span><br><span class="line">    userHits.setStart(<span class="number">2</span>);</span><br><span class="line">    ArrayList&lt;Hit&lt;User&gt;&gt; hitArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    hitArrayList.add(hit);</span><br><span class="line">    userHits.setHit(hitArrayList);</span><br><span class="line"></span><br><span class="line">    userJson.setHits(userHits);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String userJsonString = JsonUtils.getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userJson);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        Json&lt;User&gt; readValue = JsonUtils.getMapper().readValue(userJsonString, <span class="keyword">new</span> TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(readValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String jsonString = <span class="string">"&#123;\"hits\":&#123;\"found\":1,\"start\":2,\"hit\":[&#123;\"id\":\"1\",\"data\":&#123;\"age\":20,\"name\":\"jack\",\"enName\":null,\"password\":null,\"gender\":\"\\u0000\",\"hasMarried\":false&#125;&#125;]&#125;&#125;"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span></span><br><span class="line">        Json&lt;User&gt; readValue = JsonUtils.getMapper().readValue(jsonString, <span class="keyword">new</span> TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 TypeFactory 来解决泛型问题</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json.class, User.class);</span><br><span class="line">        readValue = JsonUtils.getMapper().readValue(jsonString, jsonType);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String jsonString = <span class="string">"&#123;\"data\":&#123;\"hits\":&#123;\"found\":1,\"start\":2,\"hit\":[&#123;\"id\":\"1\",\"data\":&#123;\"age\":20,\"name\":\"jack\",\"enName\":null,\"password\":null,\"gender\":\"\\u0000\",\"hasMarried\":false&#125;&#125;]&#125;&#125;,\"sign\":\"success\",\"code\":200,\"message\":null,\"dataSize\":1&#125;"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span></span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; httpResponse = JsonUtils.getMapper().readValue(jsonString, <span class="keyword">new</span> TypeReference&lt;HttpResponse&lt;Json&lt;User&gt;&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(httpResponse.getData().getHits().getFound());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 TypeFactory 来解决泛型问题</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json.class, User.class);</span><br><span class="line">        JavaType httpResponseJavaType = JsonUtils.getMapper().getTypeFactory().constructParametricType(HttpResponse.class, jsonType);</span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; parseHttpResponse = JsonUtils.getMapper().readValue(jsonString, httpResponseJavaType);</span><br><span class="line">        System.out.println(parseHttpResponse.getData().getHits().getFound());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Json&lt;User&gt; userJson = <span class="keyword">new</span> Json&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    Hit&lt;User&gt; hit = <span class="keyword">new</span> Hit&lt;&gt;();</span><br><span class="line">    hit.setId(<span class="string">"1"</span>);</span><br><span class="line">    hit.setData(<span class="keyword">new</span> User(<span class="number">20</span>, <span class="string">"jack"</span>));</span><br><span class="line"></span><br><span class="line">    Hits&lt;User&gt; userHits = <span class="keyword">new</span> Hits&lt;&gt;();</span><br><span class="line">    userHits.setFound(<span class="number">1</span>);</span><br><span class="line">    userHits.setStart(<span class="number">2</span>);</span><br><span class="line">    ArrayList&lt;Hit&lt;User&gt;&gt; hitArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    hitArrayList.add(hit);</span><br><span class="line">    userHits.setHit(hitArrayList);</span><br><span class="line"></span><br><span class="line">    userJson.setHits(userHits);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String userJsonString = JsonUtils.getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userJson);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        Json&lt;User&gt; readValue = JsonUtils.getMapper().readValue(userJsonString, <span class="keyword">new</span> TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(readValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String jsonString = <span class="string">"&#123;\"hits\":&#123;\"found\":1,\"start\":2,\"hit\":[&#123;\"id\":\"1\",\"data\":&#123;\"age\":20,\"name\":\"jack\",\"enName\":null,\"password\":null,\"gender\":\"\\u0000\",\"hasMarried\":false&#125;&#125;]&#125;&#125;"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span></span><br><span class="line">        Json&lt;User&gt; readValue = JsonUtils.getMapper().readValue(jsonString, <span class="keyword">new</span> TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 TypeFactory 来解决泛型问题</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json<span class="class">.<span class="keyword">class</span>, <span class="title">User</span>.<span class="title">class</span>)</span>;</span><br><span class="line">        readValue = JsonUtils.getMapper().readValue(jsonString, jsonType);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test3</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String jsonString = <span class="string">"&#123;\"data\":&#123;\"hits\":&#123;\"found\":1,\"start\":2,\"hit\":[&#123;\"id\":\"1\",\"data\":&#123;\"age\":20,\"name\":\"jack\",\"enName\":null,\"password\":null,\"gender\":\"\\u0000\",\"hasMarried\":false&#125;&#125;]&#125;&#125;,\"sign\":\"success\",\"code\":200,\"message\":null,\"dataSize\":1&#125;"</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 通过 new TypeReference&lt;Json&lt;User&gt;&gt;()&#123;&#125; 来解决泛型问题</span></span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; httpResponse = JsonUtils.getMapper().readValue(jsonString, <span class="keyword">new</span> TypeReference&lt;HttpResponse&lt;Json&lt;User&gt;&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(httpResponse.getData().getHits().getFound());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过 TypeFactory 来解决泛型问题</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(Json<span class="class">.<span class="keyword">class</span>, <span class="title">User</span>.<span class="title">class</span>)</span>;</span><br><span class="line">        JavaType httpResponseJavaType = JsonUtils.getMapper().getTypeFactory().constructParametricType(HttpResponse<span class="class">.<span class="keyword">class</span>, <span class="title">jsonType</span>)</span>;</span><br><span class="line">        HttpResponse&lt;Json&lt;User&gt;&gt; parseHttpResponse = JsonUtils.getMapper().readValue(jsonString, httpResponseJavaType);</span><br><span class="line">        System.out.println(parseHttpResponse.getData().getHits().getFound());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="4-TypeFactory-一些方法解析"><a href="#4-TypeFactory-一些方法解析" class="headerlink" title="4 TypeFactory 一些方法解析"></a>4 TypeFactory 一些方法解析</h2><ul>
 <li>com.fasterxml.jackson.databind.type.TypeFactory</li>
 <li>com.fasterxml.jackson.databind.JavaType</li>
@@ -442,11 +432,11 @@
 <h4 id="4-1-constructCollectionType-方法处理-List-的-json-类型"><a href="#4-1-constructCollectionType-方法处理-List-的-json-类型" class="headerlink" title="4.1 constructCollectionType 方法处理 List 的 json 类型"></a>4.1 constructCollectionType 方法处理 List<t> 的 json 类型</t></h4><ul>
 <li>constructCollectionType 方法</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_list_string</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String listString = <span class="string">"[ \"1\",\"2\",\"3\" ]"</span>;</span><br><span class="line">        JavaType stringCollection = JsonUtils.getMapper().getTypeFactory().constructCollectionType(List.class, String.class);</span><br><span class="line">        List&lt;String&gt; dataList = JsonUtils.getMapper().readValue(listString, stringCollection);</span><br><span class="line"></span><br><span class="line">        dataList.forEach(data -&gt; System.out.println(String.format(<span class="string">"data:%s"</span>, data)));</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_list_string</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String listString = <span class="string">"[ \"1\",\"2\",\"3\" ]"</span>;</span><br><span class="line">        JavaType stringCollection = JsonUtils.getMapper().getTypeFactory().constructCollectionType(List<span class="class">.<span class="keyword">class</span>, <span class="title">String</span>.<span class="title">class</span>)</span>;</span><br><span class="line">        List&lt;String&gt; dataList = JsonUtils.getMapper().readValue(listString, stringCollection);</span><br><span class="line"></span><br><span class="line">        dataList.forEach(data -&gt; System.out.println(String.format(<span class="string">"data:%s"</span>, data)));</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="4-2-constructMapLikeType-方法处理-Map-lt-k-List-gt-的-json-类型"><a href="#4-2-constructMapLikeType-方法处理-Map-lt-k-List-gt-的-json-类型" class="headerlink" title="4.2 constructMapLikeType 方法处理 Map&lt;k, List&gt; 的 json 类型"></a>4.2 constructMapLikeType 方法处理 Map&lt;k, List<t>&gt; 的 json 类型</t></h4><ul>
 <li>constructMapLikeType 方法</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_map_list_string</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String jsonString = <span class="string">"&#123; \"list\" : [ \"1\",\"2\",\"3\" ] &#125;"</span>;</span><br><span class="line"></span><br><span class="line">        JavaType stringType = JsonUtils.getMapper().getTypeFactory().constructType(String.class);</span><br><span class="line">        JavaType listType = JsonUtils.getMapper().getTypeFactory().constructCollectionType(List.class, String.class);</span><br><span class="line"></span><br><span class="line">        JavaType mapLikeType = JsonUtils.getMapper().getTypeFactory().constructMapLikeType(Map.class, stringType, listType);</span><br><span class="line">        Map&lt;String, List&lt;String&gt;&gt; dataMap = JsonUtils.getMapper().readValue(jsonString, mapLikeType);</span><br><span class="line"></span><br><span class="line">        dataMap.forEach((key,value) -&gt; &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"key:%s"</span>, key));</span><br><span class="line">            System.out.println(<span class="string">"value:"</span>);</span><br><span class="line">            value.forEach(data -&gt; System.out.print(String.format(<span class="string">"data:%s,"</span>, data)));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_map_list_string</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String jsonString = <span class="string">"&#123; \"list\" : [ \"1\",\"2\",\"3\" ] &#125;"</span>;</span><br><span class="line"></span><br><span class="line">        JavaType stringType = JsonUtils.getMapper().getTypeFactory().constructType(String<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        JavaType listType = JsonUtils.getMapper().getTypeFactory().constructCollectionType(List<span class="class">.<span class="keyword">class</span>, <span class="title">String</span>.<span class="title">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">        JavaType mapLikeType = JsonUtils.getMapper().getTypeFactory().constructMapLikeType(Map<span class="class">.<span class="keyword">class</span>, <span class="title">stringType</span>, <span class="title">listType</span>)</span>;</span><br><span class="line">        Map&lt;String, List&lt;String&gt;&gt; dataMap = JsonUtils.getMapper().readValue(jsonString, mapLikeType);</span><br><span class="line"></span><br><span class="line">        dataMap.forEach((key,value) -&gt; &#123;</span><br><span class="line">            System.out.println(String.format(<span class="string">"key:%s"</span>, key));</span><br><span class="line">            System.out.println(<span class="string">"value:"</span>);</span><br><span class="line">            value.forEach(data -&gt; System.out.print(String.format(<span class="string">"data:%s,"</span>, data)));</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="4-3-constructParametricType-方法处理-HttpResponse-lt-Json-gt-的-json-类型"><a href="#4-3-constructParametricType-方法处理-HttpResponse-lt-Json-gt-的-json-类型" class="headerlink" title="4.3 constructParametricType 方法处理 HttpResponse&lt;Json&gt; 的 json 类型"></a>4.3 constructParametricType 方法处理 HttpResponse&lt;Json<t>&gt; 的 json 类型</t></h4><ul>
 <li>constructParametricType 方法</li>
 </ul>
@@ -456,7 +446,7 @@
 <ul>
 <li>测试如下</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJsonType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JsonType&lt;String, User&gt; userJson = <span class="keyword">new</span> JsonType&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    Hit&lt;User&gt; hit = <span class="keyword">new</span> Hit&lt;&gt;();</span><br><span class="line">    hit.setId(<span class="string">"1"</span>);</span><br><span class="line">    hit.setData(<span class="keyword">new</span> User(<span class="number">20</span>, <span class="string">"jack"</span>));</span><br><span class="line"></span><br><span class="line">    Hits&lt;User&gt; userHits = <span class="keyword">new</span> Hits&lt;&gt;();</span><br><span class="line">    userHits.setFound(<span class="number">1</span>);</span><br><span class="line">    userHits.setStart(<span class="number">2</span>);</span><br><span class="line">    ArrayList&lt;Hit&lt;User&gt;&gt; hitArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    hitArrayList.add(hit);</span><br><span class="line">    userHits.setHit(hitArrayList);</span><br><span class="line"></span><br><span class="line">    userJson.setKey(<span class="string">"chen"</span>);</span><br><span class="line">    userJson.setHits(userHits);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String userJsonString = JsonUtils.getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userJson);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. new TypeReference&lt;JsonType&lt;String, User&gt;&gt;()&#123;&#125; 方式</span></span><br><span class="line">        JsonType&lt;String, User&gt; readValue = JsonUtils.getMapper().readValue(userJsonString, <span class="keyword">new</span> TypeReference&lt;JsonType&lt;String, User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(readValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. JavaType 方式</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(JsonType.class, String.class, User.class);</span><br><span class="line">        JsonType&lt;String, User&gt; JsonTypeValue = JsonUtils.getMapper().readValue(userJsonString, jsonType);</span><br><span class="line">        System.out.println(JsonTypeValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(JsonTypeValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testJsonType</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JsonType&lt;String, User&gt; userJson = <span class="keyword">new</span> JsonType&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    Hit&lt;User&gt; hit = <span class="keyword">new</span> Hit&lt;&gt;();</span><br><span class="line">    hit.setId(<span class="string">"1"</span>);</span><br><span class="line">    hit.setData(<span class="keyword">new</span> User(<span class="number">20</span>, <span class="string">"jack"</span>));</span><br><span class="line"></span><br><span class="line">    Hits&lt;User&gt; userHits = <span class="keyword">new</span> Hits&lt;&gt;();</span><br><span class="line">    userHits.setFound(<span class="number">1</span>);</span><br><span class="line">    userHits.setStart(<span class="number">2</span>);</span><br><span class="line">    ArrayList&lt;Hit&lt;User&gt;&gt; hitArrayList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    hitArrayList.add(hit);</span><br><span class="line">    userHits.setHit(hitArrayList);</span><br><span class="line"></span><br><span class="line">    userJson.setKey(<span class="string">"chen"</span>);</span><br><span class="line">    userJson.setHits(userHits);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        String userJsonString = JsonUtils.getMapper().writerWithDefaultPrettyPrinter().writeValueAsString(userJson);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1. new TypeReference&lt;JsonType&lt;String, User&gt;&gt;()&#123;&#125; 方式</span></span><br><span class="line">        JsonType&lt;String, User&gt; readValue = JsonUtils.getMapper().readValue(userJsonString, <span class="keyword">new</span> TypeReference&lt;JsonType&lt;String, User&gt;&gt;()&#123;&#125;);</span><br><span class="line">        System.out.println(readValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(readValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. JavaType 方式</span></span><br><span class="line">        JavaType jsonType = JsonUtils.getMapper().getTypeFactory().constructParametricType(JsonType<span class="class">.<span class="keyword">class</span>, <span class="title">String</span>.<span class="title">class</span>, <span class="title">User</span>.<span class="title">class</span>)</span>;</span><br><span class="line">        JsonType&lt;String, User&gt; JsonTypeValue = JsonUtils.getMapper().readValue(userJsonString, jsonType);</span><br><span class="line">        System.out.println(JsonTypeValue.getHits().getFound());</span><br><span class="line"></span><br><span class="line">        userJsonString = JsonUtils.getMapper().writeValueAsString(JsonTypeValue);</span><br><span class="line">        System.out.println(String.format(<span class="string">"hit to jsonString:\n%s"</span>, userJsonString));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="5-参考"><a href="#5-参考" class="headerlink" title="5 参考"></a>5 参考</h2><ul>
 <li><a href="https://stackoverflow.com/questions/11664894/jackson-deserialize-using-generic-class" target="_blank" rel="noopener">jackson-deserialize-using-generic-class</a></li>
 <li><a href="https://stackoverflow.com/questions/11659844/jackson-deserialize-generic-class-variable" target="_blank" rel="noopener">Jackson - Deserialize Generic class variable</a></li>
@@ -475,14 +465,14 @@
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
   <div>Buy me a cup of coffee</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    <span>Donate</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
-        <p>微信支付</p>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
     
 
@@ -590,10 +580,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -613,8 +603,13 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
+=======
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -625,7 +620,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">38</span>
-                  <span class="site-state-item-name">分类</span>
+                  <span class="site-state-item-name">categories</span>
                 </a>
               </div>
             
@@ -635,8 +630,13 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
+<<<<<<< HEAD
                   <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
+=======
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -695,7 +695,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -705,7 +705,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -713,7 +713,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,8 +88,8 @@
 <meta property="og:url" content="http://ckjava.com/2018/09/19/Spring-SpringMVC-integration-velocity-practice/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="在 Spring 或者 SpringMVC 中集成 velocity 的方法">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-09-19T15:28:46.228Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Spring 中集成 velocity">
 <meta name="twitter:description" content="在 Spring 或者 SpringMVC 中集成 velocity 的方法">
@@ -108,7 +108,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: 'undefined',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -144,22 +144,12 @@
 </script>
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
 
 
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -207,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -217,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -227,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -237,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -247,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
-            站点地图
+            Sitemap
           </a>
         </li>
       
@@ -257,7 +247,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -331,9 +321,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-19T00:00:00+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-19T00:00:00+08:00">
                 2018-09-19
               </time>
             
@@ -352,7 +342,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -363,7 +353,7 @@
 
                 
                 
-                  ， 
+                  , 
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -447,7 +437,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">header...</span><br><span class="line">我来了，velocity！</span><br><span class="line">footer...</span><br></pre></td></tr></table></figure>
 <h2 id="在-Spring-中使用-velocity"><a href="#在-Spring-中使用-velocity" class="headerlink" title="在 Spring 中使用 velocity"></a>在 Spring 中使用 velocity</h2><p>也就是不通过 xml 配置的方式来使用，将 VelocityEngine 配置成一个 Spring Bean 对象，可以用于邮件模板，或者代码模板。Maven 依赖和上面的一样。</p>
 <p>VelocityEngine 配置如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.velocity.app.VelocityEngine;</span><br><span class="line"><span class="keyword">import</span> org.apache.velocity.runtime.RuntimeConstants;</span><br><span class="line"><span class="keyword">import</span> org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VelocityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> VelocityEngine <span class="title">velocityEngine</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		VelocityEngine velocityEngine = <span class="keyword">new</span> VelocityEngine();</span><br><span class="line"></span><br><span class="line">		velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, <span class="string">"classpath"</span>);</span><br><span class="line">		velocityEngine.setProperty(<span class="string">"classpath.resource.loader.class"</span>, ClasspathResourceLoader.class.getName());</span><br><span class="line">		velocityEngine.setProperty(RuntimeConstants.INPUT_ENCODING, <span class="string">"UTF-8"</span>);</span><br><span class="line">		velocityEngine.setProperty(RuntimeConstants.OUTPUT_ENCODING, <span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line">		velocityEngine.init();</span><br><span class="line">		<span class="keyword">return</span> velocityEngine;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.velocity.app.VelocityEngine;</span><br><span class="line"><span class="keyword">import</span> org.apache.velocity.runtime.RuntimeConstants;</span><br><span class="line"><span class="keyword">import</span> org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VelocityConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> VelocityEngine <span class="title">velocityEngine</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		VelocityEngine velocityEngine = <span class="keyword">new</span> VelocityEngine();</span><br><span class="line"></span><br><span class="line">		velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, <span class="string">"classpath"</span>);</span><br><span class="line">		velocityEngine.setProperty(<span class="string">"classpath.resource.loader.class"</span>, ClasspathResourceLoader<span class="class">.<span class="keyword">class</span>.<span class="title">getName</span>())</span>;</span><br><span class="line">		velocityEngine.setProperty(RuntimeConstants.INPUT_ENCODING, <span class="string">"UTF-8"</span>);</span><br><span class="line">		velocityEngine.setProperty(RuntimeConstants.OUTPUT_ENCODING, <span class="string">"UTF-8"</span>);</span><br><span class="line"></span><br><span class="line">		velocityEngine.init();</span><br><span class="line">		<span class="keyword">return</span> velocityEngine;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>使用如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.velocity.Template;</span><br><span class="line"><span class="keyword">import</span> org.apache.velocity.VelocityContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.velocity.app.VelocityEngine;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.StringWriter;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProcessVelocityTemplate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> VelocityEngine velocityEngine;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getVelocityResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Template template = velocityEngine.getTemplate(<span class="string">"vtls/hellovelocity.vm"</span>);</span><br><span class="line">			VelocityContext ctx = <span class="keyword">new</span> VelocityContext();</span><br><span class="line"></span><br><span class="line">			ctx.put(<span class="string">"name"</span>, <span class="string">"模板velocity"</span>);</span><br><span class="line">			ctx.put(<span class="string">"date"</span>, (<span class="keyword">new</span> Date()).toString());</span><br><span class="line"></span><br><span class="line">			List temp = <span class="keyword">new</span> ArrayList();</span><br><span class="line">			temp.add(<span class="string">"1"</span>);</span><br><span class="line">			temp.add(<span class="string">"2"</span>);</span><br><span class="line">			ctx.put(<span class="string">"list"</span>, temp);</span><br><span class="line"></span><br><span class="line">			StringWriter sw = <span class="keyword">new</span> StringWriter();</span><br><span class="line"></span><br><span class="line">			template.merge(ctx, sw);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span> sw.toString();</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>其中需要注意的是 <code>hellovelocity.vm</code> 位于 Maven 项目中的 <code>src/main/resources/vtls</code> 目录下。</p>
@@ -465,14 +455,14 @@
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
   <div>Buy me a cup of coffee</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    <span>Donate</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
-        <p>微信支付</p>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
     
 
@@ -580,10 +570,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -603,8 +593,13 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
+=======
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -615,7 +610,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">38</span>
-                  <span class="site-state-item-name">分类</span>
+                  <span class="site-state-item-name">categories</span>
                 </a>
               </div>
             
@@ -625,8 +620,13 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
+<<<<<<< HEAD
                   <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
+=======
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -685,7 +685,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -695,7 +695,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -703,7 +703,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

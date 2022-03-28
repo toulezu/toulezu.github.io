@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,8 +88,8 @@
 <meta property="og:url" content="http://ckjava.com/2019/12/01/freemarker-self-define-function-usage/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="本文介绍内容如下：1. 在 freemarker 模板中使用自定义的函数功能；2. freemarker 使用字符串类型的模板以及文件模板">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-01T13:38:06.762Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.171Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 freemarker 中使用自定义的函数的两种方法介绍">
 <meta name="twitter:description" content="本文介绍内容如下：1. 在 freemarker 模板中使用自定义的函数功能；2. freemarker 使用字符串类型的模板以及文件模板">
@@ -108,7 +108,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: 'undefined',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -144,22 +144,12 @@
 </script>
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
 
 
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -207,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -217,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -227,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -237,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -247,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
-            站点地图
+            Sitemap
           </a>
         </li>
       
@@ -257,7 +247,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -331,9 +321,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-01T00:00:00+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-01T00:00:00+08:00">
                 2019-12-01
               </time>
             
@@ -352,7 +342,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -428,7 +418,7 @@
 <ul>
 <li>封装 TemplateCom.java, 用于处理字符串模板和文件模板</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> freemarker.cache.StringTemplateLoader;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.Configuration;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.Template;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.freemarker.FreeMarkerTemplateUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.StringWriter;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateCom</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(TemplateCom.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> FreeMarkerConfigurer freeMarkerConfigurer;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理模板文件</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> template 模板文件名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataMap 模板数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">renderTemplate</span><span class="params">(String template, Map&lt;String, Object&gt; dataMap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Template tpl = freeMarkerConfigurer.getConfiguration().getTemplate(template);</span><br><span class="line">            <span class="keyword">return</span> FreeMarkerTemplateUtils.processTemplateIntoString(tpl, dataMap);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="keyword">this</span>.getClass().getName().concat(<span class="string">".renderTemplate has error"</span>), e);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理模板字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string 模板字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataMap 模板数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> String <span class="title">renderString</span><span class="params">(String string, Map&lt;String, Object&gt; dataMap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (string.contains(<span class="string">"$&#123;"</span>) &amp;&amp; string.contains(<span class="string">"&#125;"</span>)) &#123;</span><br><span class="line">                <span class="comment">// 1. 获取已经存在的配置</span></span><br><span class="line">                Configuration configuration = freeMarkerConfigurer.getConfiguration();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 2. 自定义一个字符串模板</span></span><br><span class="line">                StringTemplateLoader stringLoader = <span class="keyword">new</span> StringTemplateLoader();</span><br><span class="line">                stringLoader.putTemplate(<span class="string">"myTemplate"</span>, string);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 3. 加载已经存在的模板</span></span><br><span class="line">                configuration.setTemplateLoader(stringLoader);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 4. 处理模板数据</span></span><br><span class="line">                StringWriter writer = <span class="keyword">new</span> StringWriter();</span><br><span class="line">                configuration.getTemplate(<span class="string">"myTemplate"</span>).process(dataMap, writer);</span><br><span class="line">                <span class="keyword">return</span> writer.toString();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> string;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="keyword">this</span>.getClass().getName().concat(<span class="string">".renderString has error"</span>), e);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> freemarker.cache.StringTemplateLoader;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.Configuration;</span><br><span class="line"><span class="keyword">import</span> freemarker.template.Template;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.freemarker.FreeMarkerTemplateUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.StringWriter;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateCom</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Logger logger = LoggerFactory.getLogger(TemplateCom<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> FreeMarkerConfigurer freeMarkerConfigurer;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理模板文件</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> template 模板文件名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataMap 模板数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">renderTemplate</span><span class="params">(String template, Map&lt;String, Object&gt; dataMap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Template tpl = freeMarkerConfigurer.getConfiguration().getTemplate(template);</span><br><span class="line">            <span class="keyword">return</span> FreeMarkerTemplateUtils.processTemplateIntoString(tpl, dataMap);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="keyword">this</span>.getClass().getName().concat(<span class="string">".renderTemplate has error"</span>), e);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理模板字符串</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> string 模板字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> dataMap 模板数据</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的内容</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> String <span class="title">renderString</span><span class="params">(String string, Map&lt;String, Object&gt; dataMap)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (string.contains(<span class="string">"$&#123;"</span>) &amp;&amp; string.contains(<span class="string">"&#125;"</span>)) &#123;</span><br><span class="line">                <span class="comment">// 1. 获取已经存在的配置</span></span><br><span class="line">                Configuration configuration = freeMarkerConfigurer.getConfiguration();</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 2. 自定义一个字符串模板</span></span><br><span class="line">                StringTemplateLoader stringLoader = <span class="keyword">new</span> StringTemplateLoader();</span><br><span class="line">                stringLoader.putTemplate(<span class="string">"myTemplate"</span>, string);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 3. 加载已经存在的模板</span></span><br><span class="line">                configuration.setTemplateLoader(stringLoader);</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 4. 处理模板数据</span></span><br><span class="line">                StringWriter writer = <span class="keyword">new</span> StringWriter();</span><br><span class="line">                configuration.getTemplate(<span class="string">"myTemplate"</span>).process(dataMap, writer);</span><br><span class="line">                <span class="keyword">return</span> writer.toString();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> string;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="keyword">this</span>.getClass().getName().concat(<span class="string">".renderString has error"</span>), e);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="3-2-方法1-不实现-TemplateMethodModelEx-接口"><a href="#3-2-方法1-不实现-TemplateMethodModelEx-接口" class="headerlink" title="3.2 方法1: 不实现 TemplateMethodModelEx 接口"></a>3.2 方法1: 不实现 <code>TemplateMethodModelEx</code> 接口</h4><p>模板内容如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;cus.add(5, 8)&#125;</span><br></pre></td></tr></table></figure>
 <p>其中 <code>cus</code> 是自定义对象, <code>add</code> 是其中的方法, </p>
@@ -437,7 +427,7 @@
 <p>使用如下</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ckjava.test.freemarker;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"><span class="keyword">import</span> org.springframework.ui.freemarker.FreeMarkerTemplateUtils;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> freemarker.template.Template;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ProcessTemplate</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> FreeMarkerConfigurer freeMarkerConfigurer;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getResult</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			Map&lt;String, Object&gt; resultData = <span class="keyword">new</span> HashMap&lt;String, Object&gt;();</span><br><span class="line">			resultData.put(<span class="string">"cus"</span>, <span class="keyword">new</span> Custom());</span><br><span class="line">			</span><br><span class="line">			Template tpl = freeMarkerConfigurer.getConfiguration().getTemplate(<span class="string">"test.ftl"</span>);</span><br><span class="line">			String result = FreeMarkerTemplateUtils.processTemplateIntoString(tpl, resultData);	</span><br><span class="line">			<span class="keyword">return</span> result;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>执行 getResult 方法如下</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ckjava.test.component.NewCardQuery;</span><br><span class="line"><span class="keyword">import</span> com.ckjava.test.freemarker.ProcessTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Run</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ApplicationContext appc;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		appc = <span class="keyword">new</span> AnnotationConfigApplicationContext(<span class="string">"com.ckjava.test"</span>);</span><br><span class="line">		</span><br><span class="line">		ProcessTemplate pt = appc.getBean(ProcessTemplate.class);</span><br><span class="line">		System.out.println(<span class="string">"result = "</span> + pt.getResult());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ckjava.test.component.NewCardQuery;</span><br><span class="line"><span class="keyword">import</span> com.ckjava.test.freemarker.ProcessTemplate;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Run</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> ApplicationContext appc;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		appc = <span class="keyword">new</span> AnnotationConfigApplicationContext(<span class="string">"com.ckjava.test"</span>);</span><br><span class="line">		</span><br><span class="line">		ProcessTemplate pt = appc.getBean(ProcessTemplate<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">		System.out.println(<span class="string">"result = "</span> + pt.getResult());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结果如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = 13</span><br></pre></td></tr></table></figure>
 <h4 id="3-3-方法2-实现TemplateMethodModelEx接口"><a href="#3-3-方法2-实现TemplateMethodModelEx接口" class="headerlink" title="3.3 方法2: 实现TemplateMethodModelEx接口"></a>3.3 方法2: 实现<code>TemplateMethodModelEx</code>接口</h4><p>具体实现如下</p>
@@ -461,14 +451,14 @@
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
   <div>Buy me a cup of coffee</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    <span>Donate</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
-        <p>微信支付</p>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
     
 
@@ -574,10 +564,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -597,8 +587,13 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
+=======
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -609,7 +604,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">38</span>
-                  <span class="site-state-item-name">分类</span>
+                  <span class="site-state-item-name">categories</span>
                 </a>
               </div>
             
@@ -619,8 +614,13 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
+<<<<<<< HEAD
                   <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
+=======
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -679,7 +679,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -689,7 +689,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -697,7 +697,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

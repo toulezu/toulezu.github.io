@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,8 +88,8 @@
 <meta property="og:url" content="http://ckjava.com/2019/10/20/understand-Java-JavaScript-Nashorn-Rhino-usage-practice/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="本文介绍在 Java 环境中执行 JavaScript 脚本的简单使用，具体内容：1. Java 8 中的内置 Nashorn Javascript 引擎介绍；2. Rhino JavaScript 引擎介绍以及对 XML 的处理介绍">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-20T14:38:30.746Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.168Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在 Java 中执行 JavaScript 脚本">
 <meta name="twitter:description" content="本文介绍在 Java 环境中执行 JavaScript 脚本的简单使用，具体内容：1. Java 8 中的内置 Nashorn Javascript 引擎介绍；2. Rhino JavaScript 引擎介绍以及对 XML 的处理介绍">
@@ -108,7 +108,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: 'undefined',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -144,22 +144,12 @@
 </script>
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
 
 
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -207,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -217,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -227,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -237,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -247,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
-            站点地图
+            Sitemap
           </a>
         </li>
       
@@ -257,7 +247,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -331,9 +321,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-20T00:00:00+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-20T00:00:00+08:00">
                 2019-10-20
               </time>
             
@@ -352,7 +342,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -363,7 +353,7 @@
 
                 
                 
-                  ， 
+                  , 
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -445,7 +435,7 @@
 <ul>
 <li>src/test/resources/test.js</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_invoke_js_file</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"Nashorn"</span>);</span><br><span class="line">        engine.eval(<span class="keyword">new</span> FileReader(TestJSEngine.class.getResource(<span class="string">"/test.js"</span>).getPath()));</span><br><span class="line">        Invocable invocable = (Invocable) engine;</span><br><span class="line"></span><br><span class="line">        Object result = invocable.invokeFunction(<span class="string">"checkSign"</span>, <span class="keyword">null</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line"></span><br><span class="line">        result = invocable.invokeFunction(<span class="string">"getData"</span>, <span class="keyword">null</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line"></span><br><span class="line">        result = invocable.invokeFunction(<span class="string">"calculate"</span>, <span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_invoke_js_file</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"Nashorn"</span>);</span><br><span class="line">        engine.eval(new FileReader(TestJSEngine.class.getResource("/test.js").getPath()));</span><br><span class="line">        Invocable invocable = (Invocable) engine;</span><br><span class="line"></span><br><span class="line">        Object result = invocable.invokeFunction(<span class="string">"checkSign"</span>, <span class="keyword">null</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line"></span><br><span class="line">        result = invocable.invokeFunction(<span class="string">"getData"</span>, <span class="keyword">null</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line"></span><br><span class="line">        result = invocable.invokeFunction(<span class="string">"calculate"</span>, <span class="number">2</span>, <span class="number">5</span>);</span><br><span class="line">        System.out.println(result);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>文件内容和上面一样。</p>
 <h2 id="3-Rhino-JavaScript-引擎介绍"><a href="#3-Rhino-JavaScript-引擎介绍" class="headerlink" title="3 Rhino JavaScript 引擎介绍"></a>3 Rhino JavaScript 引擎介绍</h2><p>默认的 Nashorn 引擎是无法解析 xml 的，像 DOMParser 这样的对象是浏览器内置的组件。</p>
 <p>这里可以通过 Maven 依赖 Rhino 引擎来处理 xml。</p>
@@ -462,7 +452,7 @@
 <ul>
 <li>执行如下</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_rhino_file_js</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"rhino"</span>);</span><br><span class="line"></span><br><span class="line">        ScriptContext scriptContext = engine.getContext();</span><br><span class="line"></span><br><span class="line">        StringWriter stringWriter = <span class="keyword">new</span> StringWriter();</span><br><span class="line">        PrintWriter printWriter = <span class="keyword">new</span> PrintWriter(stringWriter);</span><br><span class="line">        scriptContext.setWriter(printWriter);</span><br><span class="line">        engine.eval(<span class="keyword">new</span> FileReader(TestJSEngine.class.getResource(<span class="string">"/xml.js"</span>).getPath()));</span><br><span class="line"></span><br><span class="line">        System.out.println(String.format(<span class="string">"xml result = %s"</span>,stringWriter.toString() ));</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_rhino_file_js</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        ScriptEngine engine = <span class="keyword">new</span> ScriptEngineManager().getEngineByName(<span class="string">"rhino"</span>);</span><br><span class="line"></span><br><span class="line">        ScriptContext scriptContext = engine.getContext();</span><br><span class="line"></span><br><span class="line">        StringWriter stringWriter = <span class="keyword">new</span> StringWriter();</span><br><span class="line">        PrintWriter printWriter = <span class="keyword">new</span> PrintWriter(stringWriter);</span><br><span class="line">        scriptContext.setWriter(printWriter);</span><br><span class="line">        engine.eval(new FileReader(TestJSEngine.class.getResource("/xml.js").getPath()));</span><br><span class="line"></span><br><span class="line">        System.out.println(String.format(<span class="string">"xml result = %s"</span>,stringWriter.toString() ));</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>输出如下</li>
 </ul>
@@ -497,14 +487,14 @@
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
   <div>Buy me a cup of coffee</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    <span>Donate</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
-        <p>微信支付</p>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
     
 
@@ -539,8 +529,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/14/understand-Java-ScheduledThreadPoolExecutor-usage-practice/" rel="next" title="深入理解 Java 中 ScheduledThreadPoolExecutor 的使用">
-                <i class="fa fa-chevron-left"></i> 深入理解 Java 中 ScheduledThreadPoolExecutor 的使用
+              <a href="/2019/10/14/JSON-stringify-parse-usage-practice/" rel="next" title="JSON.stringify() 和 JSON.parse() 使用详解">
+                <i class="fa fa-chevron-left"></i> JSON.stringify() 和 JSON.parse() 使用详解
               </a>
             
           </div>
@@ -612,10 +602,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -635,8 +625,13 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
+=======
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -647,7 +642,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">38</span>
-                  <span class="site-state-item-name">分类</span>
+                  <span class="site-state-item-name">categories</span>
                 </a>
               </div>
             
@@ -657,8 +652,13 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
+<<<<<<< HEAD
                   <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
+=======
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -717,7 +717,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -727,7 +727,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -735,7 +735,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

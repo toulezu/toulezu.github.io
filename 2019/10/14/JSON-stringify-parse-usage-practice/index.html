@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,8 +88,8 @@
 <meta property="og:url" content="http://ckjava.com/2019/10/14/JSON-stringify-parse-usage-practice/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="本文将详解 JSON 中 `parse()` 和 `stringify()` 两个 JavaScript 函数的使用。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-14T15:04:52.049Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.156Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JSON.stringify() 和 JSON.parse() 使用详解">
 <meta name="twitter:description" content="本文将详解 JSON 中 `parse()` 和 `stringify()` 两个 JavaScript 函数的使用。">
@@ -108,7 +108,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: 'undefined',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -144,22 +144,12 @@
 </script>
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
 
 
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -207,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -217,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -227,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -237,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -247,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
-            站点地图
+            Sitemap
           </a>
         </li>
       
@@ -257,7 +247,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -331,9 +321,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-14T00:00:00+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-14T00:00:00+08:00">
                 2019-10-14
               </time>
             
@@ -352,7 +342,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -421,7 +411,7 @@
 <ul>
 <li>代码如下</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>从 JSON 字符串中创建一个对象<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> text = <span class="string">'&#123;"employees":['</span> +</span></span><br><span class="line"><span class="javascript">	<span class="string">'&#123;"name":"Google","site":"http://www.Google.com" &#125;,'</span> +</span></span><br><span class="line"><span class="javascript">	<span class="string">'&#123;"name":"Taobao","site":"http://www.taobao.com" &#125;]&#125;'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> jsonObj = <span class="built_in">JSON</span>.parse(text);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML = jsonObj.employees[<span class="number">1</span>].name + <span class="string">" "</span> + jsonObj.employees[<span class="number">1</span>].site;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>从 JSON 字符串中创建一个对象<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> text = <span class="string">'&#123;"employees":['</span> +</span></span><br><span class="line"><span class="javascript">	<span class="string">'&#123;"name":"Google","site":"http://www.Google.com" &#125;,'</span> +</span></span><br><span class="line"><span class="javascript">	<span class="string">'&#123;"name":"Taobao","site":"http://www.taobao.com" &#125;]&#125;'</span>;</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> jsonObj = <span class="built_in">JSON</span>.parse(text);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.getElementById(<span class="string">"demo"</span>).innerHTML = jsonObj.employees[<span class="number">1</span>].name + <span class="string">" "</span> + jsonObj.employees[<span class="number">1</span>].site;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>输出如下</li>
 </ul>
@@ -432,7 +422,7 @@
 <ul>
 <li>代码如下</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>使用可选参数，回调函数<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">name, val</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> ( val &amp;&amp; val.constructor === <span class="built_in">RegExp</span> ) &#123; <span class="comment">// 如果是 RegExp 对象，将其转成字符串</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val.toString();</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( name === <span class="string">"2"</span>) &#123; <span class="comment">// 如果键值为 name 通过返回 undefined 将键值对移除</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="literal">undefined</span>;</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( name === <span class="string">"6"</span>) &#123; <span class="comment">// 如果键值为 name 通过返回 undefined 将键值对移除</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val * <span class="number">2</span>;</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val; <span class="comment">// 返回原值</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">&#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> jsonObj = <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"1": 1, "2": 2, "3": &#123;"4": 4, "5": &#123;"6": 6&#125;&#125;&#125;'</span>, replacer);</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + <span class="built_in">JSON</span>.stringify(jsonObj, <span class="literal">null</span>, <span class="number">4</span>) + <span class="string">"&lt;/pre&gt;"</span>);<span class="comment">// 输出当前属性，最后一个为 ""</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;br&gt;"</span>);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>使用可选参数，回调函数<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"demo"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">name, val</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> ( val &amp;&amp; val.constructor === <span class="built_in">RegExp</span> ) &#123; <span class="comment">// 如果是 RegExp 对象，将其转成字符串</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val.toString();</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( name === <span class="string">"2"</span>) &#123; <span class="comment">// 如果键值为 name 通过返回 undefined 将键值对移除</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="literal">undefined</span>;</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( name === <span class="string">"6"</span>) &#123; <span class="comment">// 如果键值为 name 通过返回 undefined 将键值对移除</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val * <span class="number">2</span>;</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val; <span class="comment">// 返回原值</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> jsonObj = <span class="built_in">JSON</span>.parse(<span class="string">'&#123;"1": 1, "2": 2, "3": &#123;"4": 4, "5": &#123;"6": 6&#125;&#125;&#125;'</span>, replacer);</span></span><br><span class="line">	</span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + <span class="built_in">JSON</span>.stringify(jsonObj, <span class="literal">null</span>, <span class="number">4</span>) + <span class="string">"&lt;/pre&gt;"</span>);<span class="comment">// 输出当前属性，最后一个为 ""</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;br&gt;"</span>);</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>输出如下</li>
 </ul>
@@ -453,7 +443,7 @@
 <h4 id="3-5-实例"><a href="#3-5-实例" class="headerlink" title="3.5 实例"></a>3.5 实例</h4><ul>
 <li>代码如下</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">name, val</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> ( val &amp;&amp; val.constructor === <span class="built_in">RegExp</span> ) &#123; <span class="comment">// 如果是 RegExp 对象，将其转成字符串</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val.toString();</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( name === <span class="string">'name'</span> ) &#123; <span class="comment">// 如果键值为 name 通过返回 undefined 将键值对移除</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="literal">undefined</span>;</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val; <span class="comment">// 返回原值</span></span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined">&#125;;</span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript"><span class="keyword">var</span> str = &#123;<span class="string">"name"</span>:<span class="string">"test JSON"</span>, <span class="string">"site"</span>:<span class="string">"http://ckjava.com"</span>&#125;</span></span><br><span class="line"><span class="javascript">str_pretty1 = <span class="built_in">JSON</span>.stringify(str)</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"1. 只有一个参数情况："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty1 + <span class="string">"&lt;/pre&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript">str_pretty2 = <span class="built_in">JSON</span>.stringify(str, <span class="literal">null</span>, <span class="number">4</span>) <span class="comment">//使用四个空格缩进</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"2. 格式化显示 JSON 字符串："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty2 + <span class="string">"&lt;/pre&gt;"</span> ); <span class="comment">// pre 用于格式化输出</span></span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript">str_pretty3 = <span class="built_in">JSON</span>.stringify(str, replacer, <span class="number">4</span>) <span class="comment">//使用四个空格缩进</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"3. replacer 为函数："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty3 + <span class="string">"&lt;/pre&gt;"</span> ); <span class="comment">// pre 用于格式化输出</span></span></span><br><span class="line"><span class="undefined">	</span></span><br><span class="line"><span class="javascript">str_pretty4 = <span class="built_in">JSON</span>.stringify(str, [<span class="string">"name"</span>], <span class="number">4</span>) <span class="comment">//只显示 键为 name 的键值对</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"4. replacer 为数组："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty4 + <span class="string">"&lt;/pre&gt;"</span> ); <span class="comment">// pre 用于格式化输出</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">replacer</span>(<span class="params">name, val</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">    <span class="keyword">if</span> ( val &amp;&amp; val.constructor === <span class="built_in">RegExp</span> ) &#123; <span class="comment">// 如果是 RegExp 对象，将其转成字符串</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val.toString();</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> ( name === <span class="string">'name'</span> ) &#123; <span class="comment">// 如果键值为 name 通过返回 undefined 将键值对移除</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="literal">undefined</span>;</span></span><br><span class="line"><span class="javascript">    &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> val; <span class="comment">// 返回原值</span></span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">	</span><br><span class="line"><span class="javascript"><span class="keyword">var</span> str = &#123;<span class="string">"name"</span>:<span class="string">"test JSON"</span>, <span class="string">"site"</span>:<span class="string">"http://ckjava.com"</span>&#125;</span></span><br><span class="line"><span class="javascript">str_pretty1 = <span class="built_in">JSON</span>.stringify(str)</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"1. 只有一个参数情况："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty1 + <span class="string">"&lt;/pre&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript">str_pretty2 = <span class="built_in">JSON</span>.stringify(str, <span class="literal">null</span>, <span class="number">4</span>) <span class="comment">//使用四个空格缩进</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"2. 格式化显示 JSON 字符串："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty2 + <span class="string">"&lt;/pre&gt;"</span> ); <span class="comment">// pre 用于格式化输出</span></span></span><br><span class="line">	</span><br><span class="line"><span class="javascript">str_pretty3 = <span class="built_in">JSON</span>.stringify(str, replacer, <span class="number">4</span>) <span class="comment">//使用四个空格缩进</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"3. replacer 为函数："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty3 + <span class="string">"&lt;/pre&gt;"</span> ); <span class="comment">// pre 用于格式化输出</span></span></span><br><span class="line">	</span><br><span class="line"><span class="javascript">str_pretty4 = <span class="built_in">JSON</span>.stringify(str, [<span class="string">"name"</span>], <span class="number">4</span>) <span class="comment">//只显示 键为 name 的键值对</span></span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"4. replacer 为数组："</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write( <span class="string">"&lt;br&gt;"</span> );</span></span><br><span class="line"><span class="javascript"><span class="built_in">document</span>.write(<span class="string">"&lt;pre&gt;"</span> + str_pretty4 + <span class="string">"&lt;/pre&gt;"</span> ); <span class="comment">// pre 用于格式化输出</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>输出如下</li>
 </ul>
@@ -476,14 +466,14 @@
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
   <div>Buy me a cup of coffee</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    <span>Donate</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
-        <p>微信支付</p>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
     
 
@@ -516,8 +506,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/11/understand-Spring-Lazy-annotation-practice/" rel="next" title="深入理解 Spring @Lazy 注解以及最佳实践">
-                <i class="fa fa-chevron-left"></i> 深入理解 Spring @Lazy 注解以及最佳实践
+              <a href="/2019/10/14/understand-Java-ScheduledThreadPoolExecutor-usage-practice/" rel="next" title="深入理解 Java 中 ScheduledThreadPoolExecutor 的使用">
+                <i class="fa fa-chevron-left"></i> 深入理解 Java 中 ScheduledThreadPoolExecutor 的使用
               </a>
             
           </div>
@@ -526,8 +516,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/14/understand-Java-ScheduledThreadPoolExecutor-usage-practice/" rel="prev" title="深入理解 Java 中 ScheduledThreadPoolExecutor 的使用">
-                深入理解 Java 中 ScheduledThreadPoolExecutor 的使用 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/20/understand-Java-JavaScript-Nashorn-Rhino-usage-practice/" rel="prev" title="在 Java 中执行 JavaScript 脚本">
+                在 Java 中执行 JavaScript 脚本 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -589,10 +579,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -612,8 +602,13 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
+=======
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -624,7 +619,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">38</span>
-                  <span class="site-state-item-name">分类</span>
+                  <span class="site-state-item-name">categories</span>
                 </a>
               </div>
             
@@ -634,8 +629,13 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
+<<<<<<< HEAD
                   <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
+=======
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -694,7 +694,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -704,7 +704,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -712,7 +712,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

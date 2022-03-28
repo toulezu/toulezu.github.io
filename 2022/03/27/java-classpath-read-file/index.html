@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,classpath,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="ckJava" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="本文详细介绍在 java 中如何从 classpath 读取文件，以及在开发阶段和打包成 war 或者 jar 之后读取 classpath 下的文件">
+<meta name="keywords" content="Java,classpath">
+<meta property="og:type" content="article">
+<meta property="og:title" content="详解 Java 从 classpath 读取文件">
+<meta property="og:url" content="http://ckjava.com/2022/03/27/java-classpath-read-file/index.html">
+<meta property="og:site_name" content="ckJava">
+<meta property="og:description" content="本文详细介绍在 java 中如何从 classpath 读取文件，以及在开发阶段和打包成 war 或者 jar 之后读取 classpath 下的文件">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2022-03-27T13:55:16.892Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="详解 Java 从 classpath 读取文件">
+<meta name="twitter:description" content="本文详细介绍在 java 中如何从 classpath 读取文件，以及在开发阶段和打包成 war 或者 jar 之后读取 classpath 下的文件">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: 'undefined',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://ckjava.com/2022/03/27/java-classpath-read-file/">
+
+
+
+
+
+  <title>详解 Java 从 classpath 读取文件 | ckJava</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-115933407-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ckJava</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            Sitemap
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-cron-表达式生成器">
+          <a href="http://cron.toulezu.com/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-link"></i> <br>
+            
+            cron 表达式生成器
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://ckjava.com/2022/03/27/java-classpath-read-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ck">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ckJava">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">详解 Java 从 classpath 读取文件</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2022-03-27T00:00:00+08:00">
+                2022-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2022/03/27/java-classpath-read-file/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2022/03/27/java-classpath-read-file/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+              <div class="post-description">
+                  本文详细介绍在 java 中如何从 classpath 读取文件，以及在开发阶段和打包成 war 或者 jar 之后读取 classpath 下的文件
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本文详细介绍在 java 中如何从 classpath 读取文件，以及在开发阶段和打包成 war 或者 jar 之后读取 classpath 下的文件需要注意的问题，具体如下</p>
+<ol>
+<li>class 类中的 getResource 方法 和 getResourceAsStream 方法</li>
+<li>ClassLoader 类中的 getResource 方法和 getResourceAsStream 方法</li>
+<li>Spring 中的 ClassPathResource 类和 ResourceUtils 类</li>
+<li>在本地开发或者在 war 中读取文件</li>
+<li>在 jar 中读取文件</li>
+<li>使用建议</li>
+</ol>
+<h2 id="class-类中的-getResource-方法-和-getResourceAsStream-方法"><a href="#class-类中的-getResource-方法-和-getResourceAsStream-方法" class="headerlink" title="class 类中的 getResource 方法 和 getResourceAsStream 方法"></a>class 类中的 getResource 方法 和 getResourceAsStream 方法</h2><p>通过 <code>this.getClass()</code> 或者 <code>TestResources.class</code> 可以返回一个 class 对象。</p>
+<h4 id="getResource-方法"><a href="#getResource-方法" class="headerlink" title="getResource 方法"></a>getResource 方法</h4><ul>
+<li><code>getResource()</code>: 返回值为 URL 类型</li>
+</ul>
+<p>比如通过下面的做法可以获取到 <code>src\test\resources\imageConfig</code> 目录下的文件列表</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_class_getResource()  &#123;</span><br><span class="line">    final URL url = <span class="keyword">this</span>.getClass().getResource(<span class="string">"/imageConfig"</span>);</span><br><span class="line">    final File[] configFileArr = FileUtils.listFiles(url.getPath());</span><br><span class="line">    Arrays.asList(configFileArr).forEach(f -&gt; &#123;</span><br><span class="line">        System.out.println(f.getName());</span><br><span class="line">        System.out.println(f.getPath());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="getResourceAsStream-方法"><a href="#getResourceAsStream-方法" class="headerlink" title="getResourceAsStream 方法"></a>getResourceAsStream 方法</h4><ul>
+<li><code>getResourceAsStream()</code>: 返回值为 InputStream 类型</li>
+</ul>
+<p>比如文件地址为 <code>src\test\resources\cdWebHookObj.txt</code>，那么在单元测试中通过如下方式可以读取到</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_class_getResourceAsStream() &#123;</span><br><span class="line">    final InputStream inputStream = <span class="keyword">this</span>.getClass().getResourceAsStream(<span class="string">"/imageConfig/rabbitmq.json"</span>);</span><br><span class="line">    FileUtils.readFileContent(inputStream, System.out::println);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public <span class="keyword">static</span> <span class="keyword">void</span> readFileContent(InputStream inputStream, Consumer&lt;<span class="built_in">String</span>&gt; stringConsumer) &#123;</span><br><span class="line">    Assert.notNull(inputStream, <span class="string">"the inputStream object is null"</span>);</span><br><span class="line">    StringBuilder data = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">    BufferedReader bufferedReader = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        bufferedReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(inputStream));</span><br><span class="line"></span><br><span class="line">        <span class="built_in">String</span> temp;</span><br><span class="line">        <span class="keyword">while</span>((temp = bufferedReader.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">            data.append(temp);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        stringConsumer.accept(data.toString());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception var8) &#123;</span><br><span class="line">        logger.error(<span class="string">"readFileContent has error"</span>, var8);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        IOUtils.closeQuietly(bufferedReader);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其中 <code>this.getClass().getResourceAsStream(&quot;/imageConfig/rabbitmq.json&quot;)</code> 中的 <code>/imageConfig/rabbitmq.json</code> 相当于从 classpath 根目录下读取文件</li>
+</ul>
+<h4 id="getResource-和-getResourceAsStream-的目录问题"><a href="#getResource-和-getResourceAsStream-的目录问题" class="headerlink" title="getResource 和 getResourceAsStream 的目录问题"></a>getResource 和 getResourceAsStream 的目录问题</h4><ol>
+<li>如果以 <code>/</code> 开头，表示从 <strong>类路径的根目录</strong> 开始</li>
+<li>如果不以 <code>/</code> 开头，表示从 <strong>类所在包的根目录</strong> 开始</li>
+<li>在 maven 项目中如果需要把文件放到 <strong>类所在包的根目录</strong>下读取，需要在 pom 中增加额外的配置，才能读取到，具体如下</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">finalName</span>&gt;</span>test<span class="tag">&lt;/<span class="name">finalName</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">resources</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/java<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">includes</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!--json 的配置文件会和编译后的class文件放在一起--&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">include</span>&gt;</span>**/*.json<span class="tag">&lt;/<span class="name">include</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">includes</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">resource</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--加载配置的资源--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">directory</span>&gt;</span>src/main/resources<span class="tag">&lt;/<span class="name">directory</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">resource</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">resources</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="ClassLoader-类中的-getResource-方法和-getResourceAsStream-方法"><a href="#ClassLoader-类中的-getResource-方法和-getResourceAsStream-方法" class="headerlink" title="ClassLoader 类中的 getResource 方法和 getResourceAsStream 方法"></a>ClassLoader 类中的 getResource 方法和 getResourceAsStream 方法</h2><ul>
+<li>文件或者目录前面不需要带上 <code>/</code>，默认就从 <strong>类路径的根目录</strong> 开始读取</li>
+<li>获取 ClassLoader 对象的方法如下</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法1</span></span><br><span class="line">InputStream io = Thread.currentThread().getContextClassLoader().getResourceAsStream(<span class="string">"test.txt"</span>);</span><br><span class="line"><span class="comment">// 方法2</span></span><br><span class="line">InputStream io = getClass().getClassLoader().getResourceAsStream(<span class="string">"test.txt"</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="getResource-方法-1"><a href="#getResource-方法-1" class="headerlink" title="getResource 方法"></a>getResource 方法</h4><ul>
+<li><code>getResource()</code>: 返回值为 URL 类型</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_classloader_getResource() &#123;</span><br><span class="line">    final URL url = getClass().getClassLoader().getResource(<span class="string">"imageConfig"</span>);</span><br><span class="line">    final File file = <span class="keyword">new</span> File(url.getPath());</span><br><span class="line">    Arrays.asList(file.listFiles()).forEach(f -&gt; System.out.println(f.getName()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="getResourceAsStream-方法-1"><a href="#getResourceAsStream-方法-1" class="headerlink" title="getResourceAsStream 方法"></a>getResourceAsStream 方法</h4><ul>
+<li><code>getResourceAsStream()</code>: 返回值为 InputStream 类型</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_classloader_getResourceAsStream() &#123;</span><br><span class="line">    final InputStream inputStream = getClass().getClassLoader().getResourceAsStream(<span class="string">"imageConfig/rabbitmq.json"</span>);</span><br><span class="line">    FileUtils.readFileContent(inputStream, data -&gt; System.out.println(data));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="getResources-方法"><a href="#getResources-方法" class="headerlink" title="getResources 方法"></a>getResources 方法</h4><ul>
+<li><code>getResources()</code>: 返回值为 <code>Enumeration&lt;URL&gt;</code> 类型</li>
+</ul>
+<p>并且额外提供了 <code>getResources</code> 方法，具体如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test2() throws Exception &#123;</span><br><span class="line">    final Enumeration&lt;URL&gt; enumeration = getClass().getClassLoader().getResources(<span class="string">"imageConfig"</span>);</span><br><span class="line">    <span class="keyword">while</span> (enumeration.hasMoreElements()) &#123;</span><br><span class="line">        final URL url = enumeration.nextElement();</span><br><span class="line">        final File file = <span class="keyword">new</span> File(url.getPath());</span><br><span class="line">        Arrays.asList(file.listFiles()).forEach(f -&gt; System.out.println(f.getName()));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Spring-中的-ClassPathResource-类和-ResourceUtils-类"><a href="#Spring-中的-ClassPathResource-类和-ResourceUtils-类" class="headerlink" title="Spring 中的 ClassPathResource 类和 ResourceUtils 类"></a>Spring 中的 ClassPathResource 类和 ResourceUtils 类</h2><h4 id="ClassPathResource-类"><a href="#ClassPathResource-类" class="headerlink" title="ClassPathResource 类"></a>ClassPathResource 类</h4><ul>
+<li>org.springframework.core.io.ClassPathResource</li>
+</ul>
+<p>ClassPathResource 对 <code>ClassLoader.getResourceAsStream(String)</code> 进行了一层额外的封装</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> @Test</span><br><span class="line">public <span class="keyword">void</span> test_ClassPathResource_getInputStream() throws Exception &#123;</span><br><span class="line">    final Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"imageConfig/elasticsearch.json"</span>);</span><br><span class="line">    final InputStream jsonFileInputStream = resource.getInputStream();</span><br><span class="line">    FileUtils.readFileContent(jsonFileInputStream, System.out::println);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_ClassPathResource_getURL() throws Exception &#123;</span><br><span class="line">    final Resource resource = <span class="keyword">new</span> ClassPathResource(<span class="string">"imageConfig"</span>);</span><br><span class="line">    final URL url = resource.getURL();</span><br><span class="line">    final File[] configFileArr = FileUtils.listFiles(url.getPath());</span><br><span class="line">    Arrays.asList(configFileArr).forEach(f -&gt; &#123;</span><br><span class="line">        System.out.println(f.getName());</span><br><span class="line">        System.out.println(f.getPath());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ResourceUtils-类"><a href="#ResourceUtils-类" class="headerlink" title="ResourceUtils 类"></a>ResourceUtils 类</h4><ul>
+<li>org.springframework.util.ResourceUtils</li>
+<li>文件或者目录前面需要带上 <code>classpath:</code></li>
+</ul>
+<ol>
+<li>读取文件</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_ResourceUtils_file() throws Exception &#123;</span><br><span class="line">    final File file = ResourceUtils.getFile(<span class="string">"classpath:imageConfig/rabbitmq.json"</span>);</span><br><span class="line">    System.out.println(FileUtils.readFileContent(file, <span class="string">"UTF-8"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>读取目录</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public <span class="keyword">void</span> test_ResourceUtils_path() throws Exception &#123;</span><br><span class="line">    final File file = ResourceUtils.getFile(<span class="string">"classpath:imageConfig"</span>);</span><br><span class="line">    Arrays.asList(file.listFiles()).forEach(f -&gt; System.out.println(f.getName()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="在本地开发或者在-war-中读取文件"><a href="#在本地开发或者在-war-中读取文件" class="headerlink" title="在本地开发或者在 war 中读取文件"></a>在本地开发或者在 war 中读取文件</h2><ol>
+<li>在本地开发的时候实际上是以文件夹的形式读取文件</li>
+<li>如果项目打包成 war 并通过 tomcat 启动项目，实际在启动的过程中 war 会自动解压，本质也是通过文件夹的形式读取文件</li>
+</ol>
+<h2 id="在-jar-中读取文件"><a href="#在-jar-中读取文件" class="headerlink" title="在 jar 中读取文件"></a>在 jar 中读取文件</h2><p>spring boot 会将代码打包成 jar，在 jar 中读取文件一定要返回 InputStream 对象才可以，否则会出现读取不到文件的问题，具体如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 方法1</span><br><span class="line">InputStream io = Thread.currentThread().getContextClassLoader().getResourceAsStream(&quot;test.txt&quot;);</span><br><span class="line">// 方法2</span><br><span class="line">InputStream io = getClass().getClassLoader().getResourceAsStream(&quot;test.txt&quot;);</span><br></pre></td></tr></table></figure>
+<p>因为 jar 本身就是一个文件，类似压缩文件 zip，jar 中的文件路径和文件夹中的路径是不一样的，比如：<code>jar:file:/home/devops/oneKeySys/one-key-sys-service.jar!/BOOT-INF/classes!/imageConfig/mysql.json</code>，因此会导致在本地开发的时候代码是没有问题的，但是到了线上环境（linux）就会出现问题。</p>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><h4 id="cannot-be-resolved-to-absolute-file-path-because-it-does-not-reside-in-the-file-system-jar"><a href="#cannot-be-resolved-to-absolute-file-path-because-it-does-not-reside-in-the-file-system-jar" class="headerlink" title="cannot be resolved to absolute file path because it does not reside in the file system: jar"></a>cannot be resolved to absolute file path because it does not reside in the file system: jar</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java.io.FileNotFoundException: class path resource [imageConfig/mysql.json] cannot be resolved to absolute file path because it does not reside in the file system: jar:file:/home/devops/oneKeySys/one-key-sys-service.jar!/BOOT-INF/classes!/imageConfig/mysql.json</span><br><span class="line">        at org.springframework.util.ResourceUtils.getFile(ResourceUtils.java:217)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://blog.csdn.net/u013084266/article/details/112238267" target="_blank" rel="noopener">问题解决：cannot be resolved to absolute file path because it does not reside in the file system: jar</a></li>
+</ul>
+<h2 id="使用建议"><a href="#使用建议" class="headerlink" title="使用建议"></a>使用建议</h2><ol>
+<li>在一般的 java 中使用 ClassLoader 类中的 getResource 方法和 getResourceAsStream 方法</li>
+<li>在 spring 中使用 ClassPathResource 类中的相关方法。</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://blog.csdn.net/u014534808/article/details/115936771" target="_blank" rel="noopener">此文要从 SpringBoot 打包后不能读取 classpath 下文件说起</a></li>
+<li><a href="https://blog.csdn.net/weixin_38229356/article/details/80783142" target="_blank" rel="noopener">SpringBoot-读取 classpath 下文件</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>Buy me a cup of coffee</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/classpath/" rel="tag"># classpath</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/12/26/Promise-design-in-Java-understand-practice/" rel="next" title="Promise 的设计理念在 Java 编程中的应用">
+                <i class="fa fa-chevron-left"></i> Promise 的设计理念在 Java 编程中的应用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2022/03/28/java-if-else-function/" rel="prev" title="Java 中通过循环判断来替换 if else 的一种方法">
+                Java 中通过循环判断来替换 if else 的一种方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">ck</p>
+              <p class="site-description motion-element" itemprop="description">从生活和工作中偷取快乐</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class-类中的-getResource-方法-和-getResourceAsStream-方法"><span class="nav-number">2.</span> <span class="nav-text">class 类中的 getResource 方法 和 getResourceAsStream 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getResource-方法"><span class="nav-number">2.0.1.</span> <span class="nav-text">getResource 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getResourceAsStream-方法"><span class="nav-number">2.0.2.</span> <span class="nav-text">getResourceAsStream 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getResource-和-getResourceAsStream-的目录问题"><span class="nav-number">2.0.3.</span> <span class="nav-text">getResource 和 getResourceAsStream 的目录问题</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#ClassLoader-类中的-getResource-方法和-getResourceAsStream-方法"><span class="nav-number">3.</span> <span class="nav-text">ClassLoader 类中的 getResource 方法和 getResourceAsStream 方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getResource-方法-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">getResource 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getResourceAsStream-方法-1"><span class="nav-number">3.0.2.</span> <span class="nav-text">getResourceAsStream 方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getResources-方法"><span class="nav-number">3.0.3.</span> <span class="nav-text">getResources 方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-中的-ClassPathResource-类和-ResourceUtils-类"><span class="nav-number">4.</span> <span class="nav-text">Spring 中的 ClassPathResource 类和 ResourceUtils 类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassPathResource-类"><span class="nav-number">4.0.1.</span> <span class="nav-text">ClassPathResource 类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ResourceUtils-类"><span class="nav-number">4.0.2.</span> <span class="nav-text">ResourceUtils 类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在本地开发或者在-war-中读取文件"><span class="nav-number">5.</span> <span class="nav-text">在本地开发或者在 war 中读取文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在-jar-中读取文件"><span class="nav-number">6.</span> <span class="nav-text">在 jar 中读取文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">6.0.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cannot-be-resolved-to-absolute-file-path-because-it-does-not-reside-in-the-file-system-jar"><span class="nav-number">6.0.2.</span> <span class="nav-text">cannot be resolved to absolute file path because it does not reside in the file system: jar</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用建议"><span class="nav-number">7.</span> <span class="nav-text">使用建议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ck</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+      <style>
+        a.gitment-editor-footer-tip { display: none; }
+        .gitment-container.gitment-footer-container { display: none; }
+      </style>
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'toulezu',
+            repo: 'toulezu.github.io',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: 'bc56332fd742125996e8dff575342d57650d5717',
+            
+                client_id: '3ea922b2819ffc8223fb'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

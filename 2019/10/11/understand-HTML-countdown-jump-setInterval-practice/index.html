@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -88,8 +88,8 @@
 <meta property="og:url" content="http://ckjava.com/2019/10/11/understand-HTML-countdown-jump-setInterval-practice/index.html">
 <meta property="og:site_name" content="ckJava">
 <meta property="og:description" content="HTML 倒计时自动跳转功能实现以及 setInterval() 方法介绍">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-14T15:05:00.828Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-06T02:10:40.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTML 倒计时自动跳转功能实现以及 setInterval() 方法介绍">
 <meta name="twitter:description" content="HTML 倒计时自动跳转功能实现以及 setInterval() 方法介绍">
@@ -108,7 +108,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: 'undefined',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: '',
@@ -144,22 +144,12 @@
 </script>
 
 
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?da35ffacbd044ee33c19952855ed80e9";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
 
 
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -207,7 +197,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -217,7 +207,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -227,7 +217,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -237,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -247,7 +237,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
             
-            站点地图
+            Sitemap
           </a>
         </li>
       
@@ -257,7 +247,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -331,9 +321,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-11T00:00:00+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-11T00:00:00+08:00">
                 2019-10-11
               </time>
             
@@ -352,7 +342,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -413,7 +403,7 @@
 <li>content 属性值中的 5 表示 5秒钟，<code>url=&#39;http://ckjava.com&#39;</code> 表示跳转到其他页面的地址</li>
 </ul>
 <h4 id="2-2-用-javascript-实现"><a href="#2-2-用-javascript-实现" class="headerlink" title="2.2 用 javascript 实现"></a>2.2 用 javascript 实现</h4><p>具体如下</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;meta http-equiv="refresh" content="3;url='index.html#!/publishPlan'" &gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>确认成功<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">countDown</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 获取初始时间</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> time = <span class="built_in">document</span>.getElementById(<span class="string">"timeTotal"</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">            <span class="comment">// 获取到id为time标签中的数字时间</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (<span class="built_in">parseInt</span>(time.innerHTML) == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 等于0时清除计时，并跳转该指定页面</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">window</span>.location.href = <span class="string">"index.html#!/publishPlan"</span>;</span></span><br><span class="line"><span class="javascript">            &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">                time.innerHTML = <span class="built_in">String</span>(<span class="built_in">parseInt</span>(time.innerHTML) - <span class="number">1</span>);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 1000毫秒调用一次</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">window</span>.setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; countDown() &#125;, <span class="number">1000</span>);</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .tip &#123;</span></span><br><span class="line"><span class="undefined">            font-size: 20px;</span></span><br><span class="line"><span class="undefined">            font-family: "Microsoft YaHei UI";</span></span><br><span class="line"><span class="undefined">            font-weight: bold;</span></span><br><span class="line"><span class="undefined">            margin: 200px auto;</span></span><br><span class="line"><span class="undefined">            text-align: center;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .mt20 &#123;</span></span><br><span class="line"><span class="undefined">            margin-top: 20px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .bold &#123;</span></span><br><span class="line"><span class="undefined">            font-weight: bold;</span></span><br><span class="line"><span class="undefined">            color: red;</span></span><br><span class="line"><span class="undefined">            background-color: white;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        .pr3 &#123;</span></span><br><span class="line"><span class="undefined">            padding-right: 3px;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tip"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bold"</span>&gt;</span>给CTO发送紧急申请邮件成功！<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mt20"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"timeTotal"</span> <span class="attr">class</span>=<span class="string">"pr3"</span>&gt;</span>5<span class="tag">&lt;/<span class="name">span</span>&gt;</span>秒后返回首页 或 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"index.html#!/publishPlan"</span>&gt;</span>点击链接直接返回<span class="tag">&lt;/<span class="name">a</span>&gt;</span>。</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--&lt;meta http-equiv="refresh" content="3;url='index.html#!/publishPlan'" &gt;--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>确认成功<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">countDown</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 获取初始时间</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> time = <span class="built_in">document</span>.getElementById(<span class="string">"timeTotal"</span>);</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">            <span class="comment">// 获取到id为time标签中的数字时间</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">if</span> (<span class="built_in">parseInt</span>(time.innerHTML) == <span class="number">0</span>) &#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// 等于0时清除计时，并跳转该指定页面</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">window</span>.location.href = <span class="string">"index.html#!/publishPlan"</span>;</span></span><br><span class="line"><span class="javascript">            &#125; <span class="keyword">else</span> &#123;</span></span><br><span class="line"><span class="javascript">                time.innerHTML = <span class="built_in">String</span>(<span class="built_in">parseInt</span>(time.innerHTML) - <span class="number">1</span>);</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// 1000毫秒调用一次</span></span></span><br><span class="line"><span class="javascript">            <span class="built_in">window</span>.setInterval(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; countDown() &#125;, <span class="number">1000</span>);</span></span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span> <span class="attr">type</span>=<span class="string">"text/css"</span>&gt;</span></span><br><span class="line">        .tip &#123;</span><br><span class="line">            font-size: 20px;</span><br><span class="line">            font-family: "Microsoft YaHei UI";</span><br><span class="line">            font-weight: bold;</span><br><span class="line">            margin: 200px auto;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .mt20 &#123;</span><br><span class="line">            margin-top: 20px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .bold &#123;</span><br><span class="line">            font-weight: bold;</span><br><span class="line">            color: red;</span><br><span class="line">            background-color: white;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .pr3 &#123;</span><br><span class="line">            padding-right: 3px;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"tip"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bold"</span>&gt;</span>给CTO发送紧急申请邮件成功！<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"mt20"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"timeTotal"</span> <span class="attr">class</span>=<span class="string">"pr3"</span>&gt;</span>5<span class="tag">&lt;/<span class="name">span</span>&gt;</span>秒后返回首页 或 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"index.html#!/publishPlan"</span>&gt;</span>点击链接直接返回<span class="tag">&lt;/<span class="name">a</span>&gt;</span>。</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="3-setInterval-方法"><a href="#3-setInterval-方法" class="headerlink" title="3 setInterval() 方法"></a>3 setInterval() 方法</h2><h4 id="3-1-setInterval-方法介绍"><a href="#3-1-setInterval-方法介绍" class="headerlink" title="3.1 setInterval() 方法介绍"></a>3.1 setInterval() 方法介绍</h4><ol>
 <li>setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。</li>
 <li>setInterval() 方法会不停地调用函数，直到 clearInterval() 被调用或窗口被关闭。由 setInterval() 返回的 ID 值可用作 clearInterval() 方法的参数。</li>
@@ -473,14 +463,14 @@
         <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
   <div>Buy me a cup of coffee</div>
   <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-    <span>打赏</span>
+    <span>Donate</span>
   </button>
   <div id="QR" style="display: none;">
 
     
       <div id="wechat" style="display: inline-block">
-        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck 微信支付">
-        <p>微信支付</p>
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="ck WeChat Pay">
+        <p>WeChat Pay</p>
       </div>
     
 
@@ -515,8 +505,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/10/understand-Java-primary-type-change/" rel="next" title="深入理解 Java 中的类型转换">
-                <i class="fa fa-chevron-left"></i> 深入理解 Java 中的类型转换
+              <a href="/2019/10/11/understand-Spring-Lazy-annotation-practice/" rel="next" title="深入理解 Spring @Lazy 注解以及最佳实践">
+                <i class="fa fa-chevron-left"></i> 深入理解 Spring @Lazy 注解以及最佳实践
               </a>
             
           </div>
@@ -525,8 +515,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/10/11/understand-Spring-Lazy-annotation-practice/" rel="prev" title="深入理解 Spring @Lazy 注解以及最佳实践">
-                深入理解 Spring @Lazy 注解以及最佳实践 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/10/14/understand-Java-ScheduledThreadPoolExecutor-usage-practice/" rel="prev" title="深入理解 Java 中 ScheduledThreadPoolExecutor 的使用">
+                深入理解 Java 中 ScheduledThreadPoolExecutor 的使用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -588,10 +578,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -611,8 +601,13 @@
               
                 <a href="/archives/">
               
+<<<<<<< HEAD
                   <span class="site-state-item-count">88</span>
                   <span class="site-state-item-name">日志</span>
+=======
+                  <span class="site-state-item-count">90</span>
+                  <span class="site-state-item-name">posts</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -623,7 +618,7 @@
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
                   <span class="site-state-item-count">38</span>
-                  <span class="site-state-item-name">分类</span>
+                  <span class="site-state-item-name">categories</span>
                 </a>
               </div>
             
@@ -633,8 +628,13 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
+<<<<<<< HEAD
                   <span class="site-state-item-count">83</span>
                   <span class="site-state-item-name">标签</span>
+=======
+                  <span class="site-state-item-count">84</span>
+                  <span class="site-state-item-name">tags</span>
+>>>>>>> master
                 </a>
               </div>
             
@@ -693,7 +693,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -703,7 +703,7 @@
 </div>
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -711,7 +711,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
