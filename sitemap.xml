@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://ckjava.com/2022/04/17/docker-vsftpd-java-FTPClient-api/</loc>
+    <loc>http://ckjava.com/2022/04/23/Netty-TCP-spring-boot-api/</loc>
     
-    <lastmod>2022-04-19T14:43:52.394Z</lastmod>
+    <lastmod>2022-04-23T10:39:44.906Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://ckjava.com/2022/04/19/Netty-HelloWorld-spring-boot-api/</loc>
     
-    <lastmod>2022-04-19T14:42:47.606Z</lastmod>
+    <lastmod>2022-04-23T10:38:43.129Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ckjava.com/2022/04/17/docker-vsftpd-java-FTPClient-api/</loc>
+    
+    <lastmod>2022-04-19T14:43:52.394Z</lastmod>
     
   </url>
   
