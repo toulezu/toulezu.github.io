@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2022/05/01/Websocket-SpringBoot-Vue/</loc>
+    
+    <lastmod>2022-05-01T09:21:52.957Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2022/04/23/Netty-TCP-spring-boot-api/</loc>
     
     <lastmod>2022-04-23T10:39:44.906Z</lastmod>
