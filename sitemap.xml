@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ckjava.com/2022/05/02/Websocket-SpringBoot-Vue/</loc>
+    
+    <lastmod>2022-05-02T09:12:42.746Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ckjava.com/2022/05/01/Websocket-SpringBoot-Vue/</loc>
     
     <lastmod>2022-05-01T09:41:44.196Z</lastmod>
@@ -702,14 +709,14 @@
   </url>
   
   <url>
-    <loc>http://ckjava.com/categories/index.html</loc>
+    <loc>http://ckjava.com/about/index.html</loc>
     
     <lastmod>2020-02-06T02:10:40.182Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://ckjava.com/about/index.html</loc>
+    <loc>http://ckjava.com/categories/index.html</loc>
     
     <lastmod>2020-02-06T02:10:40.182Z</lastmod>
     
